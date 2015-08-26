@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeMapper">
+	
+	<!-- 列表 -->
+	<select id="noticelistPage" parameterType="page" resultType="pd">
+		select 
+				*
+		from sys_notice 
+		where
+			1 = 1
+		<if test="pd.title != null and pd.title != ''"><!-- 标题检索 -->
+			and title like CONCAT(CONCAT('%', #{pd.title}),'%') 
+		</if>
+		<if test="pd.publisher!= null and pd.publisher!= ''"><!-- 发布人检索 -->
+			and publisher like CONCAT(CONCAT('%', #{pd.publisher}),'%') 
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 发布时间检索 -->
+			and addtime &gt;= #{pd.lastStart} 
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 发布时间检索 -->
+			and addtime &lt;= #{pd.lastEnd} 
+		</if>
+		<if test="pd.status != null and pd.status != ''"><!-- 状态检索 -->
+			and status=#{pd.status} 
+		</if>
+		order by sequence desc
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into sys_notice (
+			title,
+			content,
+			publisher,
+			addtime,
+			uptime,
+			sequence,
+			status
+		) values (
+			#{title},
+			#{content},
+			#{publisher},
+			#{addtime},
+			#{uptime},
+			#{sequence},
+			#{status}
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  sys_notice
+			set title				= #{title},
+				content				= #{content},
+				publisher 			= #{publisher},
+				uptime				= #{uptime},
+				sequence 			= #{sequence},
+				status 				= #{status}
+			where 
+				id = #{id}
+	</update>
+	
+	<!-- 通过id获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			*
+		from 
+			sys_notice
+		where 
+			id = #{id}
+	</select>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from sys_notice 
+		where 
+			id = #{id}
+	</delete>
+		
+</mapper>
