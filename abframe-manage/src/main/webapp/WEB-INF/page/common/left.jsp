@@ -1,8 +1,4 @@
-﻿<%
-    String pathl = request.getContextPath();
-    String basePathl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + pathl + "/";
-%>
-<!-- 本页面涉及的js函数，都在head.jsp页面中 -->
+﻿<!-- 本页面涉及的js函数，都在head.jsp页面中 -->
 <div id="sidebar" class="menu-min">
 
     <div id="sidebar-shortcuts">
@@ -12,9 +8,9 @@
             <button class="btn btn-small btn-success" onclick="changeMenu();" title="切换菜单"><i class="icon-pencil"></i>
             </button>
 
-            <%--<button class="btn btn-small btn-info" title="爬虫" onclick="window.open('<%=basePathl%>static/UI_new');"><i class="icon-eye-open"></i></button>--%>
-            <button class="btn btn-small btn-info" title="UI实例" onclick="window.open('<%=basePathl%>static/UI_new');"><i
+            <button class="btn btn-small btn-info" title="爬虫" onclick="window.open('');"><i
                     class="icon-eye-open"></i></button>
+
 
             <button class="btn btn-small btn-warning" title="数据字典" id="adminzidian" onclick="zidian();"><i
                     class="icon-book"></i></button>

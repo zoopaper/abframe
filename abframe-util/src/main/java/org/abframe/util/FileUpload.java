@@ -7,10 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * 上传文件
- * 创建人：FH 创建时间：2014年12月23日
- */
 public class FileUpload {
 
     /**

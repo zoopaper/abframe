@@ -1,6 +1,7 @@
 package org.abframe.websocket;
 
 import net.sf.json.JSONObject;
+import org.abframe.util.Constant;
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.framing.Framedata;
@@ -23,18 +24,12 @@ public class ChatServer extends WebSocketServer {
         super(address);
     }
 
-    /**
-     * 触发连接事件
-     */
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        //this.sendToAll( "new connection: " + handshake.getResourceDescriptor() );
-        //System.out.println("===" + conn.getRemoteSocketAddress().getAddress().getHostAddress());
+        //待处理
     }
 
-    /**
-     * 触发关闭事件
-     */
+
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         userLeave(conn);
@@ -46,19 +41,23 @@ public class ChatServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         message = message.toString();
-        if (null != message && message.startsWith("FHadminqq313596790")) {
-            this.userjoin(message.replaceFirst("FHadminqq313596790", ""), conn);
+        if (null != message && message.startsWith(Constant.WEB_SOCKET_USER_CONN)) {
+            this.userjoin(message.replaceFirst(Constant.WEB_SOCKET_USER_CONN, ""), conn);
         }
-        if (null != message && message.startsWith("LeaveFHadminqq313596790")) {
+        if (null != message && message.startsWith(Constant.WEB_SOCKET_USER_LEAVE)) {
             this.userLeave(conn);
         }
-        if (null != message && message.contains("fhadmin886")) {
-            String toUser = message.substring(message.indexOf("fhadmin886") + 10, message.indexOf("fhfhadmin888"));
-            message = message.substring(0, message.indexOf("fhadmin886")) + "[私信]  " + message.substring(message.indexOf("fhfhadmin888") + 12, message.length());
-            ChatServerPool.sendMessageToUser(ChatServerPool.getWebSocketByUser(toUser), message);//向所某用户发送消息
-            ChatServerPool.sendMessageToUser(conn, message);//同时向本人发送消息
+        if (null != message && message.contains(Constant.WEB_SOCKET_USER_PRIVATE_MSG)) {
+
+            String toUser = message.substring(message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG) + Constant.WEB_SOCKET_USER_PRIVATE_MSG.length(), message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG_2));
+            message = message.substring(0, message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG)) + "[私信]" + message.substring(message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG_2) + Constant.WEB_SOCKET_USER_PRIVATE_MSG_2.length(), message.length());
+
+            //向所某用户发送消息
+            ChatServerPool.sendMessageToUser(ChatServerPool.getWebSocketByUser(toUser), message);
+            //同时向本人发送消息
+            ChatServerPool.sendMessageToUser(conn, message);
         } else {
-            ChatServerPool.sendMessage(message.toString());//向所有在线用户发送消息
+            ChatServerPool.sendMessage(message);//向所有在线用户发送消息
         }
     }
 
@@ -117,7 +116,6 @@ public class ChatServer extends WebSocketServer {
         int port = 8887; //端口
         ChatServer s = new ChatServer(port);
         s.start();
-        //System.out.println( "服务器的端口" + s.getPort() );
     }
 
 }

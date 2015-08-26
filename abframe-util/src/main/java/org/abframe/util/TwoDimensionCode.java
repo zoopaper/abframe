@@ -13,10 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-/**
- * 二维码
- * 创建人：FH 创建时间：2015年4月10日
- */
+
 public class TwoDimensionCode {
 
     /**

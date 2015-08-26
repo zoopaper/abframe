@@ -10,14 +10,6 @@ public class AppUtil {
 
     protected static Logger logger = Logger.getLogger(AppUtil.class);
 
-    public static void main(String[] args) {
-        PageData pd = new PageData();
-        pd.put("username", "zhangsan");
-
-        checkParam("registered", pd);
-    }
-
-
     public static boolean checkParam(String method, PageData pd) {
         boolean result = false;
 

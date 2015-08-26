@@ -2,10 +2,7 @@ package org.abframe.util;
 
 import java.lang.reflect.Field;
 
-/**
- * @author Administrator
- *         反射工具
- */
+
 public class ReflectHelper {
     /**
      * 获取obj对象fieldName的Field

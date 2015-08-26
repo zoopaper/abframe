@@ -9,8 +9,5 @@ public class UuidUtil {
         return uuid;
     }
 
-    public static void main(String[] args) {
-        System.out.println(get32UUID());
-    }
 }
 

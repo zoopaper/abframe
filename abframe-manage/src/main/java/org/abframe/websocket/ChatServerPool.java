@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ChatServerPool {
 
-    private static final Map<WebSocket, String> userconnections = new HashMap<WebSocket, String>();
+    private static final Map<WebSocket, String> userWebSocketPool = new HashMap<WebSocket, String>();
 
     /**
      * 获取用户名
@@ -14,7 +14,7 @@ public class ChatServerPool {
      * @param ws
      */
     public static String getUserByKey(WebSocket ws) {
-        return userconnections.get(ws);
+        return userWebSocketPool.get(ws);
     }
 
     /**
@@ -23,10 +23,10 @@ public class ChatServerPool {
      * @param user
      */
     public static WebSocket getWebSocketByUser(String user) {
-        Set<WebSocket> keySet = userconnections.keySet();
+        Set<WebSocket> keySet = userWebSocketPool.keySet();
         synchronized (keySet) {
             for (WebSocket conn : keySet) {
-                String cuser = userconnections.get(conn);
+                String cuser = userWebSocketPool.get(conn);
                 if (cuser.equals(user)) {
                     return conn;
                 }
@@ -42,7 +42,7 @@ public class ChatServerPool {
      * @param ws
      */
     public static void addUser(String user, WebSocket ws) {
-        userconnections.put(ws, user);    //添加连接
+        userWebSocketPool.put(ws, user);    //添加连接
     }
 
     /**
@@ -52,7 +52,7 @@ public class ChatServerPool {
      */
     public static Collection<String> getOnlineUser() {
         List<String> setUsers = new ArrayList<String>();
-        Collection<String> setUser = userconnections.values();
+        Collection<String> setUser = userWebSocketPool.values();
         for (String u : setUser) {
             setUsers.add("<a onclick=\"toUserMsg('" + u + "');\">" + u + "</a>");
         }
@@ -65,8 +65,8 @@ public class ChatServerPool {
      * @param ws
      */
     public static boolean removeUser(WebSocket ws) {
-        if (userconnections.containsKey(ws)) {
-            userconnections.remove(ws);    //移除连接
+        if (userWebSocketPool.containsKey(ws)) {
+            userWebSocketPool.remove(ws);    //移除连接
             return true;
         } else {
             return false;
@@ -80,7 +80,7 @@ public class ChatServerPool {
      * @param message
      */
     public static void sendMessageToUser(WebSocket ws, String message) {
-        if (null != ws && null != userconnections.get(ws)) {
+        if (null != ws && null != userWebSocketPool.get(ws)) {
             ws.send(message);
         }
     }
@@ -91,10 +91,10 @@ public class ChatServerPool {
      * @param message
      */
     public static void sendMessage(String message) {
-        Set<WebSocket> keySet = userconnections.keySet();
+        Set<WebSocket> keySet = userWebSocketPool.keySet();
         synchronized (keySet) {
             for (WebSocket conn : keySet) {
-                String user = userconnections.get(conn);
+                String user = userWebSocketPool.get(conn);
                 if (user != null) {
                     conn.send(message);
                 }

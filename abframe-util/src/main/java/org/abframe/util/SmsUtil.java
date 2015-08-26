@@ -24,9 +24,6 @@ public class SmsUtil {
     public static void main(String[] args) {
 
         sendSms2("13511111111", "您的验证码是：1111。请不要把验证码泄露给其他人。");
-        //sendSmsAll(List<PageData> list)
-
-        //sendSms1();
     }
 
 
@@ -200,7 +197,6 @@ public class SmsUtil {
             sendSms2(mobile, code);
         }
     }
-    // =================================================================================================
 
 
 }

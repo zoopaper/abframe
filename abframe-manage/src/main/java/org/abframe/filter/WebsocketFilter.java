@@ -1,5 +1,6 @@
 package org.abframe.filter;
 
+import org.abframe.util.Constant;
 import org.abframe.websocket.ChatServer;
 import org.abframe.websocket.OnlineChatServer;
 import org.java_websocket.WebSocketImpl;
@@ -14,13 +15,14 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WebsocketFilter implements Filter {
+public class WebSocketFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebsocketFilter.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketFilter.class);
 
     public void init(FilterConfig fc) throws ServletException {
+
         this.startWebsocketInstantMsg();
+
         this.startWebsocketOnline();
     }
 
@@ -29,14 +31,15 @@ public class WebsocketFilter implements Filter {
      */
     public void startWebsocketInstantMsg() {
         WebSocketImpl.DEBUG = false;
-        int port = 8887;
-        ChatServer s;
+        ChatServer chartServer;
         try {
-            s = new ChatServer(port);
-            s.start();
+            chartServer = new ChatServer(Constant.WEB_SOCKET_PORT);
 
-            LOGGER.info("WebSocket server is start...,port is{}", s.getPort());
+            chartServer.start();
+
+            LOGGER.info("WebSocket server is start..., port is {}", chartServer.getPort());
         } catch (UnknownHostException e) {
+            LOGGER.error("WebSocket start is error......");
             e.printStackTrace();
         }
     }
@@ -69,15 +72,10 @@ public class WebsocketFilter implements Filter {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-
-                //PersonService personService = (PersonService)ApplicationContext.getBean("personService");
-
-
-                //System.out.println("-------设定要指定任务--------");
+                //待处理
             }
         }, time, 1000 * 60 * 60 * 24);// 这里设定将延时每天固定执行
     }
-
 
     public void destroy() {
 

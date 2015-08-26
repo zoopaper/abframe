@@ -54,6 +54,26 @@ public class Constant {
 
     public static String PICTURE_SAVE_FILE_PATH = "";//图片存放的路径
 
+    public static final int WEB_SOCKET_PORT = 8887;
+
+    /**
+     * 用户建立连接
+     */
+    public static final String WEB_SOCKET_USER_CONN = "WSUC";
+
+    /**
+     * 用户下线
+     */
+    public static final String WEB_SOCKET_USER_LEAVE = "WSUL";
+
+    /**
+     * 消息发送（私信）
+     */
+    public static final String WEB_SOCKET_USER_PRIVATE_MSG = "PRIVATE";
+
+    public static final String WEB_SOCKET_USER_PRIVATE_MSG_2 = "PRIVATE2";
+
+
     /**
      * 二维码存放路径
      */
@@ -77,7 +97,6 @@ public class Constant {
     public static final String[] APP_GETAPPUSER_PARAM_ARRAY = new String[]{"USERNAME"};
 
     public static final String[] APP_GETAPPUSER_VALUE_ARRAY = new String[]{"用户名"};
-
 
 
     public static String getPICTURE_VISIT_FILE_PATH() {
