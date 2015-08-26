@@ -35,7 +35,7 @@
 	
 	<!-- 判断用户名和密码 -->
 	<select id="getUserInfo" parameterType="User" resultMap="userResultMap">
-		select * from SYS_USER 
+		select * from t_user
 		where 1=1
 		<if test="USERNAME!=null and PASSWORD!=null">
 		and USERNAME = #{USERNAME} and PASSWORD=#{PASSWORD}
@@ -55,15 +55,15 @@
 				r.ROLE_ID,
 				r.ROLE_NAME,
 				r.RIGHTS as ROLE_RIGHTS 
-		from SYS_USER u 
-		left join SYS_ROLE r 
+		from t_user u
+		left join t_role r
 		on u.ROLE_ID=r.ROLE_ID 
 		where u.STATUS=0 
 		and u.USER_ID=#{USER_ID}
 	</select>
 
 	<update id="updateLastLogin" parameterType="User">
-		update SYS_USER set 
+		update t_user set
 		LAST_LOGIN=#{LAST_LOGIN} 
 		where USER_ID=#{USER_ID}
 	</update>

@@ -155,7 +155,7 @@
             swf: './Uploader.swf',
             chunked: false,
             chunkSize: 512 * 1024,
-            server: locat+'/pic/save',
+            server: locat+'/save',
             //runtimeOrder: 'flash',
 
             accept: {

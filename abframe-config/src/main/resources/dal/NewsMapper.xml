@@ -7,7 +7,7 @@
 	<select id="newslistPage" parameterType="page" resultType="pd">
 		select 
 				*
-		from sys_news 
+		from t_news
 		where
 			1 = 1
 		<if test="pd.title != null and pd.title != ''"><!-- 标题检索 -->
@@ -33,7 +33,7 @@
 	
 	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
-		insert into sys_news (
+		insert into t_news (
 			title,
 			content,
 			publisher,
@@ -60,7 +60,7 @@
 
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  sys_news
+		update  t_news
 			set title				= #{title},
 				content				= #{content},
 				publisher 			= #{publisher},
@@ -78,14 +78,14 @@
 		select 
 			*
 		from 
-			sys_news
+			t_news
 		where 
 			id = #{id}
 	</select>
 	
 	<!-- 删除 -->
 	<delete id="delete" parameterType="pd">
-		delete from sys_news 
+		delete from t_news
 		where 
 			id = #{id}
 	</delete>
@@ -102,7 +102,7 @@
 			sequence,
 			recommand,
 			status				
-		from sys_news 
+		from t_news
 		where
 			status = '1'
 		order by recommand, sequence desc

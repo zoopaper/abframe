@@ -7,7 +7,7 @@
 	<select id="linklistPage" parameterType="page" resultType="pd">
 		select 
 				*
-		from sys_link 
+		from t_link
 		where
 			1 = 1
 		<if test="pd.stiename!= null and pd.stiename != ''"><!-- 网站名称检索 -->
@@ -21,7 +21,7 @@
 	
 	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
-		insert into sys_link (
+		insert into t_link (
 			stiename,
 			sitecontent,
 			type,
@@ -46,7 +46,7 @@
 
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  sys_link
+		update  t_link
 			set stiename		= #{stiename},
 				sitecontent		= #{sitecontent},
 				type 			= #{type},
@@ -64,14 +64,14 @@
 		select 
 			*
 		from 
-			sys_link
+			t_link
 		where 
 			id = #{id}
 	</select>
 	
 	<!-- 删除图片 -->
 	<update id="delTp" parameterType="pd">
-		update  sys_link
+		update  t_link
 			set 
 				stieurl			= ''
 			where 
@@ -80,7 +80,7 @@
 	
 	<!-- 删除 -->
 	<delete id="delete" parameterType="pd">
-		delete from sys_link 
+		delete from t_link
 		where 
 			id = #{id}
 	</delete>

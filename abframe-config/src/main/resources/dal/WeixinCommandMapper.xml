@@ -5,7 +5,7 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
-		insert into WEIXIN_COMMAND(
+		insert into t_weixin_command(
 			KEYWORD,	
 			COMMANDCODE,	
 			CREATETIME,	
@@ -25,7 +25,7 @@
 	
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
-		delete from WEIXIN_COMMAND
+		delete from t_weixin_command
 		where 
 			COMMAND_ID = #{COMMAND_ID}
 	</delete>
@@ -33,7 +33,7 @@
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  WEIXIN_COMMAND
+		update  t_weixin_command
 			set 
 				KEYWORD = #{KEYWORD},
 				COMMANDCODE = #{COMMANDCODE},
@@ -55,7 +55,7 @@
 			BZ,	
 			COMMAND_ID
 		from 
-			WEIXIN_COMMAND
+			t_weixin_command
 		where 
 			COMMAND_ID = #{COMMAND_ID}
 	</select>
@@ -65,8 +65,8 @@
 	<select id="findByKw" parameterType="pd" resultType="pd" useCache="false">
 		select 
 			COMMANDCODE
-		from 
-			WEIXIN_COMMAND
+		from
+		t_weixin_command
 		where 
 			KEYWORD = #{KEYWORD}
 		<if test="COMMAND_ID != null and COMMAND_ID != ''">
@@ -87,8 +87,8 @@
 				a.STATUS,	
 				a.BZ,	
 				a.COMMAND_ID
-		from 
-				WEIXIN_COMMAND a
+		from
+		t_weixin_command a
 		where
 				1=1
 		<if test="pd.KEYWORD != null and pd.KEYWORD != ''"><!-- 关键词检索 -->
@@ -110,12 +110,12 @@
 				a.BZ,	
 				a.COMMAND_ID
 		from 
-				WEIXIN_COMMAND a
+				t_weixin_command a
 	</select>
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
-		delete from WEIXIN_COMMAND
+		delete from t_weixin_command
 		where 
 			COMMAND_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">

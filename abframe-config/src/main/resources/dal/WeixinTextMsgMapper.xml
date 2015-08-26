@@ -5,7 +5,7 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
-		insert into WEIXIN_TEXTMSG(
+		insert into t_weixin_textmsg(
 			KEYWORD,	
 			CONTENT,	
 			CREATETIME,	
@@ -25,7 +25,7 @@
 	
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
-		delete from WEIXIN_TEXTMSG
+		delete from t_weixin_textmsg
 		where 
 			TEXTMSG_ID = #{TEXTMSG_ID}
 	</delete>
@@ -33,7 +33,7 @@
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  WEIXIN_TEXTMSG
+		update  t_weixin_textmsg
 			set 
 				KEYWORD = #{KEYWORD},
 				CONTENT = #{CONTENT},
@@ -55,7 +55,7 @@
 			BZ,	
 			TEXTMSG_ID
 		from 
-			WEIXIN_TEXTMSG
+			t_weixin_textmsg
 		where 
 			TEXTMSG_ID = #{TEXTMSG_ID}
 	</select>
@@ -65,8 +65,8 @@
 	<select id="findByKw" parameterType="pd" resultType="pd" useCache="false">
 		select 
 			CONTENT
-		from 
-			WEIXIN_TEXTMSG
+		from
+		t_weixin_textmsg
 		where 
 			KEYWORD = #{KEYWORD}
 		<if test="TEXTMSG_ID != null and TEXTMSG_ID != ''">
@@ -87,8 +87,8 @@
 				a.STATUS,	
 				a.BZ,	
 				a.TEXTMSG_ID
-		from 
-				WEIXIN_TEXTMSG a
+		from
+		t_weixin_textmsg a
 			where
 				1=1
 		<if test="pd.KEYWORD != null and pd.KEYWORD != ''"><!-- 关键词检索 -->
@@ -110,12 +110,12 @@
 				a.BZ,	
 				a.TEXTMSG_ID
 		from 
-				WEIXIN_TEXTMSG a
+				t_weixin_textmsg a
 	</select>
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
-		delete from WEIXIN_TEXTMSG
+		delete from t_weixin_textmsg
 		where 
 			TEXTMSG_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">

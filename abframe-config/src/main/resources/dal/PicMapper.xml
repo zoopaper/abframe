@@ -5,7 +5,7 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
-		insert into TB_PICTURES(
+		insert into t_pic(
 			TITLE,	
 			NAME,	
 			PATH,	
@@ -27,7 +27,7 @@
 	
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
-		delete from TB_PICTURES
+		delete from t_pic
 		where 
 			PICTURES_ID = #{PICTURES_ID}
 	</delete>
@@ -35,7 +35,7 @@
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  TB_PICTURES
+		update  t_pic
 			set 
 				TITLE = #{TITLE},
 				PATH = #{PATH},
@@ -61,7 +61,7 @@
 			BZ,	
 			PICTURES_ID
 		from 
-			TB_PICTURES
+			t_pic
 		where 
 			PICTURES_ID = #{PICTURES_ID}
 	</select>
@@ -77,8 +77,8 @@
 				a.MASTER_ID,	
 				a.BZ,	
 				a.PICTURES_ID
-		from 
-				TB_PICTURES a
+		from
+		t_pic a
 		where 1 = 1
 		<if test="pd.KEYW != null and pd.KEYW != ''"><!-- 关键词检索 -->
 			and
@@ -105,12 +105,12 @@
 				a.BZ,	
 				a.PICTURES_ID
 		from 
-				TB_PICTURES a
+				t_pic a
 	</select>
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
-		delete from TB_PICTURES
+		delete from t_pic
 		where 
 			PICTURES_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -120,7 +120,7 @@
 	
 	<!-- 批量获取 -->
 	<select id="getAllById" parameterType="String" resultType="pd">
-		select PATH from TB_PICTURES
+		select PATH from t_pic
 		where 
 			PICTURES_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -130,7 +130,7 @@
 	
 	<!-- 删除图片 -->
 	<update id="delTp" parameterType="pd">
-		update  TB_PICTURES
+		update  t_pic
 			set 
 				PATH			= ''
 			where 

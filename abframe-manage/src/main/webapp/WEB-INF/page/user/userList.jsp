@@ -9,7 +9,6 @@
 <html lang="en">
 <head>
     <base href="<%=basePath%>">
-    <!-- jsp文件头和头部 -->
     <%@ include file="../common/top.jsp" %>
 </head>
 <body>
@@ -253,7 +252,7 @@
         var diag = new top.Dialog();
         diag.Drag = true;
         diag.Title = "发送电子邮件";
-        diag.URL = '<%=basePath%>head/toSendEmail?EMAIL=' + EMAIL;
+        diag.URL = '<%=basePath%>config/toSendEmail?EMAIL=' + EMAIL;
         diag.Width = 660;
         diag.Height = 470;
         diag.CancelEvent = function () {
@@ -268,7 +267,7 @@
         var diag = new top.Dialog();
         diag.Drag = true;
         diag.Title = "发送短信";
-        diag.URL = '<%=basePath%>head/toSendSms?PHONE=' + phone + '&msg=appuser';
+        diag.URL = '<%=basePath%>config/toSendSms?PHONE=' + phone + '&msg=appuser';
         diag.Width = 600;
         diag.Height = 265;
         diag.CancelEvent = function () {

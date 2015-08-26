@@ -26,16 +26,16 @@
 </resultMap>
 
 	<select id="findMaxId" parameterType="pd" resultType="pd">
-		select MAX(MENU_ID) MID FROM SYS_MENU
+		select MAX(MENU_ID) MID FROM t_menu
 	</select>
 	
 	<select id="listAllParentMenu" resultMap="menuResultMap">
-		select * from SYS_MENU 
+		select * from t_menu
 		where PARENT_ID = '0' order by MENU_ORDER 
 	</select>
 	
 	<select id="listSubMenuByParentId" parameterType="String" resultMap="menuResultMap">
-		select  * from SYS_MENU
+		select  * from t_menu
 		where PARENT_ID = #{parentId} order by MENU_ORDER 
 	</select>
 		
@@ -46,13 +46,13 @@
 		 		PARENT_ID,
 		 		MENU_ORDER,
 		 		MENU_TYPE
-		 from SYS_MENU 
+		 from t_menu
 		 where MENU_ID=#{MENU_ID}
 	</select>
 	
 	
 	<insert id="insertMenu" parameterType="Menu">
-		insert into SYS_MENU (
+		insert into t_menu (
 			MENU_ID,
 			MENU_NAME,
 			MENU_URL,
@@ -70,7 +70,7 @@
 	</insert>
 	
 	<update id="updateMenu" parameterType="Menu">
-		update SYS_MENU set 
+		update t_menu set
 			MENU_NAME =#{MENU_NAME},
 			MENU_URL  =#{MENU_URL} ,
 			PARENT_ID =#{PARENT_ID},
@@ -81,19 +81,19 @@
 	</update>
 	
 	<update id="editIcon" parameterType="Menu">
-		update SYS_MENU set 
+		update t_menu set
 			MENU_ICON=#{MENU_ICON}
 		where MENU_ID=#{MENU_ID}
 	</update>
 	
 	<update id="editType" parameterType="Menu">
-		update SYS_MENU set 
+		update t_menu set
 			MENU_TYPE=#{MENU_TYPE}
 		where PARENT_ID=#{MENU_ID}
 	</update>
 	
 	<delete id="deleteMenuById" parameterType="String">
-		delete from SYS_MENU 
+		delete from t_menu
 		where MENU_ID=#{MENU_ID} 
 		or PARENT_ID=#{MENU_ID}
 	</delete>

@@ -67,7 +67,7 @@ $(function () {
                     $("#adminzidian").hide();	//隐藏数据字典
                     $("#systemset").hide();	//隐藏系统设置
                 }
-                    $("#productCode").hide();	//隐藏代码生成
+                $("#productCode").hide();	//隐藏代码生成
                 online();//连接在线管理
             });
         }

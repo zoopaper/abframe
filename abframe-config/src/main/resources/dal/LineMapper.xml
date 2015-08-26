@@ -5,7 +5,7 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
-		insert into TB_LINE(
+		insert into t_line(
 			TITLE,	
 			LINE_URL,	
 			LINE_ROAD,	
@@ -27,7 +27,7 @@
 	
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
-		delete from TB_LINE
+		delete from t_line
 		where 
 			LINE_ID = #{LINE_ID}
 	</delete>
@@ -35,7 +35,7 @@
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  TB_LINE
+		update  t_line
 			set 
 				TITLE = #{TITLE},
 				LINE_URL = #{LINE_URL},
@@ -59,7 +59,7 @@
 			PARENT_ID,	
 			LINE_ID
 		from 
-			TB_LINE
+			t_line
 		where 
 			LINE_ID = #{LINE_ID}
 	</select>
@@ -76,8 +76,8 @@
 				a.PARENT_ID,	
 				a.LINE_ID,
 				get_count(a.LINE_ID) LINE_COUNT
-		from 
-				TB_LINE a
+		from
+		t_line a
 		where
 			1 = 1		
 		<if test="pd.PARENT_ID != null and pd.PARENT_ID != ''">
@@ -100,12 +100,12 @@
 				a.PARENT_ID,	
 				a.LINE_ID
 		from 
-				TB_LINE a
+				t_line a
 	</select>
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
-		delete from TB_LINE
+		delete from t_line
 		where 
 			LINE_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
