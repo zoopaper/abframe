@@ -1,27 +1,28 @@
-# æ¦‚è¿°
+# ¸ÅÊö
 
-ABFrameæ˜¯Application base framworkçš„ç¼©å†™ï¼Œ
-
-
-# æ¨¡å—è¯´æ˜
+ABFrameÊÇApplication base framworkµÄËõĞ´£¬
 
 
-1. abframe-config  ç»Ÿä¸€çš„é…ç½®æ–‡ä»¶
-2. abframe-entity  å®ä½“æ¨¡å‹
-3. abframe-util    å·¥å…·ç±»
-4. abframe-manage  ç®¡ç†åå°
+# Ä£¿éËµÃ÷
 
 
-# å®‰è£…
+1. abframe-config  Í³Ò»µÄÅäÖÃÎÄ¼ş
+2. abframe-entity  ÊµÌåÄ£ĞÍ
+3. abframe-util    ¹¤¾ßÀà
+4. abframe-manage  ¹ÜÀíºóÌ¨
 
-å¯¼å…¥drill.sqlï¼Œè¿è¡Œabrame-manage
 
-ç™»å½•ï¼š admin/1
+# °²×°
 
-# åç»­ç‰ˆæœ¬æ›´æ–°
+µ¼Èëdrill.sql£¬ÔËĞĞabrame-manage
 
-1. æ‹†åˆ†é™æ€æ–‡ä»¶ã€‚
-2. ä¼˜åŒ–jsï¼Œå»é™¤é‡å¤ã€‚ä¼˜åŒ–JSPé¡µé¢ï¼Œæå–åŠŸèƒ½å¼•ç”¨åˆ°å…¬å…±é¡µé¢ã€‚
-3. nginxå¯¹é™æ€èµ„æºçš„æ”¯æŒ
-4. å¢åŠ redis
-5. Appæ¥å£
+µÇÂ¼£º admin/1
+
+# ºóĞø°æ±¾¸üĞÂ
+
+1. ²ğ·Ö¾²Ì¬ÎÄ¼ş¡£
+2. ÓÅ»¯js£¬È¥³ıÖØ¸´¡£ÓÅ»¯JSPÒ³Ãæ£¬ÌáÈ¡¹¦ÄÜÒıÓÃµ½¹«¹²Ò³Ãæ¡£
+3. nginx¶Ô¾²Ì¬×ÊÔ´µÄÖ§³Ö
+4. Ôö¼Óredis
+5. App½Ó¿Ú
+6. ........
