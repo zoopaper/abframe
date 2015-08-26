@@ -273,7 +273,7 @@ public class RoleController extends BaseController {
             logger.error(e.toString(), e);
         }
 
-        return "authorization";
+        return "auth/auth";
     }
 
     /**

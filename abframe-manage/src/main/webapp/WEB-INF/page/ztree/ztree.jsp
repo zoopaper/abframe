@@ -6,7 +6,7 @@
 <head>
     <%@ include file="../common/top.jsp" %>
     <link rel="stylesheet" href="plugins/zTree/3.5/zTreeStyle.css" type="text/css">
-    <script type="text/javascript" src="static/js/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="plugins/zTree/3.5/jquery.ztree.core-3.5.js"></script>
 
 <body>
