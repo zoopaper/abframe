@@ -1,6 +1,6 @@
 # maven ignore
 target/
-*.jar
+
 *.war
 *.zip
 *.tar
