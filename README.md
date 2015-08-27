@@ -18,10 +18,11 @@ ABFrame是Application base framwork的缩写，
 
 登录： admin/1
 
-登陆登录地址：http://locahost:8086  
+登录地址：http://locahost:8086  
+
 登录界面：
 
-![]("https://github.com/zoopaper/assets/blob/master/img/login.jpg")
+![login](https://github.com/zoopaper/assets/blob/master/img/login.jpg)
 
 # 后续版本更新
 
