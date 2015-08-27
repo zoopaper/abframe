@@ -26,7 +26,7 @@ ABFrame是Application base framwork的缩写，
 
 ![login](https://github.com/zoopaper/assets/blob/master/img/main.jpg)
 
-# 后续版本更新
+# 后续更新
 
 1. 拆分静态文件。
 2. 优化js，去除重复。优化JSP页面，提取功能引用到公共页面。
