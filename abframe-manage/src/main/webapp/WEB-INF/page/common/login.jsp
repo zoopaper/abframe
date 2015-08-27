@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="static/login/matrix-login.css"/>
     <link href="static/login/font-awesome.css" rel="stylesheet"/>
     <script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery.backstretch.min.js"></script>
 </head>
 <body>
-
 <div style="width:100%;text-align: center;margin: 0 auto;position: absolute;">
     <div id="loginbox">
         <form action="" method="post" name="loginForm" id="loginForm">
@@ -83,8 +83,18 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
 
+
+<script type="text/javascript">
+    $.backstretch([
+                "static/login/images/1.jpg",
+                "static/login/images/2.jpg",
+                "static/login/images/3.jpg"
+            ], {
+                fade: 1000,
+                duration: 6000
+            }
+    );
     //服务器校验
     function severCheck() {
         if (check()) {
@@ -243,7 +253,10 @@
             $("#code").focus();
         }
     });
+
+
 </script>
+
 <script>
     //TOCMAT重启之后 点击左侧列表跳转登录首页
     if (window != top) {
