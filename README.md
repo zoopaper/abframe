@@ -1,28 +1,33 @@
-# ¸ÅÊö
+# æ¦‚è¿°
 
-ABFrameÊÇApplication base framworkµÄËõĞ´£¬
-
-
-# Ä£¿éËµÃ÷
+ABFrameæ˜¯Application base framworkçš„ç¼©å†™ï¼Œ
 
 
-1. abframe-config  Í³Ò»µÄÅäÖÃÎÄ¼ş
-2. abframe-entity  ÊµÌåÄ£ĞÍ
-3. abframe-util    ¹¤¾ßÀà
-4. abframe-manage  ¹ÜÀíºóÌ¨
+# æ¨¡å—è¯´æ˜
 
 
-# °²×°
+1. abframe-config  ç»Ÿä¸€çš„é…ç½®æ–‡ä»¶
+2. abframe-entity  å®ä½“æ¨¡å‹
+3. abframe-util    å·¥å…·ç±»
+4. abframe-manage  ç®¡ç†åå°
 
-µ¼Èëdrill.sql£¬ÔËĞĞabrame-manage
 
-µÇÂ¼£º admin/1
+# å®‰è£…
 
-# ºóĞø°æ±¾¸üĞÂ
+å¯¼å…¥drill.sqlï¼Œè¿è¡Œabrame-manage
 
-1. ²ğ·Ö¾²Ì¬ÎÄ¼ş¡£
-2. ÓÅ»¯js£¬È¥³ıÖØ¸´¡£ÓÅ»¯JSPÒ³Ãæ£¬ÌáÈ¡¹¦ÄÜÒıÓÃµ½¹«¹²Ò³Ãæ¡£
-3. nginx¶Ô¾²Ì¬×ÊÔ´µÄÖ§³Ö
-4. Ôö¼Óredis
-5. App½Ó¿Ú
+ç™»å½•ï¼š admin/1
+
+ç™»é™†ç™»å½•åœ°å€ï¼šhttp://locahost:8086  
+ç™»å½•ç•Œé¢ï¼š
+
+![]("https://github.com/zoopaper/assets/blob/master/img/login.jpg")
+
+# åç»­ç‰ˆæœ¬æ›´æ–°
+
+1. æ‹†åˆ†é™æ€æ–‡ä»¶ã€‚
+2. ä¼˜åŒ–jsï¼Œå»é™¤é‡å¤ã€‚ä¼˜åŒ–JSPé¡µé¢ï¼Œæå–åŠŸèƒ½å¼•ç”¨åˆ°å…¬å…±é¡µé¢ã€‚
+3. nginxå¯¹é™æ€èµ„æºçš„æ”¯æŒ
+4. å¢åŠ redis
+5. Appæ¥å£
 6. ........
