@@ -32,5 +32,5 @@ ABFrame是Application base framwork的缩写，
 2. 优化js，去除重复。优化JSP页面，提取功能引用到公共页面。
 3. nginx对静态资源的支持
 4. 增加redis
-5. App接口
+5. 增加APP应用的统一接口模块
 6. ........
