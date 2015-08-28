@@ -17,7 +17,6 @@
     <context:annotation-config/>
 
 
-
     <context:component-scan base-package="org.abframe">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
@@ -27,47 +26,55 @@
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:/jdbc.properties</value>
-            </list>
-        </property>
-    </bean>
-    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
-        <!--<property name="locations" value="classpath:/jdbc.properties"/>-->
-    <!--</bean>-->
 
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:/jdbc.properties"/>
+    </bean>
+
+    <!--数据源-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
-        <!-- 数据库基本信息配置 -->
+        <!--基础属性-->
         <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${username}"/>
-        <property name="password" value="${password}"/>
-        <property name="driverClassName" value="${driverClassName}"/>
-        <property name="filters" value="${filters}"/>
-        <!-- 最大并发连接数 -->
-        <property name="maxActive" value="${maxActive}"/>
-        <!-- 初始化连接数量 -->
-        <property name="initialSize" value="${initialSize}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="${maxWait}"/>
-        <!-- 最小空闲连接数 -->
-        <property name="minIdle" value="${minIdle}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+
+
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}"/>
-        <property name="validationQuery" value="${validationQuery}"/>
-        <property name="testWhileIdle" value="${testWhileIdle}"/>
-        <property name="testOnBorrow" value="${testOnBorrow}"/>
-        <property name="testOnReturn" value="${testOnReturn}"/>
-        <property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}"/>
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="testOnReturn" value="${jdbc.testOnReturn}"/>
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小,如果用Oracle设置为true,MYSQL设置为false -->
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+
         <!-- 打开removeAbandoned功能 -->
-        <property name="removeAbandoned" value="${removeAbandoned}"/>
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+
         <!-- 1800秒，也就是30分钟 -->
-        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+
         <!-- 关闭abanded连接时输出错误日志 -->
-        <property name="logAbandoned" value="${logAbandoned}"/>
+        <property name="logAbandoned" value="${jdbc.logAbandoned}"/>
+
+        <!--配置监控统计拦截的filters-->
+        <property name="filters" value="stat"/>
     </bean>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
