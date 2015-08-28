@@ -34,3 +34,8 @@ ABFrame是Application base framwork的缩写，
 4. 增加redis
 5. 增加APP应用的统一接口模块
 6. ........
+
+
+# 交流QQ群
+
+83624384
