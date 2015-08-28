@@ -3,9 +3,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="AdvertMapper">
 
-    <!-- 列表 -->
-    <select id="andorralistPage" parameterType="page" resultType="pd">
-        select * from t_advert
+    <sql id="allAttribute">
+		<![CDATA[
+
+            id,
+			title,
+			content,
+			type,
+			adurl,
+			publisher,
+			addtime,
+			uptime,
+			starttime,
+			endtime,
+			status,
+			tourl
+        ]]>
+	</sql>
+
+    <select id="listPage" parameterType="page" resultType="pd">
+        select
+        <include refid="allAttribute"/>
+        from t_advert
         where
         1 = 1
         <if test="pd.title != null and pd.title != ''"><!-- 标题检索 -->
@@ -25,7 +44,6 @@
         </if>
     </select>
 
-    <!-- 新增 -->
     <insert id="save" parameterType="pd">
 		insert into t_advert (
 			title,
@@ -54,7 +72,7 @@
 		)
 	</insert>
 
-    <!-- 修改 -->
+
     <update id="edit" parameterType="pd">
 		update  t_advert
 			set title			= #{title},
@@ -71,26 +89,22 @@
 				id = #{id}
 	</update>
 
-    <!-- 删除图片 -->
-    <update id="delTp" parameterType="pd">
-		update  t_advert set adurl= '' where 	id = #{id}
+
+    <update id="delPic" parameterType="pd">
+		update  t_advert set adurl= '' where id = #{id}
 	</update>
 
-    <!-- 通过id获取数据 -->
     <select id="findById" parameterType="pd" resultType="pd">
 		select 
-			*
+			<include refid="allAttribute"/>
 		from 
 			t_advert
 		where 
 			id = #{id}
 	</select>
 
-    <!-- 删除 -->
     <delete id="delete" parameterType="pd">
-		delete from t_advert
-		where 
-			id = #{id}
+		delete from t_advert where id = #{id}
 	</delete>
 
 </mapper>

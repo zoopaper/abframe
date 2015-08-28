@@ -32,7 +32,7 @@
     </bean>
 
     <!--数据源-->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <!--基础属性-->
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>

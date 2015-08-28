@@ -1,15 +1,15 @@
 package org.abframe.controller;
 
 import org.abframe.common.PermissionHandler;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.entity.Role;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.RoleService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -171,7 +171,7 @@ public class MemberUserController extends BaseController {
         pd = this.getPageData();
         try {
             List<Role> roleList;
-            roleList = roleService.listAllappERRoles();            //列出所有二级角色
+            roleList = roleService.listAllappERRoles();
             mv.setViewName("memberUser/memberUserEdit");
             mv.addObject("msg", "saveU");
             mv.addObject("pd", pd);

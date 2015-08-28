@@ -16,7 +16,7 @@ public class AdvertService {
 
 
     public List<PageData> list(Page page) throws Exception {
-        return (List<PageData>) dao.findForList("AdvertMapper.andorralistPage", page);
+        return (List<PageData>) dao.findForList("AdvertMapper.listPage", page);
     }
 
 
@@ -43,6 +43,6 @@ public class AdvertService {
     * 删除图片
     */
     public void delTp(PageData pd) throws Exception {
-        dao.update("AdvertMapper.delTp", pd);
+        dao.update("AdvertMapper.delPic", pd);
     }
 }
