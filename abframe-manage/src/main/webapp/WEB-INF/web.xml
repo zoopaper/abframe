@@ -75,7 +75,7 @@
 
     <filter>
         <filter-name>startFilter</filter-name>
-        <filter-class>org.abframe.filter.WebSocketFilter2</filter-class>
+        <filter-class>org.abframe.filter.WebSocketFilter</filter-class>
     </filter>
 
     <!-- shiro -->

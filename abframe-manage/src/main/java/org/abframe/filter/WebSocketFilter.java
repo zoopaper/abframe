@@ -15,9 +15,9 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WebSocketFilter2 implements Filter {
+public class WebSocketFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketFilter2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketFilter.class);
 
     public void init(FilterConfig fc) throws ServletException {
 
