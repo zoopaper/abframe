@@ -164,8 +164,8 @@ public class MemberUserController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/goAddU")
-    public ModelAndView goAddU() {
+    @RequestMapping(value = "/toAddU")
+    public ModelAndView toAddU() {
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
