@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-    <comment>邮件服务相关配置</comment>
+    <comment>邮件配置</comment>
 
     <!-- 邮箱Host -->
     <entry key="mail.host">smtp.163.com</entry>
