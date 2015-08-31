@@ -7,6 +7,7 @@ import net.common.utils.config.MapConfig;
 import javax.annotation.PostConstruct;
 
 /**
+ * 配置文件
  * <p/>
  * User : krisibm@163.com
  * Date: 2015/8/31
