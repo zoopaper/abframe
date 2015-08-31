@@ -1,7 +1,4 @@
 package org.abframe.util.mail;
-/**
- * 发送邮件需要使用的基本信息
- */
 
 import java.util.Properties;
 

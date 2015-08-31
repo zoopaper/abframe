@@ -1,19 +1,20 @@
 package org.abframe.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import org.abframe.config.ConfigBean;
 import org.abframe.controller.base.BaseController;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.UserService;
 import org.abframe.util.*;
 import org.abframe.util.mail.SimpleMailSender;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +25,14 @@ import java.util.Map;
 @RequestMapping(value = "/config")
 public class ConfigController extends BaseController {
 
-    @Resource(name = "userService")
+    @Autowired
     private UserService userService;
 
-    @Resource(name = "memberUserService")
+    @Autowired
     private MemberUserService appuserService;
+
+    @Autowired
+    ConfigBean configBean;
 
 
     @RequestMapping(value = "/getUname")
@@ -210,6 +214,8 @@ public class ConfigController extends BaseController {
     @RequestMapping(value = "/sendEmail")
     @ResponseBody
     public Object sendEmail() {
+        String c = configBean.getString("mail.host", configBean.getCfgMap(), "");
+
         PageData pd = new PageData();
         pd = this.getPageData();
         Map<String, Object> map = new HashMap<String, Object>();

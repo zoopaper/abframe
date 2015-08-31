@@ -98,15 +98,18 @@
 
                                         <tr>
                                             <td class='center' style="width: 30px;">
-                                                <c:if test="${user.USERNAME != 'admin'}"><label><input type='checkbox'
-                                                                                                       name='ids'
-                                                                                                       value="${user.USER_ID }"
-                                                                                                       id="${user.EMAIL }"
-                                                                                                       alt="${user.PHONE }"/><span
-                                                        class="lbl"></span></label></c:if>
-                                                <c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox'
-                                                                                                       disabled="disabled"/><span
-                                                        class="lbl"></span></label></c:if>
+                                                <c:if test="${user.USERNAME != 'admin'}">
+                                                    <label>
+                                                        <input type='checkbox' name='ids' value="${user.USER_ID }"
+                                                               id="${user.EMAIL }" alt="${user.PHONE }"/>
+                                                        <span class="lbl"></span>
+                                                    </label>
+                                                </c:if>
+                                                <c:if test="${user.USERNAME == 'admin'}">
+                                                    <label>
+                                                        <input type='checkbox' disabled="disabled"/>
+                                                        <span class="lbl"></span></label>
+                                                </c:if>
                                             </td>
                                             <td class='center' style="width: 30px;">${vs.index+1}</td>
                                             <td>${user.NUMBER }</td>

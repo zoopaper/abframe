@@ -200,7 +200,7 @@
 
 
 <!-- 引入 -->
-<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.7.2.js'>\x3C/script>");</script>
+<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
 <script src="static/js/bootstrap.min.js"></script>
 <script src="static/js/ace-elements.min.js"></script>
 <script src="static/js/ace.min.js"></script>

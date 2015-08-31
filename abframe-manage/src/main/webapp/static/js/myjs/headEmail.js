@@ -58,10 +58,10 @@ function sendEm() {
     var isAll = $("#isAll").val();
 
     var fmsg = "${pd.msg}";
-
+    alert(11111111111);
     $.ajax({
         type: "POST",
-        url: locat + '/config/sendEmail?tm=' + new Date().getTime(),
+        url:'/config/sendEmail?tm=' + new Date().getTime(),
         data: {EMAIL: EMAIL, TYPE: TYPE, TITLE: TITLE, CONTENT: CONTENT, isAll: isAll, fmsg: fmsg},
         dataType: 'json',
         //beforeSend: validateData,

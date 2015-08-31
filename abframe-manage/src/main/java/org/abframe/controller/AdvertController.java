@@ -11,6 +11,7 @@ import org.abframe.util.Constant;
 import org.abframe.util.DateUtil;
 import org.abframe.util.PageData;
 import org.abframe.util.UuidUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,7 +36,7 @@ import java.util.Map;
 @RequestMapping(value = "/adv")
 public class AdvertController extends BaseController {
 
-    @Resource(name = "advertService")
+    @Autowired
     private AdvertService advertService;
 
 

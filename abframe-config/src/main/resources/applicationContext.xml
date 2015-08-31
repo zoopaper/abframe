@@ -15,7 +15,7 @@
 	">
 
     <context:annotation-config/>
-
+    <import resource="spring-config.xml"/>
 
     <context:component-scan base-package="org.abframe">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
