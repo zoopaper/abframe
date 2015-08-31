@@ -197,121 +197,7 @@ public class ConfigController extends BaseController {
         return AppUtil.returnObject(pd, map);
     }
 
-    @RequestMapping(value = "/toSendEmail")
-    public ModelAndView toSendEmail() throws Exception {
-        ModelAndView mv = this.getModelAndView();
-        PageData pd = new PageData();
-        pd = this.getPageData();
-        mv.setViewName("config/sendEmail");
-        mv.addObject("pd", pd);
-        return mv;
-    }
 
-    @RequestMapping(value = "/sendEmail")
-    @ResponseBody
-    public Object sendEmail() {
-        String mailHost = configBean.getString(MailConst.MAIL_HOST, configBean.getCfgMap(), "");
-        String mailPort = configBean.getString(MailConst.MAIL_PORT, configBean.getCfgMap(), "");
-        String mailUserName = configBean.getString(MailConst.MAIL_USERNAME, configBean.getCfgMap(), "");
-        String mailPassword = configBean.getString(MailConst.MAIL_PASSWORD, configBean.getCfgMap(), "");
-        String mailName = configBean.getString(MailConst.MAIL_NAME, configBean.getCfgMap(), "");
-        boolean mailAuth = configBean.getBoolean(MailConst.MAIL_SMTP_AUTH, configBean.getCfgMap(), true);
-
-
-        MailInfo info = new MailInfo();
-
-        info.setMailServerHost(mailHost);
-        info.setIsAuth(mailAuth);
-        info.setUsername(mailUserName);
-        info.setPassword(mailPassword);
-        info.setMailName(mailName);
-        info.setMailPort(Integer.valueOf(mailPort));
-        info.setMailFrom(mailUserName);
-
-
-        PageData pd = new PageData();
-        pd = this.getPageData();
-        Map<String, Object> map = new HashMap<String, Object>();
-        String msg = "ok";        //发送状态
-        int count = 0;            //统计发送成功条数
-        int zcount = 0;            //理论条数
-
-        List<PageData> pdList = new ArrayList<PageData>();
-
-        String mailTo = pd.getString("EMAIL");
-        String mailTile = pd.getString("TITLE");
-        String mailContent = pd.getString("CONTENT");
-        String mailType = pd.getString("TYPE");
-        String isAll = pd.getString("isAll");
-
-        String fmsg = pd.getString("fmsg");
-
-        info.setBody(mailContent);
-        info.setMailSubject(mailTile);
-
-        if ("yes".endsWith(isAll)) {
-            try {
-                List<PageData> userList = new ArrayList<PageData>();
-                userList = "appuser".equals(fmsg) ? appuserService.listAllUser(pd) : userService.listAllUser(pd);
-
-                zcount = userList.size();
-                try {
-                    for (int i = 0; i < userList.size(); i++) {
-                        if (Tools.checkEmail(userList.get(i).getString("EMAIL"))) {
-                            info.setMailTo(userList.get(i).getString("EMAIL"));
-                            if (mailType.equals("1")) {
-                                MailUtil.sendTextMail(info);
-                            } else {
-                                MailUtil.sendHtmlEmail(info);
-                            }
-
-                            count++;
-                        } else {
-                            continue;
-                        }
-                    }
-                    msg = "ok";
-                } catch (Exception e) {
-                    msg = "error";
-                    e.printStackTrace();
-                }
-
-            } catch (Exception e) {
-                msg = "error";
-                e.printStackTrace();
-            }
-        } else {
-            mailTo = mailTo.replaceAll("；", ";");
-            mailTo = mailTo.replaceAll(" ", "");
-            String[] mailToArr = mailTo.split(";");
-            zcount = mailToArr.length;
-            try {
-                for (int i = 0; i < mailToArr.length; i++) {
-                    if (Tools.checkEmail(mailToArr[i])) {
-                        info.setMailTo(mailToArr[i]);
-                        if (mailType.equals("1")) {
-                            MailUtil.sendTextMail(info);
-                        } else {
-                            MailUtil.sendHtmlEmail(info);
-                        }
-                        count++;
-                    } else {
-                        continue;
-                    }
-                }
-                msg = "ok";
-            } catch (Exception e) {
-                msg = "error";
-                e.printStackTrace();
-            }
-        }
-        pd.put("msg", msg);
-        pd.put("count", count);                        //成功数
-        pd.put("ecount", zcount - count);                //失败数
-        pdList.add(pd);
-        map.put("list", pdList);
-        return AppUtil.returnObject(pd, map);
-    }
 
     /**
      * 去系统设置页面
@@ -321,24 +207,12 @@ public class ConfigController extends BaseController {
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        pd.put("YSYNAME", Tools.readTxtFile(Constant.SYSNAME));    //读取系统名称
-        pd.put("COUNTPAGE", Tools.readTxtFile(Constant.PAGE));        //读取每页条数
-        String strEMAIL = Tools.readTxtFile(Constant.EMAIL);        //读取邮件配置
         String strSMS1 = Tools.readTxtFile(Constant.SMS1);            //读取短信1配置
         String strSMS2 = Tools.readTxtFile(Constant.SMS2);            //读取短信2配置
         String strFWATERM = Tools.readTxtFile(Constant.FWATERM);    //读取文字水印配置
         String strIWATERM = Tools.readTxtFile(Constant.IWATERM);    //读取图片水印配置
         pd.put("Token", Tools.readTxtFile(Constant.WEIXIN));        //读取微信配置
 
-        if (null != strEMAIL && !"".equals(strEMAIL)) {
-            String strEM[] = strEMAIL.split(",fh,");
-            if (strEM.length == 4) {
-                pd.put("SMTP", strEM[0]);
-                pd.put("PORT", strEM[1]);
-                pd.put("EMAIL", strEM[2]);
-                pd.put("PAW", strEM[3]);
-            }
-        }
 
         if (null != strSMS1 && !"".equals(strSMS1)) {
             String strS1[] = strSMS1.split(",fh,");

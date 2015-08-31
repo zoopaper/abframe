@@ -1,15 +1,15 @@
-var locat = (window.location + '').split('/');
-$(function () {
-    if ('head' == locat[3]) {
-        locat = locat[0] + '//' + locat[2];
-    } else {
-        locat = locat[0] + '//' + locat[2] + '/' + locat[3];
-    }
-    ;
-});
+//var locat = (window.location + '').split('/');
+//$(function () {
+//    if ('head' == locat[3]) {
+//        locat = locat[0] + '//' + locat[2];
+//    } else {
+//        locat = locat[0] + '//' + locat[2] + '/' + locat[3];
+//    }
+//    ;
+//});
 
 $(top.hangge());
-//发送
+
 function sendEm() {
 
     if ($("#TYPE").val() == "1") {
@@ -58,10 +58,9 @@ function sendEm() {
     var isAll = $("#isAll").val();
 
     var fmsg = "${pd.msg}";
-    alert(11111111111);
     $.ajax({
         type: "POST",
-        url:'/config/sendEmail?tm=' + new Date().getTime(),
+        url:'/mail/sendEmail?tm=' + new Date().getTime(),
         data: {EMAIL: EMAIL, TYPE: TYPE, TITLE: TITLE, CONTENT: CONTENT, isAll: isAll, fmsg: fmsg},
         dataType: 'json',
         //beforeSend: validateData,
@@ -99,7 +98,7 @@ function close() {
     top.Dialog.close();
 }
 function isAll() {
-    if ($("#allusers").attr("checked") == 'checked') {
+    if ($("#allUser").attr("checked") == 'checked') {
         $("#isAll").val('yes');
         $("#EMAIL").attr("disabled", true);
     } else {
@@ -109,15 +108,15 @@ function isAll() {
 }
 
 //编辑邮箱(此方式弃用)
-function editEmail() {
-    var EMAIL = $("#EMAIL").val();
-    var result = showModalDialog(locat + "/config/editEmail?EMAIL=" + EMAIL, "", "dialogWidth=600px;dialogHeight=380px;");
-    if (result == null || "" == result) {
-        $("#EMAIL").val("");
-    } else {
-        $("#EMAIL").val(result);
-    }
-}
+//function editEmail() {
+//    var EMAIL = $("#EMAIL").val();
+//    var result = showModalDialog(locat + "/config/editEmail?EMAIL=" + EMAIL, "", "dialogWidth=600px;dialogHeight=380px;");
+//    if (result == null || "" == result) {
+//        $("#EMAIL").val("");
+//    } else {
+//        $("#EMAIL").val(result);
+//    }
+//}
 
 //打开编辑邮箱
 function dialog_open() {

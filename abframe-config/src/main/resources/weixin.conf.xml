@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <comment>微信配置</comment>
+
+    <!-- 服务器地址 -->
+    <entry key="mail.host">127.0.0.1:8086/weixin/index</entry>
+    <!-- Token -->
+    <entry key="mail.port"></entry>
+</properties>

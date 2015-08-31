@@ -31,8 +31,6 @@
     </script>
     <!--引入属于此页面的js -->
     <script type="text/javascript" src="static/js/myjs/sys.js"></script>
-
-    <!--提示框-->
     <script type="text/javascript" src="static/js/jquery.tips.js"></script>
 
 
@@ -50,44 +48,6 @@
             <div class="tab-content">
                 <div id="home" class="tab-pane in active">
                     <form action="config/saveSys" name="Form" id="Form" method="post">
-                        <table id="table_report" class="table table-striped table-bordered table-hover">
-                            <tr>
-                                <td style="width:70px;text-align: right;padding-top: 13px;">系统名称:</td>
-                                <td><input type="text" name="YSYNAME" id="YSYNAME" value="${pd.YSYNAME }"
-                                           placeholder="这里输入系统名称" style="width:90%" title="系统名称"/></td>
-
-                                <td style="width:70px;text-align: right;padding-top: 13px;">每页条数:</td>
-                                <td><input type="number" name="COUNTPAGE" id="COUNTPAGE" value="${pd.COUNTPAGE }"
-                                           placeholder="这里输入每页条数" style="width:90%" title="每页条数"/></td>
-                            </tr>
-                        </table>
-
-                        <table id="table_report" class="table table-striped table-bordered table-hover">
-                            <tr>
-                                <td style="text-align: center;" colspan="100">
-                                    邮件服务器配置
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width:50px;text-align: right;padding-top: 13px;">SMTP:</td>
-                                <td><input type="text" name="SMTP" id="SMTP" value="${pd.SMTP }"
-                                           placeholder="例如:smtp.qq.com" style="width:90%" title="SMTP"/></td>
-
-                                <td style="width:50px;text-align: right;padding-top: 13px;">端口:</td>
-                                <td><input type="number" name="PORT" id="PORT" value="${pd.PORT }" placeholder="一般为：25"
-                                           style="width:90%" title="端口"/></td>
-                            </tr>
-                            <tr>
-                                <td style="width:50px;text-align: right;padding-top: 13px;">邮箱:</td>
-                                <td><input type="email" name="EMAIL" id="EMAIL" value="${pd.EMAIL }"
-                                           placeholder="请输入邮件服务器邮箱" style="width:90%" title="邮箱"/></td>
-
-                                <td style="width:50px;text-align: right;padding-top: 13px;">密码:</td>
-                                <td><input type="password" name="PAW" id="PAW" value="${pd.PAW }" placeholder="请输入邮箱密码"
-                                           style="width:90%" title="密码"/></td>
-                            </tr>
-                        </table>
-
                         <table id="table_report" class="table table-striped table-bordered table-hover">
                             <tr>
                                 <td style="text-align: center;" colspan="100">

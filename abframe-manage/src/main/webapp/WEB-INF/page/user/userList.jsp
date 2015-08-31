@@ -255,7 +255,7 @@
         var diag = new top.Dialog();
         diag.Drag = true;
         diag.Title = "发送电子邮件";
-        diag.URL = '<%=basePath%>config/toSendEmail?EMAIL=' + EMAIL;
+        diag.URL = '/mail/toSendEmail?EMAIL=' + EMAIL;
         diag.Width = 660;
         diag.Height = 470;
         diag.CancelEvent = function () {

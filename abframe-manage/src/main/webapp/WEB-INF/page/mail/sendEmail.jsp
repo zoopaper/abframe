@@ -1,27 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-%>
+<%--<%--%>
+<%--String path = request.getContextPath();--%>
+<%--String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";--%>
+<%--%>--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=basePath%>">
     <meta charset="utf-8"/>
     <title></title>
     <meta name="description" content="overview & stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="static/css/ace.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-responsive.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-skins.min.css"/>
-    <script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-responsive.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-skins.min.css"/>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
     <!--提示框-->
-    <script type="text/javascript" src="static/js/jquery.tips.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.tips.js"></script>
 
     <style type="text/css">
         #dialog-add, #dialog-message, #dialog-comment {
@@ -139,8 +138,9 @@
 
                 <div class="commitbox_cen">
                     <div class="left" id="cityname"></div>
-                    <div class="right"><span class="save" onClick="saveEmail()">保存</span>&nbsp;&nbsp;<span
-                            class="quxiao" onClick="cancel_pl()">取消</span></div>
+                    <div class="right"><span class="save" onClick="saveEmail()">保存</span>&nbsp;&nbsp;
+                        <span class="quxiao" onClick="cancel_pl()">取消</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,13 +155,15 @@
     <table style="width:98%;">
         <tr>
             <td style="margin-top:0px;">
-                <div style="float: left;" style="width:81%"><textarea name="EMAIL" id="EMAIL" rows="1" cols="50"
-                                                                      style="width:600px;height:20px;"
-                                                                      placeholder="请选输入对方邮箱,多个请用(;)分号隔开"
-                                                                      title="请选输入对方邮箱,多个请用(;)分号隔开">${pd.EMAIL}</textarea>
+                <div style="float: left;" style="width:81%">
+                    <textarea name="EMAIL" id="EMAIL" rows="1" cols="50" style="width:600px;height:20px;"
+                              placeholder="请选输入对方邮箱,多个请用(;)分号隔开"
+                              title="请选输入对方邮箱,多个请用(;)分号隔开">${pd.EMAIL}</textarea>
                 </div>
-                <div style="float: right;" style="width:19%"><a class='btn btn-mini btn-info' title="编辑邮箱"
-                                                                onclick="dialog_open();"><i class='icon-edit'></i></a>
+                <div style="float: right;" style="width:19%">
+                    <a class='btn btn-mini btn-info' title="编辑邮箱" onclick="dialog_open();">
+                        <i class='icon-edit'></i>
+                    </a>
                 </div>
             </td>
         </tr>
@@ -179,39 +181,45 @@
             <td style="text-align: center;">
                 <a class="btn btn-mini btn-primary" onclick="sendEm();">发送</a>
                 <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-                <label style="float:left;padding-left: 32px;"><input name="form-field-radio" id="form-field-radio1"
-                                                                     onclick="setType('1');" checked="checked"
-                                                                     type="radio" value="icon-edit"><span class="lbl">纯文本</span></label>
-                <label style="float:left;padding-left: 5px;"><input name="form-field-radio" id="form-field-radio2"
-                                                                    onclick="setType('2');" type="radio"
-                                                                    value="icon-edit"><span
-                        class="lbl">带标签</span></label>
-                <label style="float:left;padding-left: 15px;"><input name="form-field-checkbox" class="ace-checkbox-2"
-                                                                     type="checkbox" id="allusers"
-                                                                     onclick="isAll();"/><span
-                        class="lbl">全体用户</span></label>
+                <label style="float:left;padding-left: 32px;">
+                    <input name="form-field-radio" id="form-field-radio1" onclick="setType('1');" checked="checked"
+                           type="radio" value="icon-edit">
+                    <span class="lbl">纯文本</span>
+                </label>
+                <label style="float:left;padding-left: 5px;">
+                    <input name="form-field-radio" id="form-field-radio2" onclick="setType('2');" type="radio"
+                           value="icon-edit">
+                    <span class="lbl">带标签</span>
+                </label>
+                <label style="float:left;padding-left: 15px;">
+                    <input name="form-field-checkbox" class="ace-checkbox-2" type="checkbox" id="allUser"
+                           onclick="isAll();"/>
+                    <span class="lbl">全体用户</span>
+                </label>
             </td>
         </tr>
     </table>
 </div>
 
-<div id="zhongxin2" class="center" style="display:none"><br/><img src="static/images/jzx.gif" id='msg'/><br/><h4
-        class="lighter block green" id='msg'>正在发送...</h4></div>
+<div id="zhongxin2" class="center" style="display:none"><br/>
+    <img src="/static/images/jzx.gif" id='msg'/><br/>
+    <h4 class="lighter block green" id='msg'>正在发送...</h4>
+</div>
 
 
 <!-- 引入 -->
-<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/ace-elements.min.js"></script>
-<script src="static/js/ace.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write("<script src='/static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/ace-elements.min.js"></script>
+<script src="/static/js/ace.min.js"></script>
 
 <!-- 编辑框-->
-<script type="text/javascript" charset="utf-8">window.UEDITOR_HOME_URL = "<%=path%>/plugins/ueditor/";</script>
-<script type="text/javascript" charset="utf-8" src="plugins/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="plugins/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8">window.UEDITOR_HOME_URL = "/plugins/ueditor/";</script>
+<script type="text/javascript" charset="utf-8" src="/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/plugins/ueditor/ueditor.all.js"></script>
 <!-- 编辑框-->
 <!--引入属于此页面的js -->
-<script type="text/javascript" src="static/js/myjs/headEmail.js"></script>
+<script type="text/javascript" src="/static/js/myjs/headEmail.js"></script>
 
 </body>
 </html>
