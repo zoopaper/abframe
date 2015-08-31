@@ -24,7 +24,7 @@ ABFrame是Application base framwork的缩写，
 
 ![login](https://github.com/zoopaper/assets/blob/master/img/login.jpg)
 
-![login](https://github.com/zoopaper/assets/blob/master/img/main.jpg)
+
 
 # 后续更新
 
