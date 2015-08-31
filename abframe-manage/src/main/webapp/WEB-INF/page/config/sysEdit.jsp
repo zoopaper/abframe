@@ -41,64 +41,22 @@
     <div class="span6">
         <div class="tabbable">
             <ul class="nav nav-tabs" id="myTab">
-                <li class="active"><a data-toggle="tab" href="#home"><i class="green icon-home bigger-110"></i> 邮件&短信配置</a></li>
-                <li><a data-toggle="tab" href="#profile"><i class="green icon-cog bigger-110"></i>水印配置</a></li>
-                <li><a data-toggle="tab" href="#profile3"><i class="green icon-cog bigger-110"></i>微信接口配置</a></li>
+                <li class="active"><a data-toggle="tab" href="#profile">
+                    <i
+                            class="green icon-cog bigger-110"></i>水印配置</a></li>
             </ul>
             <div class="tab-content">
-                <div id="home" class="tab-pane in active">
-                    <form action="config/saveSys" name="Form" id="Form" method="post">
-                        <table id="table_report" class="table table-striped table-bordered table-hover">
-                            <tr>
-                                <td style="text-align: center;" colspan="100">
-                                    短信接口&nbsp;(短信商一&nbsp;<a href="http://www.dxton.com/" target="_blank">官网</a>)
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width:50px;text-align: right;padding-top: 13px;">账号:</td>
-                                <td><input type="email" name="SMSU1" id="SMSU1" value="${pd.SMSU1 }" placeholder="请输入账号"
-                                           style="width:90%" title="邮箱"/></td>
-
-                                <td style="width:50px;text-align: right;padding-top: 13px;">密码:</td>
-                                <td><input type="password" name="SMSPAW1" id="SMSPAW1" value="${pd.SMSPAW1 }"
-                                           placeholder="请输入密码" style="width:90%" title="密码"/></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;" colspan="100">
-                                    短信接口&nbsp;(短信商二&nbsp;<a href="http://www.ihuyi.com/" target="_blank">官网</a>)
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width:50px;text-align: right;padding-top: 13px;">账号:</td>
-                                <td><input type="email" name="SMSU2" id="SMSU2" value="${pd.SMSU2 }" placeholder="请输入账号"
-                                           style="width:90%" title="邮箱"/></td>
-
-                                <td style="width:50px;text-align: right;padding-top: 13px;">密码:</td>
-                                <td><input type="password" name="SMSPAW2" id="SMSPAW2" value="${pd.SMSPAW2 }"
-                                           placeholder="请输入密码" style="width:90%" title="密码"/></td>
-                            </tr>
-                        </table>
-
-                        <table class="center" style="width:100%">
-                            <tr>
-                                <td style="text-align: center;" colspan="100">
-                                    <a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-                                    <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
                 <div id="profile" class="tab-pane">
                     <form action="head/saveSys2.do" name="Form2" id="Form2" method="post">
                         <table id="table_report" class="table table-striped table-bordered table-hover">
                             <tr>
                                 <td style="text-align: center;" colspan="100">
                                     文字水印配置
-                                    <label style="float:left;padding-left: 15px;"><input name="fcheckbox"
-                                                                                         class="ace-checkbox-2"
-                                                                                         type="checkbox" id="check1"
-                                                                                         onclick="openThis1();"/><span
+                                    <label style="float:left;padding-left: 15px;">
+                                        <input name="fcheckbox"
+                                               class="ace-checkbox-2"
+                                               type="checkbox" id="check1"
+                                               onclick="openThis1();"/><span
                                             class="lbl">开启</span></label>
                                 </td>
                             </tr>
@@ -164,41 +122,6 @@
                         <input type="hidden" value="no" id="hasTp1"/>
                     </form>
                 </div>
-
-
-                <div id="profile3" class="tab-pane">
-                    <form action="head/saveSys3.do" name="Form3" id="Form3" method="post">
-                        <table id="table_report" class="table table-striped table-bordered table-hover">
-                            <tr>
-                                <td style="text-align: center;" colspan="100">
-                                    微信接口配置
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width:120px;text-align: right;padding-top: 12px;">URL(服务器地址):</td>
-                                <td><input type="text" name="WXURL" id="WXURL" value="<%=basePath%>weixin/index "
-                                           disabled="disabled" style="width:90%" title="URL(服务器地址)必须是域名，ip地址验证通不过"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width:120px;text-align: right;padding-top: 12px;">Token(令牌):</td>
-                                <td><input type="text" name="Token" id="Token" value="${pd.Token }" style="width:90%"
-                                           title="URL(服务器地址)"/></td>
-                            </tr>
-                        </table>
-
-                        <table class="center" style="width:100%">
-                            <tr>
-                                <td style="text-align: center;" colspan="100">
-                                    <a class="btn btn-mini btn-primary" onclick="save3();">保存</a>
-                                    <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-
-
             </div>
         </div>
     </div>

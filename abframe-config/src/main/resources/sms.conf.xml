@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <comment>短信配置</comment>
+
+    <!-- 短信服务商(短信通) -->
+    <entry key="sms.dxt.vendor">http://www.dxton.com</entry>
+    <!-- 账号 -->
+    <entry key="sms.dxt.username"></entry>
+    <!-- 密码 -->
+    <entry key="sms.dxt.password"></entry>
+
+    <!-- 短信服务商(互亿无线) -->
+    <entry key="sms.huyi.vendor">http://www.ihuyi.com/</entry>
+    <!-- 账号 -->
+    <entry key="sms.huyi.username"></entry>
+    <!-- 密码 -->
+    <entry key="sms.huyi.password"></entry>
+
+</properties>
