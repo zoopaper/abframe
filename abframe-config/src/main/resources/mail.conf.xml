@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <comment>邮件服务相关配置</comment>
+
+    <!-- 邮箱Host -->
+    <entry key="mail.host">mail.smtp.host</entry>
+    <!-- 邮箱port -->
+    <entry key="mail.port">25</entry>
+    <!-- 邮箱帐号 -->
+    <entry key="mail.username">abframe@163.com</entry>
+    <!-- 邮箱密码 -->
+    <entry key="mail.password">abf</entry>
+    <!-- 邮箱名称-->
+    <entry key="mail.name"></entry>
+    <!-- 邮箱主题 -->
+    <entry key="mail.subject"></entry>
+    <!-- 验证用户 -->
+    <entry key="mail.smtp.auth">true</entry>
+    <!-- 超时时间:30秒 -->
+    <entry key="mail.smtp.timeout">30000</entry>
+</properties>
