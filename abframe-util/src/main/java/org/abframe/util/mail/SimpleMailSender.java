@@ -1,7 +1,4 @@
 package org.abframe.util.mail;
-/**
- * 简单邮件（不带附件的邮件）发送器
- */
 
 
 import javax.mail.*;
@@ -138,7 +135,7 @@ public class SimpleMailSender {
      */
     public static void sendEmail(String SMTP, String PORT, String EMAIL, String PAW, String toEMAIL, String TITLE, String CONTENT, String TYPE) throws Exception {
 
-        //这个类主要是设置邮件   
+
         MailSenderInfo mailInfo = new MailSenderInfo();
 
         mailInfo.setMailServerHost(SMTP);
@@ -150,7 +147,7 @@ public class SimpleMailSender {
         mailInfo.setToAddress(toEMAIL);
         mailInfo.setSubject(TITLE);
         mailInfo.setContent(CONTENT);
-        //这个类主要来发送邮件
+
 
         SimpleMailSender sms = new SimpleMailSender();
 

@@ -1,11 +1,13 @@
 package org.abframe.controller;
 
+import net.common.utils.mail.MailInfo;
+import net.common.utils.mail.MailUtil;
 import org.abframe.config.ConfigBean;
 import org.abframe.controller.base.BaseController;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.UserService;
 import org.abframe.util.*;
-import org.abframe.util.mail.SimpleMailSender;
+import org.abframe.util.constants.MailConst;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -214,7 +216,24 @@ public class ConfigController extends BaseController {
     @RequestMapping(value = "/sendEmail")
     @ResponseBody
     public Object sendEmail() {
-        String c = configBean.getString("mail.host", configBean.getCfgMap(), "");
+        String mailHost = configBean.getString(MailConst.MAIL_HOST, configBean.getCfgMap(), "");
+        String mailPort = configBean.getString(MailConst.MAIL_PORT, configBean.getCfgMap(), "");
+        String mailUserName = configBean.getString(MailConst.MAIL_USERNAME, configBean.getCfgMap(), "");
+        String mailPassword = configBean.getString(MailConst.MAIL_PASSWORD, configBean.getCfgMap(), "");
+        String mailName = configBean.getString(MailConst.MAIL_NAME, configBean.getCfgMap(), "");
+        boolean mailAuth = configBean.getBoolean(MailConst.MAIL_SMTP_AUTH, configBean.getCfgMap(), true);
+
+
+        MailInfo info = new MailInfo();
+
+        info.setMailServerHost(mailHost);
+        info.setIsAuth(mailAuth);
+        info.setUsername(mailUserName);
+        info.setPassword(mailPassword);
+        info.setMailName(mailName);
+        info.setMailPort(Integer.valueOf(mailPort));
+        info.setMailFrom(mailUserName);
+
 
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -223,69 +242,76 @@ public class ConfigController extends BaseController {
         int count = 0;            //统计发送成功条数
         int zcount = 0;            //理论条数
 
-        String strEMAIL = Tools.readTxtFile(Constant.EMAIL);        //读取邮件配置
-
         List<PageData> pdList = new ArrayList<PageData>();
 
-        String toEMAIL = pd.getString("EMAIL");                    //对方邮箱
-        String TITLE = pd.getString("TITLE");                    //标题
-        String CONTENT = pd.getString("CONTENT");                //内容
-        String TYPE = pd.getString("TYPE");                        //类型
+        String mailTo = pd.getString("EMAIL");                    //对方邮箱
+        String mailTile = pd.getString("TITLE");                    //标题
+        String mailContent = pd.getString("CONTENT");                //内容
+        String mailType = pd.getString("TYPE");                        //类型
         String isAll = pd.getString("isAll");                    //是否发送给全体成员 yes or no
 
         String fmsg = pd.getString("fmsg");                        //判断是系统用户还是会员 "appuser"为会员用户
 
-        if (null != strEMAIL && !"".equals(strEMAIL)) {
-            String strEM[] = strEMAIL.split(",fh,");
-            if (strEM.length == 4) {
-                if ("yes".endsWith(isAll)) {
-                    try {
-                        List<PageData> userList = new ArrayList<PageData>();
+        info.setBody(mailContent);
+        info.setMailSubject(mailTile);
 
-                        userList = "appuser".equals(fmsg) ? appuserService.listAllUser(pd) : userService.listAllUser(pd);
+        if ("yes".endsWith(isAll)) {
+            try {
+                List<PageData> userList = new ArrayList<PageData>();
 
-                        zcount = userList.size();
-                        try {
-                            for (int i = 0; i < userList.size(); i++) {
-                                if (Tools.checkEmail(userList.get(i).getString("EMAIL"))) {        //邮箱格式不对就跳过
-                                    SimpleMailSender.sendEmail(strEM[0], strEM[1], strEM[2], strEM[3], userList.get(i).getString("EMAIL"), TITLE, CONTENT, TYPE);//调用发送邮件函数
-                                    count++;
-                                } else {
-                                    continue;
-                                }
-                            }
-                            msg = "ok";
-                        } catch (Exception e) {
-                            msg = "error";
-                        }
+                userList = "appuser".equals(fmsg) ? appuserService.listAllUser(pd) : userService.listAllUser(pd);
 
-                    } catch (Exception e) {
-                        msg = "error";
-                    }
-                } else {
-                    toEMAIL = toEMAIL.replaceAll("；", ";");
-                    toEMAIL = toEMAIL.replaceAll(" ", "");
-                    String[] arrTITLE = toEMAIL.split(";");
-                    zcount = arrTITLE.length;
-                    try {
-                        for (int i = 0; i < arrTITLE.length; i++) {
-                            if (Tools.checkEmail(arrTITLE[i])) {        //邮箱格式不对就跳过
-                                SimpleMailSender.sendEmail(strEM[0], strEM[1], strEM[2], strEM[3], arrTITLE[i], TITLE, CONTENT, TYPE);//调用发送邮件函数
-                                count++;
+                zcount = userList.size();
+                try {
+                    for (int i = 0; i < userList.size(); i++) {
+                        if (Tools.checkEmail(userList.get(i).getString("EMAIL"))) {
+                            info.setMailTo(userList.get(i).getString("EMAIL"));
+                            if (mailType.equals("1")) {
+                                MailUtil.sendTextMail(info);
                             } else {
-                                continue;
+                                MailUtil.sendHtmlEmail(info);
                             }
+
+//                            SimpleMailSender.sendEmail(mailHost, mailPort, mailUserName, mailPassword, userList.get(i).getString("EMAIL"), mailTile, mailContent, mailType);
+                            count++;
+                        } else {
+                            continue;
                         }
-                        msg = "ok";
-                    } catch (Exception e) {
-                        msg = "error";
                     }
+                    msg = "ok";
+                } catch (Exception e) {
+                    msg = "error";
+                    e.printStackTrace();
                 }
-            } else {
+
+            } catch (Exception e) {
                 msg = "error";
+                e.printStackTrace();
             }
         } else {
-            msg = "error";
+            mailTo = mailTo.replaceAll("；", ";");
+            mailTo = mailTo.replaceAll(" ", "");
+            String[] mailToArr = mailTo.split(";");
+            zcount = mailToArr.length;
+            try {
+                for (int i = 0; i < mailToArr.length; i++) {
+                    if (Tools.checkEmail(mailToArr[i])) {
+                        info.setMailTo(mailToArr[i]);
+                        if (mailType.equals("1")) {
+                            MailUtil.sendTextMail(info);
+                        } else {
+                            MailUtil.sendHtmlEmail(info);
+                        }
+                        count++;
+                    } else {
+                        continue;
+                    }
+                }
+                msg = "ok";
+            } catch (Exception e) {
+                msg = "error";
+                e.printStackTrace();
+            }
         }
         pd.put("msg", msg);
         pd.put("count", count);                        //成功数

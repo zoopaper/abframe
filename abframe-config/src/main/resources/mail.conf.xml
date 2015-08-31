@@ -5,15 +5,15 @@
     <comment>邮件服务相关配置</comment>
 
     <!-- 邮箱Host -->
-    <entry key="mail.host">mail.smtp.host</entry>
+    <entry key="mail.host">smtp.163.com</entry>
     <!-- 邮箱port -->
     <entry key="mail.port">25</entry>
     <!-- 邮箱帐号 -->
     <entry key="mail.username">abframe@163.com</entry>
     <!-- 邮箱密码 -->
-    <entry key="mail.password">abf</entry>
+    <entry key="mail.password">abf2015</entry>
     <!-- 邮箱名称-->
-    <entry key="mail.name"></entry>
+    <entry key="mail.name">abframe</entry>
     <!-- 邮箱主题 -->
     <entry key="mail.subject"></entry>
     <!-- 验证用户 -->
