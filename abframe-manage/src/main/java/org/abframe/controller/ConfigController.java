@@ -197,9 +197,6 @@ public class ConfigController extends BaseController {
         return AppUtil.returnObject(pd, map);
     }
 
-    /**
-     * 去发送电子邮件页面
-     */
     @RequestMapping(value = "/toSendEmail")
     public ModelAndView toSendEmail() throws Exception {
         ModelAndView mv = this.getModelAndView();
@@ -210,9 +207,6 @@ public class ConfigController extends BaseController {
         return mv;
     }
 
-    /**
-     * 发送电子邮件
-     */
     @RequestMapping(value = "/sendEmail")
     @ResponseBody
     public Object sendEmail() {
@@ -244,13 +238,13 @@ public class ConfigController extends BaseController {
 
         List<PageData> pdList = new ArrayList<PageData>();
 
-        String mailTo = pd.getString("EMAIL");                    //对方邮箱
-        String mailTile = pd.getString("TITLE");                    //标题
-        String mailContent = pd.getString("CONTENT");                //内容
-        String mailType = pd.getString("TYPE");                        //类型
-        String isAll = pd.getString("isAll");                    //是否发送给全体成员 yes or no
+        String mailTo = pd.getString("EMAIL");
+        String mailTile = pd.getString("TITLE");
+        String mailContent = pd.getString("CONTENT");
+        String mailType = pd.getString("TYPE");
+        String isAll = pd.getString("isAll");
 
-        String fmsg = pd.getString("fmsg");                        //判断是系统用户还是会员 "appuser"为会员用户
+        String fmsg = pd.getString("fmsg");
 
         info.setBody(mailContent);
         info.setMailSubject(mailTile);
@@ -258,7 +252,6 @@ public class ConfigController extends BaseController {
         if ("yes".endsWith(isAll)) {
             try {
                 List<PageData> userList = new ArrayList<PageData>();
-
                 userList = "appuser".equals(fmsg) ? appuserService.listAllUser(pd) : userService.listAllUser(pd);
 
                 zcount = userList.size();
@@ -272,7 +265,6 @@ public class ConfigController extends BaseController {
                                 MailUtil.sendHtmlEmail(info);
                             }
 
-//                            SimpleMailSender.sendEmail(mailHost, mailPort, mailUserName, mailPassword, userList.get(i).getString("EMAIL"), mailTile, mailContent, mailType);
                             count++;
                         } else {
                             continue;
