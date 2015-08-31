@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import net.common.utils.uuid.UuidUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -10,7 +11,6 @@ import org.abframe.service.LinkService;
 import org.abframe.util.Constant;
 import org.abframe.util.DateUtil;
 import org.abframe.util.PageData;
-import org.abframe.util.UuidUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -135,7 +135,7 @@ public class LinkController extends BaseController {
 
         if (null != tp && !tp.isEmpty()) {
             try {
-                String tpid = UuidUtil.get32UUID();
+                String tpid = UuidUtil.genTerseUuid();
 
                 // 扩展名格式：
                 String extName = "";
@@ -191,7 +191,7 @@ public class LinkController extends BaseController {
 
         if (null != tp && !tp.isEmpty()) {
             try {
-                String id = UuidUtil.get32UUID();
+                String id = UuidUtil.genTerseUuid();
 
                 // 扩展名格式：
                 String extName = "";

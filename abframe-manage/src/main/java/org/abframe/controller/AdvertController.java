@@ -1,16 +1,16 @@
 package org.abframe.controller;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.AdvertService;
 import org.abframe.util.Constant;
 import org.abframe.util.DateUtil;
 import org.abframe.util.PageData;
-import org.abframe.util.UuidUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -147,7 +147,7 @@ public class AdvertController extends BaseController {
 
         if (null != tp && !tp.isEmpty()) {
             try {
-                String tpid = UuidUtil.get32UUID();
+                String tpid = UuidUtil.genTerseUuid();
 
                 // 扩展名格式：
                 String extName = "";
@@ -200,12 +200,12 @@ public class AdvertController extends BaseController {
         pd.put("uptime", DateUtil.getTime());
 
         //图片上传
-        String pictureSaveFilePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")+ "../../");
+        String pictureSaveFilePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource("") + "../../");
         pictureSaveFilePath = pictureSaveFilePath.substring(6);        //去掉 'file:/'
 
         if (null != tp && !tp.isEmpty()) {
             try {
-                String id = UuidUtil.get32UUID();
+                String id = UuidUtil.genTerseUuid();
 
                 // 扩展名格式：
                 String extName = "";

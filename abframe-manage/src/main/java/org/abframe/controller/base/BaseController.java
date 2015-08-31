@@ -1,10 +1,10 @@
 package org.abframe.controller.base;
 
 
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.entity.Page;
 import org.abframe.util.Logger;
 import org.abframe.util.PageData;
-import org.abframe.util.UuidUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,7 +45,7 @@ public class BaseController {
      */
     public String get32UUID() {
 
-        return UuidUtil.get32UUID();
+        return UuidUtil.genTerseUuid();
     }
 
     /**
