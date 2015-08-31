@@ -1,4 +1,4 @@
-package org.abframe.filter;
+package org.abframe.websocket.filter;
 
 import org.abframe.util.Constant;
 import org.abframe.websocket.ChatServer;

@@ -14,10 +14,6 @@ import java.net.UnknownHostException;
 
 /**
  * 在线管理
- *
- * @author FH
- *         QQ 313596790
- *         2015-5-25
  */
 public class OnlineChatServer extends WebSocketServer {
 
@@ -121,8 +117,6 @@ public class OnlineChatServer extends WebSocketServer {
 
     /**
      * 用户下线处理
-     *
-     * @param user
      */
     public void userLeave(WebSocket conn) {
         OnlineChatServerPool.removeUser(conn);                //在连接池中移除连接
@@ -130,8 +124,6 @@ public class OnlineChatServer extends WebSocketServer {
 
     /**
      * 获取在线总数
-     *
-     * @param user
      */
     public void getUserCount(WebSocket conn) {
         JSONObject result = new JSONObject();
@@ -142,8 +134,6 @@ public class OnlineChatServer extends WebSocketServer {
 
     /**
      * 获取在线用户列表
-     *
-     * @param user
      */
     public void getUserList(WebSocket conn) {
         JSONObject result = new JSONObject();

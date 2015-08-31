@@ -14,6 +14,7 @@
         <module>abframe-util</module>
         <module>abframe-entity</module>
         <module>abframe-manage</module>
+        <module>abframe-websocket</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -403,12 +404,12 @@
             <groupId>net.common.base</groupId>
             <artifactId>common-base</artifactId>
             <version>0.0.1-REALEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>fastjson</artifactId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>com.alibaba</groupId>-->
+                    <!--<artifactId>fastjson</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
     </dependencies>
 
