@@ -1,12 +1,6 @@
 package org.abframe.controller;
 
 import com.google.common.base.Strings;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.Role;
@@ -15,6 +9,12 @@ import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.service.UserService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +67,6 @@ public class LoginController extends BaseController {
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        pd.put("SYSNAME", Tools.readTxtFile(Constant.SYSNAME));
         mv.setViewName("common/login");
         mv.addObject("pd", pd);
         return mv;
@@ -95,7 +94,7 @@ public class LoginController extends BaseController {
                 errInfo = "nullcode"; //验证码为空
             } else {
                 pd.put("USERNAME", userName);
-                if (Tools.notEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)) {
+                if (!Strings.isNullOrEmpty(code) && sessionCode.equalsIgnoreCase(code)) {
                     String passwd = new SimpleHash("SHA-1", userName, password).toString();    //密码加密
                     pd.put("PASSWORD", passwd);
                     pd = userService.getUserByNameAndPwd(pd);
@@ -179,7 +178,7 @@ public class LoginController extends BaseController {
 
                 if (null == session.getAttribute(Constant.SESSION_allmenuList)) {
                     allmenuList = menuService.listAllMenu();
-                    if (Tools.notEmpty(roleRights)) {
+                    if (!Strings.isNullOrEmpty(roleRights)) {
                         for (Menu menu : allmenuList) {
                             menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
                             if (menu.isHasMenu()) {
@@ -251,7 +250,6 @@ public class LoginController extends BaseController {
             mv.setViewName("common/login");
             logger.error(e.getMessage(), e);
         }
-        pd.put("SYSNAME", Tools.readTxtFile(Constant.SYSNAME)); //读取系统名称
         mv.addObject("pd", pd);
         return mv;
     }
@@ -303,7 +301,6 @@ public class LoginController extends BaseController {
         String msg = pd.getString("msg");
         pd.put("msg", msg);
 
-        pd.put("SYSNAME", Tools.readTxtFile(Constant.SYSNAME));
         mv.setViewName("common/login");
         mv.addObject("pd", pd);
         return mv;

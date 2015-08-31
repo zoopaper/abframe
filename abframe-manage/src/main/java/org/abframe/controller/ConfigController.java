@@ -1,13 +1,10 @@
 package org.abframe.controller;
 
-import net.common.utils.mail.MailInfo;
-import net.common.utils.mail.MailUtil;
 import org.abframe.config.ConfigBean;
 import org.abframe.controller.base.BaseController;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.UserService;
 import org.abframe.util.*;
-import org.abframe.util.constants.MailConst;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -200,82 +197,6 @@ public class ConfigController extends BaseController {
 
 
     /**
-     * 去系统设置页面
-     */
-    @RequestMapping(value = "/toSystem")
-    public ModelAndView toSysConf() throws Exception {
-        ModelAndView mv = this.getModelAndView();
-        PageData pd = new PageData();
-        pd = this.getPageData();
-        String strSMS1 = Tools.readTxtFile(Constant.SMS1);            //读取短信1配置
-        String strSMS2 = Tools.readTxtFile(Constant.SMS2);            //读取短信2配置
-        String strFWATERM = Tools.readTxtFile(Constant.FWATERM);    //读取文字水印配置
-        String strIWATERM = Tools.readTxtFile(Constant.IWATERM);    //读取图片水印配置
-        pd.put("Token", Tools.readTxtFile(Constant.WEIXIN));        //读取微信配置
-
-
-        if (null != strSMS1 && !"".equals(strSMS1)) {
-            String strS1[] = strSMS1.split(",fh,");
-            if (strS1.length == 2) {
-                pd.put("SMSU1", strS1[0]);
-                pd.put("SMSPAW1", strS1[1]);
-            }
-        }
-
-        if (null != strSMS2 && !"".equals(strSMS2)) {
-            String strS2[] = strSMS2.split(",fh,");
-            if (strS2.length == 2) {
-                pd.put("SMSU2", strS2[0]);
-                pd.put("SMSPAW2", strS2[1]);
-            }
-        }
-
-        if (null != strFWATERM && !"".equals(strFWATERM)) {
-            String strFW[] = strFWATERM.split(",fh,");
-            if (strFW.length == 5) {
-                pd.put("isCheck1", strFW[0]);
-                pd.put("fcontent", strFW[1]);
-                pd.put("fontSize", strFW[2]);
-                pd.put("fontX", strFW[3]);
-                pd.put("fontY", strFW[4]);
-            }
-        }
-
-        if (null != strIWATERM && !"".equals(strIWATERM)) {
-            String strIW[] = strIWATERM.split(",fh,");
-            if (strIW.length == 4) {
-                pd.put("isCheck2", strIW[0]);
-                pd.put("imgUrl", strIW[1]);
-                pd.put("imgX", strIW[2]);
-                pd.put("imgY", strIW[3]);
-            }
-        }
-
-        mv.setViewName("config/sysEdit");
-        mv.addObject("pd", pd);
-
-        return mv;
-    }
-
-    /**
-     * 保存系统设置1
-     */
-    @RequestMapping(value = "/saveSys")
-    public ModelAndView saveSys() throws Exception {
-        ModelAndView mv = this.getModelAndView();
-        PageData pd = new PageData();
-        pd = this.getPageData();
-        Tools.writeFile(Constant.SYSNAME, pd.getString("YSYNAME"));    //写入系统名称
-        Tools.writeFile(Constant.PAGE, pd.getString("COUNTPAGE"));    //写入每页条数
-        Tools.writeFile(Constant.EMAIL, pd.getString("SMTP") + ",fh," + pd.getString("PORT") + ",fh," + pd.getString("EMAIL") + ",fh," + pd.getString("PAW"));    //写入邮件服务器配置
-        Tools.writeFile(Constant.SMS1, pd.getString("SMSU1") + ",fh," + pd.getString("SMSPAW1"));    //写入短信1配置
-        Tools.writeFile(Constant.SMS2, pd.getString("SMSU2") + ",fh," + pd.getString("SMSPAW2"));    //写入短信2配置
-        mv.addObject("msg", "OK");
-        mv.setViewName("save_result");
-        return mv;
-    }
-
-    /**
      * 保存系统设置2
      */
     @RequestMapping(value = "/saveSys2")
@@ -283,23 +204,9 @@ public class ConfigController extends BaseController {
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        Tools.writeFile(Constant.FWATERM, pd.getString("isCheck1") + ",fh," + pd.getString("fcontent") + ",fh," + pd.getString("fontSize") + ",fh," + pd.getString("fontX") + ",fh," + pd.getString("fontY"));    //文字水印配置
-        Tools.writeFile(Constant.IWATERM, pd.getString("isCheck2") + ",fh," + pd.getString("imgUrl") + ",fh," + pd.getString("imgX") + ",fh," + pd.getString("imgY"));    //图片水印配置
+//        Tools.writeFile(Constant.FWATERM, pd.getString("isCheck1") + ",fh," + pd.getString("fcontent") + ",fh," + pd.getString("fontSize") + ",fh," + pd.getString("fontX") + ",fh," + pd.getString("fontY"));    //文字水印配置
+//        Tools.writeFile(Constant.IWATERM, pd.getString("isCheck2") + ",fh," + pd.getString("imgUrl") + ",fh," + pd.getString("imgX") + ",fh," + pd.getString("imgY"));    //图片水印配置
         Watermark.fushValue();
-        mv.addObject("msg", "OK");
-        mv.setViewName("save_result");
-        return mv;
-    }
-
-    /**
-     * 保存系统设置3
-     */
-    @RequestMapping(value = "/saveSys3")
-    public ModelAndView saveSys3() throws Exception {
-        ModelAndView mv = this.getModelAndView();
-        PageData pd = new PageData();
-        pd = this.getPageData();
-        Tools.writeFile(Constant.WEIXIN, pd.getString("Token"));    //写入微信配置
         mv.addObject("msg", "OK");
         mv.setViewName("save_result");
         return mv;

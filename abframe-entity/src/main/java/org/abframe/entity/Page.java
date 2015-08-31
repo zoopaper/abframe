@@ -1,8 +1,6 @@
 package org.abframe.entity;
 
-import org.abframe.util.Constant;
 import org.abframe.util.PageData;
-import org.abframe.util.Tools;
 
 public class Page {
 
@@ -18,7 +16,7 @@ public class Page {
 
     public Page() {
         try {
-            this.showCount = Integer.parseInt(Tools.readTxtFile(Constant.PAGE));
+            this.showCount = 10;
         } catch (Exception e) {
             this.showCount = 15;
         }

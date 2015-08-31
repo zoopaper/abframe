@@ -1,5 +1,9 @@
 package org.abframe.websocket;
 
+import com.google.common.base.Strings;
+import org.abframe.entity.Page;
+import org.abframe.util.ReflectHelper;
+import org.abframe.util.Tools;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.executor.statement.BaseStatementHandler;
@@ -16,9 +20,6 @@ import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.abframe.entity.Page;
-import org.abframe.util.ReflectHelper;
-import org.abframe.util.Tools;
 
 import javax.xml.bind.PropertyException;
 import java.lang.reflect.Field;
@@ -145,7 +146,7 @@ public class PagePlugin implements Interceptor {
      * @return
      */
     private String generatePageSql(String sql, Page page) {
-        if (page != null && Tools.notEmpty(dialect)) {
+        if (page != null && !Strings.isNullOrEmpty(dialect)) {
             StringBuffer pageSql = new StringBuffer();
             if ("mysql".equals(dialect)) {
                 pageSql.append(sql);

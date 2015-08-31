@@ -38,7 +38,7 @@ public class SmsUtil {
     public static void sendSms1(String mobile, String code) {
 
         String account = "", password = "";
-        String strSMS1 = Tools.readTxtFile(Constant.SMS1);            //读取短信1配置
+        String strSMS1 = "";// Tools.readTxtFile(Constant.SMS1);            //读取短信1配置
         if (null != strSMS1 && !"".equals(strSMS1)) {
             String strS1[] = strSMS1.split(",fh,");
             if (strS1.length == 2) {
@@ -133,7 +133,7 @@ public class SmsUtil {
         String content = new String(code);
 
         String account = "", password = "";
-        String strSMS2 = Tools.readTxtFile(Constant.SMS2);            //读取短信2配置
+        String strSMS2 = "";//Tools.readTxtFile(Constant.SMS2);            //读取短信2配置
         if (null != strSMS2 && !"".equals(strSMS2)) {
             String strS2[] = strSMS2.split(",fh,");
             if (strS2.length == 2) {

@@ -1,10 +1,8 @@
 package org.abframe.controller;
 
+import com.google.common.base.Strings;
 import net.sf.json.JSONArray;
 import org.abframe.common.PermissionHandler;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.Page;
@@ -12,6 +10,9 @@ import org.abframe.entity.Role;
 import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -253,7 +254,7 @@ public class RoleController extends BaseController {
             List<Menu> menuList = menuService.listAllMenu();
             Role role = roleService.getRoleById(ROLE_ID);
             String roleRights = role.getRIGHTS();
-            if (Tools.notEmpty(roleRights)) {
+            if (!Strings.isNullOrEmpty(roleRights)) {
                 for (Menu menu : menuList) {
                     menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
                     if (menu.isHasMenu()) {
@@ -297,7 +298,7 @@ public class RoleController extends BaseController {
                 roleRights = role.getCHA_QX();
             }
 
-            if (Tools.notEmpty(roleRights)) {
+            if (!Strings.isNullOrEmpty(roleRights)) {
                 for (Menu menu : menuList) {
                     menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
                     if (menu.isHasMenu()) {
