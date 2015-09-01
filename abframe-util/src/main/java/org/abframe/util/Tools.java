@@ -1,5 +1,7 @@
 package org.abframe.util;
 
+import net.common.utils.date.DateUtil;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -158,7 +160,7 @@ public class Tools {
      */
     public static boolean checkKey(String paraname, String FKEY) {
         paraname = (null == paraname) ? "" : paraname;
-        return MD5.md5(paraname + DateUtil.getDays() + ",fh,").equals(FKEY);
+        return MD5.md5(paraname + DateUtil.formatDate(new Date(), DateUtil.DATE_STR1) + ",fh,").equals(FKEY);
     }
 
 

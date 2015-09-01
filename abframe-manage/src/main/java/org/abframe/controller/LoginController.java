@@ -1,6 +1,7 @@
 package org.abframe.controller;
 
 import com.google.common.base.Strings;
+import net.common.utils.date.DateUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.Role;
@@ -99,7 +100,7 @@ public class LoginController extends BaseController {
                     pd.put("PASSWORD", passwd);
                     pd = userService.getUserByNameAndPwd(pd);
                     if (pd != null) {
-                        pd.put("LAST_LOGIN", DateUtil.getTime().toString());
+                        pd.put("LAST_LOGIN", DateUtil.getDateTimeStr().toString());
                         userService.updateLastLogin(pd);
                         User user = new User();
                         user.setUSER_ID(pd.getString("USER_ID"));

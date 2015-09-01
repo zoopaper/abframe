@@ -1,16 +1,16 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import net.common.utils.uuid.UuidUtil;
-import org.apache.commons.io.FileUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.LinkService;
 import org.abframe.util.Constant;
-import org.abframe.util.DateUtil;
 import org.abframe.util.PageData;
+import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -123,7 +123,7 @@ public class LinkController extends BaseController {
         pd.put("status", status);
         pd.put("tourl", tourl);
         pd.put("sequence", "".equals(sequence) ? 0 : sequence);
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("uptime", DateUtil.getDateTimeStr());
 
         if (null == tpz) {
             tpz = "";
@@ -182,8 +182,8 @@ public class LinkController extends BaseController {
         pd.put("status", status);
         pd.put("tourl", tourl);
         pd.put("sequence", "".equals(sequence) ? 0 : sequence);
-        pd.put("addtime", DateUtil.getTime());
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("addtime", DateUtil.getDateTimeStr());
+        pd.put("uptime", DateUtil.getDateTimeStr());
 
         //图片上传
         String pictureSaveFilePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../";

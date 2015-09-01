@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -105,7 +106,7 @@ public class NewsController extends BaseController {
         String sequence = pd.getString("sequence");
 
         pd.put("pip", ip);
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("uptime", DateUtil.getDateTimeStr());
         pd.put("sequence", "".equals(sequence) ? 0 : sequence);
 
         newsService.edit(pd);
@@ -131,8 +132,8 @@ public class NewsController extends BaseController {
         String sequence = pd.getString("sequence");
 
         pd.put("pip", ip);
-        pd.put("addtime", DateUtil.getTime());
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("addtime", DateUtil.getDateTimeStr());
+        pd.put("uptime", DateUtil.getDateTimeStr());
         pd.put("hits", 0);
         pd.put("sequence", "".equals(sequence) ? 0 : sequence);
 

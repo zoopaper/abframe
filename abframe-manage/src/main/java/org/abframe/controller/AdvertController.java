@@ -1,11 +1,11 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import net.common.utils.uuid.UuidUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.AdvertService;
 import org.abframe.util.Constant;
-import org.abframe.util.DateUtil;
 import org.abframe.util.PageData;
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
@@ -135,7 +135,7 @@ public class AdvertController extends BaseController {
         pd.put("endtime", endtime);
         pd.put("status", status);
         pd.put("tourl", tourl);
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("uptime", DateUtil.getDateTimeStr());
 
         if (null == tpz) {
             tpz = "";
@@ -196,8 +196,8 @@ public class AdvertController extends BaseController {
         pd.put("status", status);
         pd.put("tourl", tourl);
 
-        pd.put("addtime", DateUtil.getTime());
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("addtime", DateUtil.getDateTimeStr());
+        pd.put("uptime", DateUtil.getDateTimeStr());
 
         //图片上传
         String pictureSaveFilePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource("") + "../../");

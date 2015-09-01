@@ -1,14 +1,14 @@
 package org.abframe.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import net.common.utils.date.DateUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.RecommendService;
 import org.abframe.util.Constant;
-import org.abframe.util.DateUtil;
 import org.abframe.util.PageData;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -99,7 +99,7 @@ public class RecommendController extends BaseController {
         pd = this.getPageData();
         String sequence = pd.getString("sequence");
 
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("uptime", DateUtil.getDateTimeStr());
         pd.put("sequence", "".equals(sequence) ? 0 : sequence);
 
         recommendService.edit(pd);
@@ -115,8 +115,8 @@ public class RecommendController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
         String sequence = pd.getString("sequence");
-        pd.put("addtime", DateUtil.getTime());
-        pd.put("uptime", DateUtil.getTime());
+        pd.put("addtime", DateUtil.getDateTimeStr());
+        pd.put("uptime", DateUtil.getDateTimeStr());
         pd.put("sequence", "".equals(sequence) ? 0 : sequence);
         recommendService.save(pd);
         mv.addObject("msg", "success");

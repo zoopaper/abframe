@@ -1,13 +1,14 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import org.abframe.common.PermissionHandler;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.PicService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -36,7 +37,7 @@ public class PicController extends BaseController {
     public Object save(@RequestParam(required = false) MultipartFile file) {
         logBefore(logger, "新增Pictures");
         Map<String, String> map = new HashMap<String, String>();
-        String ffile = DateUtil.getDays(), fileName = "";
+        String ffile = DateUtil.formatDate(new Date(),DateUtil.DATE_STR1), fileName = "";
         PageData pd = new PageData();
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
@@ -107,7 +108,7 @@ public class PicController extends BaseController {
             if (null == tpz) {
                 tpz = "";
             }
-            String ffile = DateUtil.getDays(), fileName = "";
+            String ffile = DateUtil.formatDate(new Date(), "yyyyMMdd"), fileName = "";
             if (null != file && !file.isEmpty()) {
                 String filePath = PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile;        //文件上传路径
                 fileName = FileUpload.fileUp(file, filePath, this.get32UUID());                //执行上传
