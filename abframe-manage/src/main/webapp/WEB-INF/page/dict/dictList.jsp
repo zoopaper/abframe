@@ -113,7 +113,7 @@
                                 <c:forEach items="${varsList}" var="var" varStatus="vsd">
                                     <td style="vertical-align:top;">
                                         <a href="/dict?parentId=${var.id}"
-                                           class="btn btn-mini btn-purple" title="查看">${var.NAME }
+                                           class="btn btn-mini btn-purple" title="查看">${var.name }
                                             <i class="icon-arrow-right  icon-on-right"></i>
                                         </a>
                                     </td>
@@ -174,7 +174,7 @@
                         <td style="vertical-align:top;width:50px;">
                             <a class="btn btn-small btn-success" onclick="add('${pd.parentId}');">新增</a>
                         </td>
-                        <c:if test="${pd.PARENT_ID != '0'}">
+                        <c:if test="${pd.parentId != '0'}">
                             <td style="vertical-align:top;" class="left">
                                 <a class="btn btn-small btn-info"
                                    onclick="location.href='/dict?parentId=${pdp.parentId }';">返回

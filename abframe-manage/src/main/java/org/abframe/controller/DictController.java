@@ -50,14 +50,14 @@ public class DictController extends BaseController {
         String id = ServletRequestUtils.getStringParameter(request, "id", "");
         String code = ServletRequestUtils.getStringParameter(request, "code", "");
 
-        if (!Strings.isNullOrEmpty(id)) {
+        if (Strings.isNullOrEmpty(id)) {
             if (null != parentId && "0".equals(parentId)) {
                 pd.put("level", 1);
                 pd.put("parentCode", pd.getString("code"));
             } else {
                 pdp = dictService.findById(pdp);
                 pd.put("level", Integer.parseInt(pdp.get("level").toString()) + 1);
-                pd.put("P_BM", pdp.getString("code") + "_" + pd.getString("code"));
+                pd.put("parentCode", pdp.getString("code") + "_" + pd.getString("code"));
             }
             pd.put("id", UuidUtil.genTerseUuid());
             dictService.save(pd);
