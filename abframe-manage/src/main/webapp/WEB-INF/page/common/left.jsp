@@ -69,9 +69,6 @@
         </c:forEach>
 
     </ul>
-    <!--/.nav-list-->
-
     <div id="sidebar-collapse"><i class="icon-double-angle-left"></i></div>
 </div>
-<!--/#sidebar-->
 

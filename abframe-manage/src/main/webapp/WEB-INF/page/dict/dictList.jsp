@@ -1,37 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=basePath%>">
     <title></title>
     <meta name="description" content="overview & stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="static/css/ace.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-responsive.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-skins.min.css"/>
-    <script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
-    <script type="text/javascript" src="static/js/bootbox.min.js"></script>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-responsive.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-skins.min.css"/>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="/static/js/bootbox.min.js"></script>
     <!-- 确认窗口 -->
 
     <script type="text/javascript">
         $(top.hangge());
 
-        //新增
-        function add(PARENT_ID) {
+        function add(parentId) {
             top.jzts();
             var diag = new top.Dialog();
             diag.Drag = true;
             diag.Title = "新增";
-            diag.URL = '<%=basePath%>dict/toAdd?PARENT_ID=' + PARENT_ID;
+            diag.URL = '/dict/toAdd?parentId=' + parentId;
             diag.Width = 223;
             diag.Height = 175;
             diag.CancelEvent = function () {
@@ -49,13 +43,13 @@
             diag.show();
         }
 
-        //修改
-        function edit(ZD_ID) {
+
+        function edit(id) {
             top.jzts();
             var diag = new top.Dialog();
             diag.Drag = true;
             diag.Title = "编辑";
-            diag.URL = '<%=basePath%>dict/toEdit?ZD_ID=' + ZD_ID;
+            diag.URL = '/dict/toEdit?id=' + id;
             diag.Width = 223;
             diag.Height = 175;
             diag.CancelEvent = function () {
@@ -68,14 +62,14 @@
         }
 
         //删除
-        function del(ZD_ID) {
+        function del(id) {
             var flag = false;
             if (confirm("确定要删除该数据吗?")) {
                 flag = true;
             }
             if (flag) {
                 top.jzts();
-                var url = "<%=basePath%>dict/del?ZD_ID=" + ZD_ID + "&guid=" + new Date().getTime();
+                var url = "/dict/del?id=" + id + "&guid=" + new Date().getTime();
                 $.get(url, function (data) {
                     if ("success" == data.result) {
                         top.jzts();
@@ -96,29 +90,33 @@
     <div class="row-fluid">
 
         <!-- 检索  -->
-        <form action="<%=basePath%>/dict" method="post" name="userForm" id="userForm">
-            <input name="PARENT_ID" id="PARENT_ID" type="hidden" value="${pd.PARENT_ID }"/>
+        <form action="/dict" method="post" name="userForm" id="userForm">
+            <input name="parentId" id="parentId" type="hidden" value="${pd.parentId }"/>
             <table>
                 <tr>
                     <td><font color="#808080">检索：</font></td>
-                    <td><input type="text" name="NAME" value="${pd.NAME }" placeholder="这里输入名称" style="width:130px;"/>
+                    <td><input type="text" name="name" value="${pd.name}" placeholder="输入名称" style="width:130px;"/>
                     </td>
                     <td style="vertical-align:top;">
                         <button class="btn btn-mini btn-light" onclick="search();">
                             <i id="nav-search-icon" class="icon-search"></i>
                         </button>
                     </td>
-                    <c:if test="${pd.PARENT_ID != '0'}">
+                    <c:if test="${pd.parentId != '0'}">
                         <c:choose>
                             <c:when test="${not empty varsList}">
-                                <td style="vertical-align:top;"><a href="<%=basePath%>/dict?PARENT_ID=0"
-                                                                   class="btn btn-mini btn-purple" title="查看">顶级<i
-                                        class="icon-arrow-right  icon-on-right"></i></a></td>
+                                <td style="vertical-align:top;">
+                                    <a href="/dict?parentId=0" class="btn btn-mini btn-purple" title="查看">顶级
+                                        <i class="icon-arrow-right  icon-on-right"></i>
+                                    </a>
+                                </td>
                                 <c:forEach items="${varsList}" var="var" varStatus="vsd">
                                     <td style="vertical-align:top;">
-                                        <a href="<%=basePath%>/dict?PARENT_ID=${var.ZD_ID }"
-                                            class="btn btn-mini btn-purple" title="查看">${var.NAME }<i
-                                            class="icon-arrow-right  icon-on-right"></i></a></td>
+                                        <a href="/dict?parentId=${var.id}"
+                                           class="btn btn-mini btn-purple" title="查看">${var.NAME }
+                                            <i class="icon-arrow-right  icon-on-right"></i>
+                                        </a>
+                                    </td>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
@@ -144,17 +142,21 @@
                     <c:when test="${not empty varList}">
                         <c:forEach items="${varList}" var="var" varStatus="vs">
                             <tr>
-                                <td class="center">${var.ORDY_BY }</td>
-                                <td class='center'><a href="<%=basePath%>/dict?PARENT_ID=${var.ZD_ID }"
-                                                      title="查看下级"><i
-                                        class="icon-arrow-right  icon-on-right"></i>&nbsp;${var.NAME }</a></td>
-                                <td class='center'>${var.P_BM }</td>
-                                <td class='center' style="width:35px;"><b class="green">${var.JB }</b></td>
+                                <td class="center">${var.orderId}</td>
+                                <td class='center'>
+                                    <a href="/dict?parentId=${var.id}" title="查看下级">
+                                        <i class="icon-arrow-right  icon-on-right"></i>&nbsp;${var.name}
+                                    </a>
+                                </td>
+                                <td class='center'>${var.parentCode}</td>
+                                <td class='center' style="width:35px;"><b class="green">${var.level}</b></td>
                                 <td style="width: 68px;">
-                                    <a class='btn btn-mini btn-info' title="编辑" onclick="edit('${var.ZD_ID }')"><i
-                                            class='icon-edit'></i></a>
-                                    <a class='btn btn-mini btn-danger' title="删除" onclick="del('${var.ZD_ID }')"><i
-                                            class='icon-trash'></i></a>
+                                    <a class='btn btn-mini btn-info' title="编辑" onclick="edit('${var.id}')">
+                                        <i class='icon-edit'></i>
+                                    </a>
+                                    <a class='btn btn-mini btn-danger' title="删除" onclick="del('${var.id}')">
+                                        <i class='icon-trash'></i>
+                                    </a>
                             </tr>
                         </c:forEach>
                     </c:when>
@@ -170,16 +172,19 @@
                 <table style="width:100%;">
                     <tr>
                         <td style="vertical-align:top;width:50px;">
-                            <a class="btn btn-small btn-success" onclick="add('${pd.PARENT_ID}');">新增</a>
+                            <a class="btn btn-small btn-success" onclick="add('${pd.parentId}');">新增</a>
                         </td>
                         <c:if test="${pd.PARENT_ID != '0'}">
                             <td style="vertical-align:top;" class="left">
                                 <a class="btn btn-small btn-info"
-                                   onclick="location.href='<%=basePath%>/dict?PARENT_ID=${pdp.PARENT_ID }';">返回</a>
+                                   onclick="location.href='/dict?parentId=${pdp.parentId }';">返回
+                                </a>
                             </td>
                         </c:if>
                         <td style="vertical-align:top;">
-                            <div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div>
+                            <div class="pagination"
+                                 style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}
+                            </div>
                         </td>
                     </tr>
                 </table>

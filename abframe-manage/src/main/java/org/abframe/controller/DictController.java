@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import com.google.common.base.Strings;
 import net.common.utils.uuid.UuidUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
@@ -9,11 +10,14 @@ import org.abframe.util.PageData;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -31,38 +35,45 @@ public class DictController extends BaseController {
 
 
     @RequestMapping(value = "/save")
-    public ModelAndView save(PrintWriter out) throws Exception {
+    public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mv = this.getModelAndView();
+
         PageData pd = new PageData();
         pd = this.getPageData();
+
         PageData pdp = new PageData();
         pdp = this.getPageData();
 
-        String PARENT_ID = pd.getString("PARENT_ID");
-        pdp.put("ZD_ID", PARENT_ID);
+        String parentId = pd.getString("parentId");
 
-        if (null == pd.getString("ZD_ID") || "".equals(pd.getString("ZD_ID"))) {
-            if (null != PARENT_ID && "0".equals(PARENT_ID)) {
-                pd.put("JB", 1);
-                pd.put("P_BM", pd.getString("BIANMA"));
+        pdp.put("id", parentId);
+        String id = ServletRequestUtils.getStringParameter(request, "id", "");
+        String code = ServletRequestUtils.getStringParameter(request, "code", "");
+
+        if (!Strings.isNullOrEmpty(id)) {
+            if (null != parentId && "0".equals(parentId)) {
+                pd.put("level", 1);
+                pd.put("parentCode", pd.getString("code"));
             } else {
                 pdp = dictService.findById(pdp);
-                pd.put("JB", Integer.parseInt(pdp.get("JB").toString()) + 1);
-                pd.put("P_BM", pdp.getString("BIANMA") + "_" + pd.getString("BIANMA"));
+                pd.put("level", Integer.parseInt(pdp.get("level").toString()) + 1);
+                pd.put("P_BM", pdp.getString("code") + "_" + pd.getString("code"));
             }
-            pd.put("ZD_ID", UuidUtil.genTerseUuid());    //ID
+            pd.put("id", UuidUtil.genTerseUuid());
             dictService.save(pd);
         } else {
             pdp = dictService.findById(pdp);
-            if (null != PARENT_ID && "0".equals(PARENT_ID)) {
-                pd.put("P_BM", pd.getString("BIANMA"));
+            if (null != parentId && "0".equals(parentId)) {
+                pd.put("parentCode", pd.getString("code"));
             } else {
-                pd.put("P_BM", pdp.getString("BIANMA") + "_" + pd.getString("BIANMA"));
+                pd.put("parentCode", pdp.getString("code") + "_" + pd.getString("code"));
             }
             dictService.edit(pd);
         }
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
+
+
         return mv;
     }
 
@@ -75,30 +86,30 @@ public class DictController extends BaseController {
         ModelAndView modelAndView = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        String PARENT_ID = pd.getString("PARENT_ID");
+        String parentId = pd.getString("parentId");
 
         try {
-            if (null != PARENT_ID && !"".equals(PARENT_ID) && !"0".equals(PARENT_ID)) {
+            if (!Strings.isNullOrEmpty(parentId) && !"0".equals(parentId)) {
 
                 //返回按钮用
                 PageData pdp = new PageData();
                 pdp = this.getPageData();
 
-                pdp.put("ZD_ID", PARENT_ID);
+                pdp.put("id", parentId);
                 pdp = dictService.findById(pdp);
                 modelAndView.addObject("pdp", pdp);
 
                 //头部导航
                 szdList = new ArrayList<PageData>();
-                this.getDictName(PARENT_ID);    //	逆序
+                this.getDictName(parentId);    //	逆序
                 Collections.reverse(szdList);
 
             }
 
-            String NAME = pd.getString("NAME");
-            if (null != NAME && !"".equals(NAME)) {
-                NAME = NAME.trim();
-                pd.put("NAME", NAME);
+            String name = pd.getString("name");
+            if (!Strings.isNullOrEmpty(name)) {
+                name = name.trim();
+                pd.put("name", name);
             }
             page.setShowCount(5);    //设置每页显示条数
             page.setPd(pd);
@@ -118,12 +129,12 @@ public class DictController extends BaseController {
     public void getDictName(String parentId) {
         try {
             PageData pdps = new PageData();
-            pdps.put("ZD_ID", parentId);
+            pdps.put("id", parentId);
             pdps = dictService.findById(pdps);
             if (pdps != null) {
                 szdList.add(pdps);
-                String PARENT_IDs = pdps.getString("PARENT_ID");
-                this.getDictName(PARENT_IDs);
+                String pid = pdps.getString("parentId");
+                this.getDictName(pid);
             }
         } catch (Exception e) {
             LOGGER.error("Controller dict exception.", e);

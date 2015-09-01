@@ -208,13 +208,13 @@ function productCode() {
     diag.show();
 }
 
-//数据字典
+
 function zidian() {
     jzts();
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "数据字典";
-    diag.URL = locat + '/dict?PARENT_ID=0';
+    diag.URL = locat + '/dict?parentId=0';
     diag.Width = 799;
     diag.Height = 460;
     diag.CancelEvent = function () {

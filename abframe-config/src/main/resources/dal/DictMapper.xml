@@ -2,104 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="DictMapper">
-    <!-- 修改 -->
+    <sql id="allAttribute">
+		<![CDATA[
+		id,
+		name,
+		code,
+		level,
+		orderId,
+		parentId,
+		parentCode
+        ]]>
+	</sql>
+
     <update id="edit" parameterType="pd">
-		update  t_dict
-			set NAME    = #{NAME},
-				ORDY_BY = #{ORDY_BY},
-				BIANMA  = #{BIANMA},
-				P_BM	  = #{P_BM}
-			where 
-				ZD_ID = #{ZD_ID}
+		update  t_dict 	set name= #{name},	orderId = #{orderId},code = #{code},parentCode= #{parentCode} where id = #{id}
 	</update>
 
-    <!-- 通过id获取数据 -->
     <select id="findById" parameterType="pd" resultType="pd">
 		select 
-			ZD_ID,
-			NAME,
-			BIANMA,
-			ORDY_BY,
-			PARENT_ID,
-			JB,
-			P_BM
+			<include refid="allAttribute"/>
 		from 
 			t_dict
 		where 
-			ZD_ID = #{ZD_ID}
+			id = #{id}
 	</select>
 
     <!-- 新增 -->
     <insert id="save" parameterType="pd">
-		insert into t_dict (
-			ZD_ID,
-			NAME,
-			BIANMA,
-			ORDY_BY,
-			PARENT_ID,
-			JB,
-			P_BM
-		) values (
-			#{ZD_ID},
-			#{NAME},
-			#{BIANMA},
-			#{ORDY_BY},
-			#{PARENT_ID},
-			#{JB},
-			#{P_BM}
-		)
+		insert into t_dict (id,name,code,orderId,parentId,level,parentCode) values (#{id},#{name},#{code},#{orderId},#{parentId},#{level},#{parentCode})
 	</insert>
 
     <!-- 列表 -->
     <select id="dictlistPage" parameterType="page" resultType="pd">
-        select z1.ZD_ID,
-        z1.NAME,
-        z1.BIANMA,
-        z1.ORDY_BY,
-        z1.PARENT_ID,
-        z1.JB,
-        z1.P_BM,
-        z2.NAME PNAME
+        select
+        z1.id,
+        z1.name,
+        z1.code,
+        z1.orderId,
+        z1.parentId,
+        z1.level,
+        z1.parentCode,
+        z2.name PNAME
         from t_dict z1
         left join
-		t_dict z2
-        on z1.PARENT_ID = z2.ZD_ID
+        t_dict z2
+        on z1.parentId = z2.id
         where
-        z1.PARENT_ID = #{pd.PARENT_ID}
-        <if test="pd.NAME != null and pd.NAME != ''">
-            and z1.NAME LIKE CONCAT(CONCAT('%', #{pd.NAME}),'%')
+        z1.parentId = #{pd.parentId}
+        <if test="pd.name != null and pd.name != ''">
+            and z1.name LIKE CONCAT(CONCAT('%', #{pd.name}),'%')
         </if>
-        order by z1.ORDY_BY
+        order by z1.orderId
     </select>
 
     <!-- 查询总数 -->
     <select id="findCount" parameterType="pd" resultType="pd">
-		select 
-			count(ZD_ID) ZS
-		from 
-			t_dict
-		where 
-			PARENT_ID = #{ZD_ID}
+		select count(id) ZS from t_dict where parentId = #{id}
 	</select>
 
     <!-- 查询某编码 -->
     <select id="findBmCount" parameterType="pd" resultType="pd">
-        select
-        ZD_ID
-        from
-		t_dict
-        where
-        BIANMA = #{BIANMA}
-        <if test="ZD_ID != null and ZD_ID != ''">
-            and ZD_ID != #{ZD_ID}
+        select id from  t_dict where code = #{code}
+        <if test="id != null and id != ''">
+            and id != #{id}
         </if>
     </select>
 
     <!-- 删除用户 -->
     <delete id="delete" parameterType="pd">
-		delete from t_dict
-		where 
-			ZD_ID = #{ZD_ID}
+		delete from t_dict where id = #{id}
 	</delete>
 
 
