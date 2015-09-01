@@ -9,9 +9,9 @@
     <!-- 邮箱port -->
     <entry key="mail.port">25</entry>
     <!-- 邮箱帐号 -->
-    <entry key="mail.username">shijinguijavafan@163.com</entry>
+    <entry key="mail.username">abframe@163.com</entry>
     <!-- 邮箱密码 -->
-    <entry key="mail.password">ruijinyeyu18</entry>
+    <entry key="mail.password">abf2015</entry>
     <!-- 邮箱名称-->
     <entry key="mail.name">abframe</entry>
     <!-- 邮箱主题 -->

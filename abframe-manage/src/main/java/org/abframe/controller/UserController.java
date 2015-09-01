@@ -1,10 +1,7 @@
 package org.abframe.controller;
 
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.entity.Role;
@@ -12,6 +9,12 @@ import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.service.UserService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -33,14 +35,17 @@ import java.util.*;
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
     String menuUrl = "user/list";
-    @Resource(name = "userService")
+
+    @Autowired
     private UserService userService;
 
-    @Resource(name = "roleService")
+    @Autowired
     private RoleService roleService;
 
-    @Resource(name = "menuService")
+    @Autowired
     private MenuService menuService;
 
 
@@ -50,7 +55,7 @@ public class UserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        pd.put("USER_ID", this.get32UUID());    //ID
+        pd.put("USER_ID", UuidUtil.genTerseUuid());    //ID
         pd.put("RIGHTS", "");                    //权限
         pd.put("LAST_LOGIN", "");                //最后登录时间
         pd.put("IP", "");                        //IP
@@ -86,7 +91,7 @@ public class UserController extends BaseController {
                 errInfo = "error";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller user exception.", e);
         }
         map.put("result", errInfo);                //返回结果
         return AppUtil.returnObject(new PageData(), map);
@@ -108,7 +113,7 @@ public class UserController extends BaseController {
                 errInfo = "error";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller user exception.", e);
         }
         map.put("result", errInfo);                //返回结果
         return AppUtil.returnObject(new PageData(), map);
@@ -129,7 +134,7 @@ public class UserController extends BaseController {
                 errInfo = "error";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller user exception.", e);
         }
         map.put("result", errInfo);                //返回结果
         return AppUtil.returnObject(new PageData(), map);
@@ -273,7 +278,7 @@ public class UserController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller user exception.", e);
         }
 
     }
@@ -304,9 +309,7 @@ public class UserController extends BaseController {
             pdList.add(pd);
             map.put("list", pdList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
-        } finally {
-            logAfter(logger);
+            LOGGER.error("Controller user exception.", e);
         }
         return AppUtil.returnObject(pd, map);
     }
@@ -375,7 +378,7 @@ public class UserController extends BaseController {
                 mv = new ModelAndView(erv, dataMap);
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller user exception.", e);
         }
         return mv;
     }
@@ -436,7 +439,7 @@ public class UserController extends BaseController {
              * var4 :备注
              */
             for (int i = 0; i < listPd.size(); i++) {
-                pd.put("USER_ID", this.get32UUID());                                        //ID
+                pd.put("USER_ID", UuidUtil.genTerseUuid());                                        //ID
                 pd.put("NAME", listPd.get(i).getString("var1"));                            //姓名
 
                 String USERNAME = GetPinyin.getPingYin(listPd.get(i).getString("var1"));    //根据姓名汉字生成全拼

@@ -5,11 +5,12 @@ import org.abframe.service.MemberUserService;
 import org.abframe.util.AppUtil;
 import org.abframe.util.PageData;
 import org.abframe.util.Tools;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,9 @@ import java.util.Map;
 @RequestMapping(value = "/memberApi")
 public class MemberUserApiController extends BaseController {
 
-    @Resource(name = "memberUserService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MemberUserApiController.class);
+
+    @Autowired
     private MemberUserService memberUesrService;
 
     /**
@@ -38,7 +41,6 @@ public class MemberUserApiController extends BaseController {
     @RequestMapping(value = "/getMemberUserByUm")
     @ResponseBody
     public Object getAppuserByUsernmae() {
-        logBefore(logger, "根据用户名获取会员信息");
         Map<String, Object> map = new HashMap<String, Object>();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -59,10 +61,9 @@ public class MemberUserApiController extends BaseController {
                 result = "05";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller memberApi exception.", e);
         } finally {
             map.put("result", result);
-            logAfter(logger);
         }
 
         return AppUtil.returnObject(new PageData(), map);

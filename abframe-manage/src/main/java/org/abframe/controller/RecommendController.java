@@ -9,12 +9,13 @@ import org.abframe.util.PageData;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
@@ -27,13 +28,14 @@ import java.util.Map;
 @RequestMapping(value = "/recommend")
 public class RecommendController extends BaseController {
 
-    @Resource(name = "recommendService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(RecommendController.class);
+
+    @Autowired
     private RecommendService recommendService;
 
 
     @RequestMapping(value = "/list")
     public ModelAndView listUsers(HttpSession session, Page page) throws Exception {
-        logBefore(logger, "特别推荐列表");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
@@ -54,7 +56,7 @@ public class RecommendController extends BaseController {
             //按钮权限
             mv.addObject(Constant.SESSION_QX, this.getHC());
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller recommend exception.", e);
         }
         return mv;
     }
@@ -69,7 +71,7 @@ public class RecommendController extends BaseController {
             mv.setViewName("recommend/recEdit");
             mv.addObject("msg", "save");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller recommend exception.", e);
         }
         return mv;
     }
@@ -86,7 +88,7 @@ public class RecommendController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller recommend exception.", e);
         }
         return mv;
     }
@@ -134,7 +136,7 @@ public class RecommendController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller recommend exception.", e);
         }
     }
 

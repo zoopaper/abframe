@@ -4,6 +4,7 @@ import org.abframe.util.Constant;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +22,8 @@ import java.util.Random;
 @Controller
 @RequestMapping("/code")
 public class SecCodeController {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(SecCodeController.class);
 
     @RequestMapping
     public void generate(HttpServletResponse response) {

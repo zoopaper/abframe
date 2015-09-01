@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
@@ -10,6 +11,8 @@ import org.abframe.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,13 +30,15 @@ import java.util.*;
 @RequestMapping(value = "/member")
 public class MemberUserController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MemberUserController.class);
+
     String menuUrl = "member/listUser";
 
-    @Resource(name = "memberUserService")
+    @Autowired
     private MemberUserService memberUserService;
 
 
-    @Resource(name = "roleService")
+    @Autowired
     private RoleService roleService;
 
 
@@ -44,7 +48,7 @@ public class MemberUserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        pd.put("USER_ID", this.get32UUID());    //ID
+        pd.put("USER_ID", UuidUtil.genTerseUuid());    //ID
         pd.put("RIGHTS", "");                    //权限
         pd.put("LAST_LOGIN", "");                //最后登录时间
         pd.put("IP", "");                        //IP
@@ -96,7 +100,7 @@ public class MemberUserController extends BaseController {
                 errInfo = "error";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         map.put("result", errInfo);                //返回结果
         return AppUtil.returnObject(new PageData(), map);
@@ -117,7 +121,7 @@ public class MemberUserController extends BaseController {
                 errInfo = "error";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         map.put("result", errInfo);                //返回结果
         return AppUtil.returnObject(new PageData(), map);
@@ -138,7 +142,7 @@ public class MemberUserController extends BaseController {
                 errInfo = "error";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         map.put("result", errInfo);
         return AppUtil.returnObject(new PageData(), map);
@@ -158,7 +162,7 @@ public class MemberUserController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject("roleList", roleList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         return mv;
     }
@@ -177,7 +181,7 @@ public class MemberUserController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject("roleList", roleList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         return mv;
     }
@@ -206,7 +210,7 @@ public class MemberUserController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         return mv;
     }
@@ -225,7 +229,7 @@ public class MemberUserController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
 
     }
@@ -256,9 +260,7 @@ public class MemberUserController extends BaseController {
             pdList.add(pd);
             map.put("list", pdList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
-        } finally {
-            logAfter(logger);
+            LOGGER.error("Controller member exception.", e);
         }
         return AppUtil.returnObject(pd, map);
     }
@@ -332,7 +334,7 @@ public class MemberUserController extends BaseController {
                 mv = new ModelAndView(erv, dataMap);
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller member exception.", e);
         }
         return mv;
     }

@@ -10,10 +10,12 @@ import org.marker.weixin.DefaultSession;
 import org.marker.weixin.HandleMessageAdapter;
 import org.marker.weixin.MySecurity;
 import org.marker.weixin.msg.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 import javax.net.ssl.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,13 +33,15 @@ import java.util.List;
 @RequestMapping(value = "/weixin")
 public class WeixinController extends BaseController {
 
-    @Resource(name = "weixinTextMsgService")
+    private static final Logger LOGGER = LoggerFactory.getLogger(WeixinController.class);
+
+    @Autowired
     private WeixinTextMsgService weixinTextMsgService;
 
-    @Resource(name = "weixinCommandService")
+    @Autowired
     private WeixinCommandService weixinCommandService;
 
-    @Resource(name = "weixinImgMsgService")
+    @Autowired
     private WeixinImgMsgService weixinImgMsgService;
 
     /**
@@ -50,8 +54,6 @@ public class WeixinController extends BaseController {
      */
     @RequestMapping(value = "/index")
     public void index(PrintWriter out, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        logBefore(logger, "微信接口");
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -61,7 +63,6 @@ public class WeixinController extends BaseController {
             String echostr = pd.getString("echostr");            //字符串
 
             if (null != signature && null != timestamp && null != nonce && null != echostr) {/* 接口验证  */
-                logBefore(logger, "进入身份验证");
                 List<String> list = new ArrayList<String>(3) {
                     private static final long serialVersionUID = 2621444383666420433L;
 
@@ -85,12 +86,11 @@ public class WeixinController extends BaseController {
                 out.close();
             } else {
                 /* 消息处理  */
-                logBefore(logger, "进入消息处理");
                 response.reset();
                 sendMsg(request, response);
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin exception.", e);
         }
     }
 
@@ -246,8 +246,8 @@ public class WeixinController extends BaseController {
                             }
                         }
                     }
-                } catch (Exception e1) {
-                    logBefore(logger, "匹配错误");
+                } catch (Exception e) {
+                    LOGGER.error("Controller weixin exception.", e);
                 }
             }
 
@@ -264,7 +264,6 @@ public class WeixinController extends BaseController {
     //获取access_token
     @RequestMapping(value = "/getGz")
     public void getGz(PrintWriter out) {
-        logBefore(logger, "获取关注列表");
         try {
             String access_token = readTxtFile("e:/access_token.txt");
 
@@ -291,7 +290,7 @@ public class WeixinController extends BaseController {
 			out.write("success");
 			out.close();*/
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin exception.", e);
         }
     }
 
@@ -327,7 +326,6 @@ public class WeixinController extends BaseController {
     //获取access_token
     @RequestMapping(value = "/getAt")
     public void getAt(PrintWriter out) {
-        logBefore(logger, "获取access_token");
         try {
             String appid = "wx9f43c8daa1c13934";
             String appsecret = "2c7f6552a5a845b49d47f65dd90beb50";
@@ -350,7 +348,7 @@ public class WeixinController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin exception.", e);
         }
     }
 

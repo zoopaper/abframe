@@ -5,12 +5,13 @@ import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.service.MenuService;
 import org.abframe.util.PageData;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,7 +20,9 @@ import java.util.List;
 @RequestMapping(value = "/menu")
 public class MenuController extends BaseController {
 
-    @Resource(name = "menuService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
+
+    @Autowired
     private MenuService menuService;
 
     @RequestMapping
@@ -30,7 +33,7 @@ public class MenuController extends BaseController {
             mv.addObject("menuList", menuList);
             mv.setViewName("menu/menuList");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
         }
         return mv;
     }
@@ -43,7 +46,7 @@ public class MenuController extends BaseController {
             mv.addObject("menuList", menuList);
             mv.setViewName("menu/menuAdd");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
         }
         return mv;
     }
@@ -66,7 +69,7 @@ public class MenuController extends BaseController {
             menuService.saveMenu(menu);
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
             mv.addObject("msg", "failed");
         }
         mv.setViewName("save_result");
@@ -86,7 +89,7 @@ public class MenuController extends BaseController {
             mv.addObject("pd", pd);
             mv.setViewName("menu/menuEdit");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
         }
         return mv;
     }
@@ -101,7 +104,7 @@ public class MenuController extends BaseController {
             mv.addObject("pd", pd);
             mv.setViewName("menu/menuIcon");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
         }
         return mv;
     }
@@ -121,7 +124,7 @@ public class MenuController extends BaseController {
             pd = menuService.editicon(pd);
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
             mv.addObject("msg", "failed");
         }
         mv.setViewName("save_result");
@@ -150,7 +153,7 @@ public class MenuController extends BaseController {
             pd = menuService.edit(pd);
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
             mv.addObject("msg", "failed");
         }
         mv.setViewName("save_result");
@@ -174,7 +177,7 @@ public class MenuController extends BaseController {
             out.flush();
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
         }
     }
 
@@ -186,7 +189,7 @@ public class MenuController extends BaseController {
             out.flush();
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller menu exception.", e);
         }
     }
 }

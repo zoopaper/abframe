@@ -5,6 +5,7 @@ import cn.jpush.api.IOSExtra;
 import cn.jpush.api.JPushClient;
 import cn.jpush.api.MessageResult;
 import org.abframe.controller.base.BaseController;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,6 +15,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/jpush")
 public class JPushController extends BaseController {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(JPushController.class);
 
     private static final String appKey = "737cea7b852bf8c60cecbf51"; // 必填，例如466f7032ac604e02fb7bda89
 

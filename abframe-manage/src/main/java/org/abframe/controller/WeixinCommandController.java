@@ -1,13 +1,17 @@
 package org.abframe.controller;
 
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.WeixinCommandService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,21 +29,22 @@ import java.util.*;
 @RequestMapping(value = "/command")
 public class WeixinCommandController extends BaseController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(WeixinCommandController.class);
+
     String menuUrl = "command/list";
 
-    @Resource(name = "weixinCommandService")
+    @Autowired
     private WeixinCommandService weixinCommandService;
 
     @RequestMapping(value = "/save")
     public ModelAndView save() throws Exception {
-        logBefore(logger, "新增Command");
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
             return null;
         }
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        pd.put("COMMAND_ID", this.get32UUID());    //主键
+        pd.put("COMMAND_ID", UuidUtil.genTerseUuid());    //主键
         pd.put("CREATETIME", Tools.date2Str(new Date()));    //创建时间
         weixinCommandService.save(pd);
         mv.addObject("msg", "success");
@@ -51,7 +55,6 @@ public class WeixinCommandController extends BaseController {
 
     @RequestMapping(value = "/delete")
     public void delete(PrintWriter out) {
-        logBefore(logger, "删除Command");
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "del")) {
             return;
         }
@@ -62,31 +65,33 @@ public class WeixinCommandController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin command exception", e);
         }
 
     }
 
 
     @RequestMapping(value = "/edit")
-    public ModelAndView edit() throws Exception {
-        logBefore(logger, "修改Command");
+    public ModelAndView edit() {
+        ModelAndView mv = this.getModelAndView();
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
             return null;
         }
-        ModelAndView mv = this.getModelAndView();
-        PageData pd = new PageData();
-        pd = this.getPageData();
-        weixinCommandService.edit(pd);
-        mv.addObject("msg", "success");
-        mv.setViewName("save_result");
+        try {
+            PageData pd = new PageData();
+            pd = this.getPageData();
+            weixinCommandService.edit(pd);
+            mv.addObject("msg", "success");
+            mv.setViewName("save_result");
+        } catch (Exception e) {
+            LOGGER.error("Controller weixin command exception", e);
+        }
         return mv;
     }
 
 
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
-        logBefore(logger, "列表Command");
         //if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
@@ -103,7 +108,7 @@ public class WeixinCommandController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin commond exception", e);
         }
         return mv;
     }
@@ -111,7 +116,6 @@ public class WeixinCommandController extends BaseController {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() {
-        logBefore(logger, "去新增Command页面");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -120,7 +124,7 @@ public class WeixinCommandController extends BaseController {
             mv.addObject("msg", "save");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin command exception", e);
         }
         return mv;
     }
@@ -130,7 +134,6 @@ public class WeixinCommandController extends BaseController {
      */
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit() {
-        logBefore(logger, "去修改Command页面");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -140,7 +143,7 @@ public class WeixinCommandController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin command exception", e);
         }
         return mv;
     }
@@ -148,7 +151,6 @@ public class WeixinCommandController extends BaseController {
     @RequestMapping(value = "/deleteAll")
     @ResponseBody
     public Object deleteAll() {
-        logBefore(logger, "批量删除Command");
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "dell")) {
             return null;
         }
@@ -168,9 +170,7 @@ public class WeixinCommandController extends BaseController {
             pdList.add(pd);
             map.put("list", pdList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
-        } finally {
-            logAfter(logger);
+            LOGGER.error("Controller weixin command exception", e);
         }
         return AppUtil.returnObject(pd, map);
     }
@@ -181,7 +181,6 @@ public class WeixinCommandController extends BaseController {
      */
     @RequestMapping(value = "/excel")
     public ModelAndView exportExcel() {
-        logBefore(logger, "导出Command到excel");
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "cha")) {
             return null;
         }
@@ -212,7 +211,7 @@ public class WeixinCommandController extends BaseController {
             ObjectExcelView erv = new ObjectExcelView();
             mv = new ModelAndView(erv, dataMap);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller weixin command exception", e);
         }
         return mv;
     }

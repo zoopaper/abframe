@@ -8,6 +8,7 @@ import org.abframe.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/config")
 public class ConfigController extends BaseController {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ConfigController.class);
 
     @Autowired
     private UserService userService;
@@ -60,9 +63,7 @@ public class ConfigController extends BaseController {
             pdList.add(pds);
             map.put("list", pdList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
-        } finally {
-            logAfter(logger);
+            LOGGER.error("Controller config exception ", e);
         }
         return AppUtil.returnObject(pd, map);
     }
@@ -88,7 +89,7 @@ public class ConfigController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller config exception ", e);
         }
 
     }
@@ -193,7 +194,6 @@ public class ConfigController extends BaseController {
         map.put("list", pdList);
         return AppUtil.returnObject(pd, map);
     }
-
 
 
     /**

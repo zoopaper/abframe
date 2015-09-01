@@ -1,14 +1,16 @@
 package org.abframe.controller;
 
 import net.common.utils.date.DateUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.NoticeService;
 import org.abframe.util.Constant;
 import org.abframe.util.PageData;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,13 +26,14 @@ import java.util.Map;
 @RequestMapping(value = "/notice")
 public class NoticeController extends BaseController {
 
-    @Resource(name = "noticeService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
+
+    @Autowired
     private NoticeService noticeService;
 
 
     @RequestMapping(value = "/list")
     public ModelAndView listUsers(HttpSession session, Page page) {
-        logBefore(logger, "公告列表");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
@@ -55,7 +58,7 @@ public class NoticeController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller notice exception.", e);
         }
 
         return mv;
@@ -70,7 +73,7 @@ public class NoticeController extends BaseController {
             mv.setViewName("notice/noticeEdit");
             mv.addObject("msg", "save");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller notice exception.", e);
         }
         return mv;
     }
@@ -87,7 +90,7 @@ public class NoticeController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller notice exception.", e);
         }
         return mv;
     }
@@ -137,7 +140,7 @@ public class NoticeController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller notice exception.", e);
         }
 
     }

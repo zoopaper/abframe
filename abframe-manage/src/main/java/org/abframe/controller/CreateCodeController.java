@@ -2,21 +2,18 @@ package org.abframe.controller;
 
 import org.abframe.controller.base.BaseController;
 import org.abframe.util.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-/**
- * 类名称：FreemarkerController
- * 创建人：FH
- * 创建时间：2015年1月12日
- */
 @Controller
 @RequestMapping(value = "/createCode")
 public class CreateCodeController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(CreateCodeController.class);
     /**
      * 生成代码
      */

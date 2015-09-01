@@ -1,19 +1,20 @@
 package org.abframe.controller;
 
 import net.common.utils.date.DateUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.NewsService;
 import org.abframe.util.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
@@ -25,12 +26,13 @@ import java.util.Map;
 @RequestMapping(value = "/news")
 public class NewsController extends BaseController {
 
-    @Resource(name = "newsService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
+
+    @Autowired
     private NewsService newsService;
 
     @RequestMapping(value = "/list")
     public ModelAndView listUsers(HttpSession session, Page page) throws Exception {
-        logBefore(logger, "新闻列表");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
@@ -53,7 +55,7 @@ public class NewsController extends BaseController {
             mv.addObject("varList", varList);
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller news exception.", e);
         }
         return mv;
     }
@@ -68,7 +70,7 @@ public class NewsController extends BaseController {
             mv.setViewName("news/newsEdit");
             mv.addObject("msg", "save");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller news exception.", e);
         }
         return mv;
     }
@@ -85,7 +87,7 @@ public class NewsController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller news exception.", e);
         }
         return mv;
     }
@@ -153,7 +155,7 @@ public class NewsController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller news exception.", e);
         }
     }
 
@@ -177,7 +179,7 @@ public class NewsController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller news exception.", e);
         }
 
     }

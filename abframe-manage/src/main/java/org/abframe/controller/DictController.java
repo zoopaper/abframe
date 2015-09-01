@@ -1,17 +1,19 @@
 package org.abframe.controller;
 
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.DictService;
 import org.abframe.util.AppUtil;
 import org.abframe.util.PageData;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -22,10 +24,9 @@ import java.util.*;
 @RequestMapping(value = "/dict")
 public class DictController extends BaseController {
 
-//    @Resource(name = "menuService")
-//    private MenuService menuService;
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DictController.class);
 
-    @Resource(name = "dictService")
+    @Autowired
     private DictService dictService;
 
 
@@ -49,7 +50,7 @@ public class DictController extends BaseController {
                 pd.put("JB", Integer.parseInt(pdp.get("JB").toString()) + 1);
                 pd.put("P_BM", pdp.getString("BIANMA") + "_" + pd.getString("BIANMA"));
             }
-            pd.put("ZD_ID", this.get32UUID());    //ID
+            pd.put("ZD_ID", UuidUtil.genTerseUuid());    //ID
             dictService.save(pd);
         } else {
             pdp = dictService.findById(pdp);
@@ -115,7 +116,6 @@ public class DictController extends BaseController {
 
     //递归
     public void getDictName(String parentId) {
-        logBefore(logger, "递归");
         try {
             PageData pdps = new PageData();
             pdps.put("ZD_ID", parentId);
@@ -126,7 +126,7 @@ public class DictController extends BaseController {
                 this.getDictName(PARENT_IDs);
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller dict exception.", e);
         }
     }
 
@@ -140,7 +140,7 @@ public class DictController extends BaseController {
             mv.setViewName("dict/dictEdit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller dict exception.", e);
         }
         return mv;
     }
@@ -178,7 +178,7 @@ public class DictController extends BaseController {
             }
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller dict exception.", e);
         }
 
     }
@@ -199,7 +199,7 @@ public class DictController extends BaseController {
                 errInfo = "success";
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller dict exception.", e);
         }
         map.put("result", errInfo);
         return AppUtil.returnObject(new PageData(), map);

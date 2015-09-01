@@ -1,8 +1,10 @@
 package org.abframe.controller;
 
 
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.util.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +21,7 @@ import java.util.Map;
 @RequestMapping(value = "/tool")
 public class ToolController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ToolController.class);
 
     /**
      * 接口测试页面
@@ -96,7 +99,7 @@ public class ToolController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
         String errInfo = "success";
-        String encoderImgId = this.get32UUID() + ".png";
+        String encoderImgId = UuidUtil.genTerseUuid()+".png";
         String encoderContent = pd.getString("encoderContent");
         if (null == encoderContent) {
             errInfo = "error";

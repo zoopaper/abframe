@@ -16,6 +16,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,13 +35,15 @@ import java.util.Map;
 @Controller
 public class LoginController extends BaseController {
 
-    @Resource(name = "userService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+
+    @Autowired
     private UserService userService;
 
-    @Resource(name = "menuService")
+    @Autowired
     private MenuService menuService;
 
-    @Resource(name = "roleService")
+    @Autowired
     private RoleService roleService;
 
     /**
@@ -249,7 +252,7 @@ public class LoginController extends BaseController {
 
         } catch (Exception e) {
             mv.setViewName("common/login");
-            logger.error(e.getMessage(), e);
+            LOGGER.error("Controller login exception.", e);
         }
         mv.addObject("pd", pd);
         return mv;
@@ -353,7 +356,7 @@ public class LoginController extends BaseController {
             map.put("chas", pd.getString("CHA_QX"));
             this.getRemortIP(USERNAME);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller login exception.", e);
         }
         return map;
     }

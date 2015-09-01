@@ -1,8 +1,6 @@
 package org.abframe.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.LineService;
@@ -10,6 +8,11 @@ import org.abframe.util.AppUtil;
 import org.abframe.util.Constant;
 import org.abframe.util.ObjectExcelView;
 import org.abframe.util.PageData;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,17 +31,18 @@ import java.util.*;
 @RequestMapping(value = "/line")
 public class LineController extends BaseController {
 
-    @Resource(name = "lineService")
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LineController.class);
+
+    @Autowired
     private LineService lineService;
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView save() throws Exception {
-        logBefore(logger, "新增Line");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        pd.put("LINE_ID", this.get32UUID());    //主键
+        pd.put("LINE_ID", UuidUtil.genTerseUuid());    //主键
         //pd.put("PARENT_ID", "");	//父类ID
         lineService.save(pd);
         mv.addObject("msg", "success");
@@ -50,7 +53,6 @@ public class LineController extends BaseController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public void delete(PrintWriter out) {
-        logBefore(logger, "删除Line");
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -58,14 +60,13 @@ public class LineController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller line exception.", e);
         }
 
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit() throws Exception {
-        logBefore(logger, "修改Line");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -78,7 +79,6 @@ public class LineController extends BaseController {
 
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
-        logBefore(logger, "列表Line");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
@@ -96,13 +96,13 @@ public class LineController extends BaseController {
             }
 
             page.setPd(pd);
-            List<PageData> varList = lineService.list(page);    //列出Line列表
+            List<PageData> varList = lineService.list(page);
             mv.setViewName("line/lineList");
             mv.addObject("varList", varList);
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller line exception.", e);
         }
         return mv;
     }
@@ -110,7 +110,6 @@ public class LineController extends BaseController {
 
     @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
     public ModelAndView toAdd() {
-        logBefore(logger, "去新增Line页面");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -119,7 +118,7 @@ public class LineController extends BaseController {
             mv.addObject("msg", "save");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller line exception.", e);
         }
         return mv;
     }
@@ -127,7 +126,6 @@ public class LineController extends BaseController {
 
     @RequestMapping(value = "/toEdit", method = RequestMethod.GET)
     public ModelAndView toEdit() {
-        logBefore(logger, "去修改Line页面");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -137,7 +135,7 @@ public class LineController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller line exception.", e);
         }
         return mv;
     }
@@ -146,7 +144,6 @@ public class LineController extends BaseController {
     @RequestMapping(value = "/deleteAll")
     @ResponseBody
     public Object deleteAll() {
-        logBefore(logger, "批量删除Line");
         Map map = new HashMap();
         PageData pd = new PageData();
         try {
@@ -163,9 +160,7 @@ public class LineController extends BaseController {
             pdList.add(pd);
             map.put("list", pdList);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
-        } finally {
-            logAfter(logger);
+            LOGGER.error("Controller line exception.", e);
         }
         return AppUtil.returnObject(pd, map);
     }
@@ -176,7 +171,6 @@ public class LineController extends BaseController {
      */
     @RequestMapping(value = "/excel")
     public ModelAndView exportExcel() {
-        logBefore(logger, "导出Line到excel");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -206,7 +200,7 @@ public class LineController extends BaseController {
             ObjectExcelView erv = new ObjectExcelView();
             mv = new ModelAndView(erv, dataMap);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller line exception.", e);
         }
         return mv;
     }

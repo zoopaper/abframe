@@ -1,7 +1,6 @@
 package org.abframe.controller.base;
 
 
-import net.common.utils.uuid.UuidUtil;
 import org.abframe.entity.Page;
 import org.abframe.util.Logger;
 import org.abframe.util.PageData;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
 
-    protected Logger logger = Logger.getLogger(this.getClass());
 
     /**
      * 得到PageData
@@ -38,15 +36,6 @@ public class BaseController {
         return request;
     }
 
-    /**
-     * 得到32位的uuid
-     *
-     * @return
-     */
-    public String get32UUID() {
-
-        return UuidUtil.genTerseUuid();
-    }
 
     /**
      * 得到分页列表的信息
@@ -54,17 +43,6 @@ public class BaseController {
     public Page getPage() {
 
         return new Page();
-    }
-
-    public static void logBefore(Logger logger, String interfaceName) {
-        logger.info("");
-        logger.info("start");
-        logger.info(interfaceName);
-    }
-
-    public static void logAfter(Logger logger) {
-        logger.info("end");
-        logger.info("");
     }
 
 }

@@ -11,6 +11,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,13 +37,14 @@ import java.util.Map;
 @RequestMapping(value = "/adv")
 public class AdvertController extends BaseController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdvertController.class);
+
     @Autowired
     private AdvertService advertService;
 
-
     @RequestMapping(value = "/list")
     public ModelAndView listUsers(HttpSession session, Page page) {
-        logBefore(logger, "广告列表");
+
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
@@ -68,7 +71,7 @@ public class AdvertController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller adv exception ", e);
         }
 
         return mv;
@@ -84,7 +87,7 @@ public class AdvertController extends BaseController {
             mv.setViewName("advert/advertEdit");
             mv.addObject("msg", "save");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller adv/toAdd exception ", e);
         }
         return mv;
     }
@@ -102,7 +105,7 @@ public class AdvertController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller adv/toEdit exception ", e);
         }
         return mv;
     }
@@ -158,7 +161,7 @@ public class AdvertController extends BaseController {
                 this.copyFile(tp.getInputStream(), pictureSaveFilePath + "TP", tpid + extName).replaceAll("-", "");
                 pd.put("adurl", tpid + extName);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                LOGGER.error("Controller adv exception ", e);
             }
         } else {
             pd.put("adurl", tpz);
@@ -216,7 +219,7 @@ public class AdvertController extends BaseController {
                 this.copyFile(tp.getInputStream(), pictureSaveFilePath + "TP", id + extName).replaceAll("-", "");
                 pd.put("adurl", id + extName);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                LOGGER.error("Controller adv exception ", e);
             }
         } else {
             pd.put("adurl", "");
@@ -253,7 +256,7 @@ public class AdvertController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller adv exception ", e);
         }
 
     }
@@ -261,7 +264,7 @@ public class AdvertController extends BaseController {
 
     @RequestMapping(value = "/delPic")
     public void delPic(PrintWriter out) {
-        logBefore(logger, "删除图片");
+
         try {
             ModelAndView mv = new ModelAndView();
             PageData pd = new PageData();
@@ -286,7 +289,7 @@ public class AdvertController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller adv exception ", e);
         }
     }
 

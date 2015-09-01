@@ -1,13 +1,14 @@
 package org.abframe.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.util.Constant;
-import org.abframe.common.PermissionHandler;
 import org.abframe.util.PageData;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -25,12 +26,12 @@ import java.util.Map;
 @RequestMapping(value = "/onlineUser")
 public class OnlineUserController extends BaseController {
 
-    String menuUrl = "onlineUser/list";
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(OnlineUserController.class);
 
+    String menuUrl = "onlineUser/list";
 
     @RequestMapping(value = "/delete")
     public void delete(PrintWriter out) {
-        logBefore(logger, "");
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "del")) {
             return;
         } //校验权限
@@ -40,14 +41,14 @@ public class OnlineUserController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller onlineUser exception.", e);
         }
 
     }
 
     @RequestMapping(value = "/edit")
     public ModelAndView edit() throws Exception {
-        logBefore(logger, "");
+
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
             return null;
         }
@@ -61,7 +62,7 @@ public class OnlineUserController extends BaseController {
 
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
-        logBefore(logger, "");
+
         //if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
@@ -72,7 +73,7 @@ public class OnlineUserController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller onlineUser exception.", e);
         }
         return mv;
     }
@@ -82,7 +83,7 @@ public class OnlineUserController extends BaseController {
      */
     @RequestMapping(value = "/goAdd")
     public ModelAndView toAdd() {
-        logBefore(logger, "去新增OnlineManager页面");
+
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -91,7 +92,7 @@ public class OnlineUserController extends BaseController {
             mv.addObject("msg", "save");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller onlineUser exception.", e);
         }
         return mv;
     }

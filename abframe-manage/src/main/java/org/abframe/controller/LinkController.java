@@ -11,6 +11,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -33,14 +34,14 @@ import java.util.Map;
 @RequestMapping(value = "/link")
 public class LinkController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LinkController.class);
 
-    @Resource(name = "linkService")
+    @Autowired
     private LinkService linkService;
 
 
     @RequestMapping(value = "/list")
     public ModelAndView listUsers(HttpSession session, Page page) {
-        logBefore(logger, "友情链接列表");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
@@ -61,7 +62,7 @@ public class LinkController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller Link exception.", e);
         }
         return mv;
     }
@@ -76,7 +77,7 @@ public class LinkController extends BaseController {
             mv.setViewName("link/linkEdit");
             mv.addObject("msg", "save");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller Link exception.", e);
         }
         return mv;
     }
@@ -93,7 +94,7 @@ public class LinkController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller Link exception.", e);
         }
         return mv;
     }
@@ -146,7 +147,7 @@ public class LinkController extends BaseController {
                 this.copyFile(tp.getInputStream(), pictureSaveFilePath + "TP", tpid + extName).replaceAll("-", "");
                 pd.put("stieurl", tpid + extName);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                LOGGER.error("Controller Link exception.", e);
             }
         } else {
             pd.put("stieurl", tpz);
@@ -202,7 +203,7 @@ public class LinkController extends BaseController {
                 this.copyFile(tp.getInputStream(), pictureSaveFilePath + "TP", id + extName).replaceAll("-", "");
                 pd.put("stieurl", id + extName);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                LOGGER.error("Controller Link exception.", e);
             }
         } else {
             pd.put("stieurl", "");
@@ -239,7 +240,7 @@ public class LinkController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller Link exception.", e);
         }
 
     }
@@ -247,7 +248,6 @@ public class LinkController extends BaseController {
 
     @RequestMapping(value = "/delPic")
     public void delPic(PrintWriter out) {
-        logBefore(logger, "删除图片");
         try {
             ModelAndView mv = new ModelAndView();
             PageData pd = new PageData();
@@ -272,7 +272,7 @@ public class LinkController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller Link exception.", e);
         }
     }
 

@@ -1,6 +1,7 @@
 package org.abframe.controller;
 
 import com.google.common.base.Strings;
+import net.common.utils.uuid.UuidUtil;
 import net.sf.json.JSONArray;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
@@ -13,6 +14,8 @@ import org.abframe.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -32,12 +34,14 @@ import java.util.Map;
 @RequestMapping(value = "/role")
 public class RoleController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(RoleController.class);
+
     String menuUrl = "role";
 
-    @Resource(name = "menuService")
+    @Autowired
     private MenuService menuService;
 
-    @Resource(name = "roleService")
+    @Autowired
     private RoleService roleService;
 
     /**
@@ -56,7 +60,7 @@ public class RoleController extends BaseController {
             mv.setViewName("save_result");
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         return mv;
     }
@@ -77,7 +81,7 @@ public class RoleController extends BaseController {
             mv.setViewName("save_result");
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         return mv;
     }
@@ -98,7 +102,7 @@ public class RoleController extends BaseController {
             mv.setViewName("save_result");
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         return mv;
     }
@@ -140,7 +144,7 @@ public class RoleController extends BaseController {
             mv.setViewName("role/roleAdd");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         return mv;
     }
@@ -163,7 +167,7 @@ public class RoleController extends BaseController {
 
             pd.put("QX_ID", "");
 
-            String UUID = this.get32UUID();
+            String UUID = UuidUtil.genTerseUuid();
 
             pd.put("GL_ID", UUID);
             pd.put("FX_QX", 0);                //发信权限
@@ -200,7 +204,7 @@ public class RoleController extends BaseController {
             }
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
             mv.addObject("msg", "failed");
         }
         mv.setViewName("save_result");
@@ -221,7 +225,7 @@ public class RoleController extends BaseController {
             mv.setViewName("role/roleEdit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         return mv;
     }
@@ -237,7 +241,7 @@ public class RoleController extends BaseController {
             }
             mv.addObject("msg", "success");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
             mv.addObject("msg", "failed");
         }
         mv.setViewName("save_result");
@@ -271,7 +275,7 @@ public class RoleController extends BaseController {
             model.addAttribute("zTreeNodes", json);
             model.addAttribute("roleId", ROLE_ID);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
 
         return "auth/auth";
@@ -317,7 +321,7 @@ public class RoleController extends BaseController {
             mv.addObject("roleId", ROLE_ID);
             mv.addObject("msg", msg);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         mv.setViewName("role/roleButton");
         return mv;
@@ -351,7 +355,7 @@ public class RoleController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
     }
 
@@ -376,7 +380,7 @@ public class RoleController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
     }
 
@@ -410,7 +414,7 @@ public class RoleController extends BaseController {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller role exception.", e);
         }
         map.put("result", errInfo);
         return AppUtil.returnObject(new PageData(), map);

@@ -1,6 +1,7 @@
 package org.abframe.controller;
 
 import net.common.utils.date.DateUtil;
+import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
@@ -9,6 +10,8 @@ import org.abframe.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -27,28 +29,30 @@ import java.util.*;
 @RequestMapping(value = "/pic")
 public class PicController extends BaseController {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(PicController.class);
+
     String menuUrl = "pic/list";
-    @Resource(name = "picService")
+
+    @Autowired
     private PicService picService;
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public Object save(@RequestParam(required = false) MultipartFile file) {
-        logBefore(logger, "新增Pictures");
         Map<String, String> map = new HashMap<String, String>();
-        String ffile = DateUtil.formatDate(new Date(),DateUtil.DATE_STR1), fileName = "";
+        String ffile = DateUtil.formatDate(new Date(), DateUtil.DATE_STR1), fileName = "";
         PageData pd = new PageData();
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
                 if (null != file && !file.isEmpty()) {
                     String filePath = PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile;        //文件上传路径
-                    fileName = FileUpload.fileUp(file, filePath, this.get32UUID());                //执行上传
+                    fileName = FileUpload.fileUp(file, filePath, UuidUtil.genTerseUuid());                //执行上传
                 } else {
                     System.out.println("上传失败");
                 }
 
-                pd.put("PICTURES_ID", this.get32UUID());            //主键
+                pd.put("PICTURES_ID", UuidUtil.genTerseUuid());            //主键
                 pd.put("TITLE", "图片");                                //标题
                 pd.put("NAME", fileName);                            //文件名
                 pd.put("PATH", ffile + "/" + fileName);                //路径
@@ -60,7 +64,7 @@ public class PicController extends BaseController {
                 picService.save(pd);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Controller pic exception.", e);
         }
 
         map.put("result", "ok");
@@ -69,7 +73,6 @@ public class PicController extends BaseController {
 
     @RequestMapping(value = "/delete")
     public void delete(PrintWriter out) {
-        logBefore(logger, "删除图片");
         PageData pd = new PageData();
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "del")) {
@@ -80,7 +83,7 @@ public class PicController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller pic exception.", e);
         }
 
     }
@@ -94,31 +97,34 @@ public class PicController extends BaseController {
             @RequestParam(value = "TITLE", required = false) String TITLE,
             @RequestParam(value = "MASTER_ID", required = false) String MASTER_ID,
             @RequestParam(value = "BZ", required = false) String BZ
-    ) throws Exception {
-        logBefore(logger, "修改Pictures");
+    ) {
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
-            pd.put("PICTURES_ID", PICTURES_ID);        //图片ID
-            pd.put("TITLE", TITLE);                    //标题
-            pd.put("MASTER_ID", MASTER_ID);            //属于ID
-            pd.put("BZ", BZ);                        //备注
+        try {
+            if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+                pd.put("PICTURES_ID", PICTURES_ID);        //图片ID
+                pd.put("TITLE", TITLE);                    //标题
+                pd.put("MASTER_ID", MASTER_ID);            //属于ID
+                pd.put("BZ", BZ);                        //备注
 
-            if (null == tpz) {
-                tpz = "";
+                if (null == tpz) {
+                    tpz = "";
+                }
+                String ffile = DateUtil.formatDate(new Date(), "yyyyMMdd"), fileName = "";
+                if (null != file && !file.isEmpty()) {
+                    String filePath = PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile;        //文件上传路径
+                    fileName = FileUpload.fileUp(file, filePath, UuidUtil.genTerseUuid());                //执行上传
+                    pd.put("PATH", ffile + "/" + fileName);                //路径
+                    pd.put("NAME", fileName);
+                } else {
+                    pd.put("PATH", tpz);
+                }
+                Watermark.setWatemark(PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile + "/" + fileName);//加水印
+                picService.edit(pd);                //执行修改数据库
             }
-            String ffile = DateUtil.formatDate(new Date(), "yyyyMMdd"), fileName = "";
-            if (null != file && !file.isEmpty()) {
-                String filePath = PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile;        //文件上传路径
-                fileName = FileUpload.fileUp(file, filePath, this.get32UUID());                //执行上传
-                pd.put("PATH", ffile + "/" + fileName);                //路径
-                pd.put("NAME", fileName);
-            } else {
-                pd.put("PATH", tpz);
-            }
-            Watermark.setWatemark(PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile + "/" + fileName);//加水印
-            picService.edit(pd);                //执行修改数据库
+        } catch (Exception e) {
+            LOGGER.error("Controller pic exception.", e);
         }
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
@@ -128,7 +134,6 @@ public class PicController extends BaseController {
 
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
-        logBefore(logger, "列表Pictures");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         try {
@@ -148,14 +153,13 @@ public class PicController extends BaseController {
             mv.addObject("pd", pd);
             mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller pic exception.", e);
         }
         return mv;
     }
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() {
-        logBefore(logger, "去新增图片页面");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -163,14 +167,13 @@ public class PicController extends BaseController {
             mv.setViewName("pic/picAdd");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller pic exception.", e);
         }
         return mv;
     }
 
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit() {
-        logBefore(logger, "去修改图片页面");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -180,7 +183,7 @@ public class PicController extends BaseController {
             mv.addObject("msg", "edit");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller pic exception.", e);
         }
         return mv;
     }
@@ -188,7 +191,7 @@ public class PicController extends BaseController {
     @RequestMapping(value = "/deleteAll")
     @ResponseBody
     public Object deleteAll() {
-        logBefore(logger, "批量删除Pictures");
+
         PageData pd = new PageData();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -213,9 +216,7 @@ public class PicController extends BaseController {
                 map.put("list", pdList);
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
-        } finally {
-            logAfter(logger);
+            LOGGER.error("Controller pic exception.", e);
         }
         return AppUtil.returnObject(pd, map);
     }
@@ -226,7 +227,6 @@ public class PicController extends BaseController {
      */
     @RequestMapping(value = "/excel")
     public ModelAndView exportExcel() {
-        logBefore(logger, "导出Pictures到excel");
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -256,7 +256,7 @@ public class PicController extends BaseController {
             ObjectExcelView erv = new ObjectExcelView();
             mv = new ModelAndView(erv, dataMap);
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller pic exception.", e);
         }
         return mv;
     }
@@ -265,7 +265,6 @@ public class PicController extends BaseController {
     //删除图片
     @RequestMapping(value = "/delPic")
     public void delPic(PrintWriter out) {
-        logBefore(logger, "删除图片");
         try {
             PageData pd = new PageData();
             pd = this.getPageData();
@@ -277,7 +276,7 @@ public class PicController extends BaseController {
             out.write("success");
             out.close();
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            LOGGER.error("Controller pic exception.", e);
         }
     }
 
