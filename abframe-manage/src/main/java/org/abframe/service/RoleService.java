@@ -1,7 +1,7 @@
 package org.abframe.service;
 
 import org.abframe.dao.BaseDaoSupport;
-import org.abframe.entity.Role;
+import org.abframe.entity.RoleBean;
 import org.abframe.util.PageData;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +15,20 @@ public class RoleService {
     private BaseDaoSupport dao;
 
 
-    public List<Role> listAllERRoles() throws Exception {
-        return (List<Role>) dao.findForList("RoleMapper.listAllERRoles", null);
+    public List<RoleBean> listAllERRoles() throws Exception {
+        return (List<RoleBean>) dao.findForList("RoleMapper.listAllERRoles", null);
 
     }
 
 
-    public List<Role> listAllappERRoles() throws Exception {
-        return (List<Role>) dao.findForList("RoleMapper.listAllappERRoles", null);
+    public List<RoleBean> listAllappERRoles() throws Exception {
+        return (List<RoleBean>) dao.findForList("RoleMapper.listAllappERRoles", null);
 
     }
 
 
-    public List<Role> listAllRoles() throws Exception {
-        return (List<Role>) dao.findForList("RoleMapper.listAllRoles", null);
+    public List<RoleBean> listAllRoles() throws Exception {
+        return (List<RoleBean>) dao.findForList("RoleMapper.listAllRoles", null);
 
     }
 
@@ -57,8 +57,8 @@ public class RoleService {
     /**
      * 列出此部门的所有下级
      */
-    public List<Role> listAllRolesByPId(PageData pd) throws Exception {
-        return (List<Role>) dao.findForList("RoleMapper.listAllRolesByPId", pd);
+    public List<RoleBean> listAllRolesByPId(PageData pd) throws Exception {
+        return (List<RoleBean>) dao.findForList("RoleMapper.listAllRolesByPId", pd);
 
     }
 
@@ -78,21 +78,21 @@ public class RoleService {
     }
 
     //删除G权限表里对应的数据
-    public void deleteGById(String ROLE_ID) throws Exception {
-        dao.delete("RoleMapper.deleteGById", ROLE_ID);
+    public void deleteGById(String id) throws Exception {
+        dao.delete("RoleMapper.deleteGById", id);
     }
 
-    public void deleteRoleById(String ROLE_ID) throws Exception {
-        dao.delete("RoleMapper.deleteRoleById", ROLE_ID);
-
-    }
-
-    public Role getRoleById(String roleId) throws Exception {
-        return (Role) dao.findForObject("RoleMapper.getRoleById", roleId);
+    public void deleteRoleById(String id) throws Exception {
+        dao.delete("RoleMapper.deleteRoleById", id);
 
     }
 
-    public void updateRoleRights(Role role) throws Exception {
+    public RoleBean getRoleById(String id) throws Exception {
+        return (RoleBean) dao.findForObject("RoleMapper.getRoleById", id);
+
+    }
+
+    public void updateRoleRights(RoleBean role) throws Exception {
         dao.update("RoleMapper.updateRoleRights", role);
     }
 

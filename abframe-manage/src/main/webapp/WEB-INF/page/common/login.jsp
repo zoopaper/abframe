@@ -7,12 +7,12 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <link rel="stylesheet" href="static/login/bootstrap.min.css"/>
-    <link rel="stylesheet" href="static/login/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="static/login/matrix-login.css"/>
-    <link href="static/login/font-awesome.css" rel="stylesheet"/>
-    <script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="static/js/jquery.backstretch.min.js"></script>
+    <link rel="stylesheet" href="/static/login/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/login/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="/static/login/matrix-login.css"/>
+    <link href="/static/login/font-awesome.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.backstretch.min.js"></script>
 </head>
 <body>
 <div style="width:100%;text-align: center;margin: 0 auto;position: absolute;">
@@ -27,7 +27,7 @@
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_lg">
-							<i><img height="37" src="static/login/user.png"/></i>
+							<i><img height="37" src="/static/login/user.png"/></i>
 						</span>
                         <input type="text" name="userName" id="userName" value="" placeholder="请输入用户名"/>
                     </div>
@@ -37,7 +37,7 @@
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_ly">
-							<i><img height="37" src="static/login/suo.png"/></i>
+							<i><img height="37" src="/static/login/suo.png"/></i>
 						</span>
                         <input type="password" name="password" id="password" placeholder="请输入密码" value=""/>
                     </div>
@@ -55,7 +55,7 @@
             <div class="form-actions">
                 <div style="width:86%;padding-left:8%;">
                     <div style="float: left;">
-                        <i><img src="static/login/yan.png"/></i>
+                        <i><img src="/static/login/yan.png"/></i>
                     </div>
                     <div style="float: left;" class="codediv">
                         <input type="text" name="code" id="code" class="login_code"
@@ -87,9 +87,9 @@
 
 <script type="text/javascript">
     $.backstretch([
-                "static/login/images/1.jpg",
-                "static/login/images/2.jpg",
-                "static/login/images/3.jpg"
+                "/static/login/images/1.jpg",
+                "/static/login/images/2.jpg",
+                "/static/login/images/3.jpg"
             ], {
                 fade: 1000,
                 duration: 6000
@@ -110,7 +110,7 @@
                 success: function (data) {
                     if ("success" == data.result) {
                         saveCookie();
-                        window.location.href = "main/index";
+                        window.location.href = "/main/index";
                     } else if ("usererror" == data.result) {
                         $("#userName").tips({
                             side: 1,
@@ -264,10 +264,10 @@
     }
 </script>
 
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/login/js/jquery.easing.1.3.js"></script>
-<script src="static/login/js/jquery.mobile.customized.min.js"></script>
-<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/login/js/jquery.easing.1.3.js"></script>
+<script src="/static/login/js/jquery.mobile.customized.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.tips.js"></script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 import net.common.utils.date.DateUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
-import org.abframe.entity.Role;
+import org.abframe.entity.RoleBean;
 import org.abframe.entity.User;
 import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
@@ -172,8 +172,8 @@ public class LoginController extends BaseController {
                 } else {
                     user = userr;
                 }
-                Role role = user.getRole();
-                String roleRights = role != null ? role.getRIGHTS() : "";
+                RoleBean role = user.getRole();
+                String roleRights = role != null ? role.getPerms() : "";
                 //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
                 session.setAttribute(Constant.SESSION_ROLE_RIGHTS, roleRights);        //将角色权限存入session
                 session.setAttribute(Constant.SESSION_USERNAME, user.getUSERNAME());    //放入用户名

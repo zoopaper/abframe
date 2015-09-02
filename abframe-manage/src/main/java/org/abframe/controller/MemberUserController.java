@@ -5,7 +5,7 @@ import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
-import org.abframe.entity.Role;
+import org.abframe.entity.RoleBean;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.RoleService;
 import org.abframe.util.AppUtil;
@@ -158,7 +158,7 @@ public class MemberUserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
-            List<Role> roleList = roleService.listAllappERRoles();            //列出所有二级角色
+            List<RoleBean> roleList = roleService.listAllappERRoles();            //列出所有二级角色
             pd = memberUserService.findByUiId(pd);                                //根据ID读取
             mv.setViewName("memberUser/memberUserEdit");
             mv.addObject("msg", "editU");
@@ -177,7 +177,7 @@ public class MemberUserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
-            List<Role> roleList;
+            List<RoleBean> roleList;
             roleList = roleService.listAllappERRoles();
             mv.setViewName("memberUser/memberUserEdit");
             mv.addObject("msg", "saveU");
@@ -205,7 +205,7 @@ public class MemberUserController extends BaseController {
 
             page.setPd(pd);
             List<PageData> userList = memberUserService.listPdPageUser(page);
-            List<Role> roleList = roleService.listAllappERRoles();
+            List<RoleBean> roleList = roleService.listAllappERRoles();
 
             mv.setViewName("memberUser/memberUserList");
             mv.addObject("userList", userList);

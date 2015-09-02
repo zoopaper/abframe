@@ -7,7 +7,7 @@ import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.Page;
-import org.abframe.entity.Role;
+import org.abframe.entity.RoleBean;
 import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.util.*;
@@ -114,12 +114,12 @@ public class RoleController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        String roleId = pd.getString("ROLE_ID");
-        if (roleId == null || "".equals(roleId)) {
-            pd.put("ROLE_ID", "1");
+        String roleId = pd.getString("id");
+        if (Strings.isNullOrEmpty(roleId)) {
+            pd.put("id", "1");
         }
-        List<Role> roleList = roleService.listAllRoles();                //列出所有部门
-        List<Role> roleList_z = roleService.listAllRolesByPId(pd);        //列出此部门的所有下级
+        List<RoleBean> roleList = roleService.listAllRoles();                //列出所有部门
+        List<RoleBean> roleList_z = roleService.listAllRolesByPId(pd);        //列出此部门的所有下级
 
         List<PageData> kefuqxlist = roleService.listAllkefu(pd);        //管理权限列表
         List<PageData> gysqxlist = roleService.listAllGysQX(pd);        //用户权限列表
@@ -145,32 +145,32 @@ public class RoleController extends BaseController {
             mv.setViewName("role/roleAdd");
             mv.addObject("pd", pd);
         } catch (Exception e) {
-            LOGGER.error("Controller role exception.", e);
+            LOGGER.error("Controller role toAdd exception.", e);
         }
         return mv;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView add() throws Exception {
+    public ModelAndView add() {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
 
-            String parent_id = pd.getString("PARENT_ID");        //父类角色id
-            pd.put("ROLE_ID", parent_id);
-            if ("0".equals(parent_id)) {
-                pd.put("RIGHTS", "");
+            String parentId = pd.getString("parentId");
+            pd.put("id", parentId);
+            if ("0".equals(parentId)) {
+                pd.put("perms", "");
             } else {
-                String rights = roleService.findObjectById(pd).getString("RIGHTS");
-                pd.put("RIGHTS", (null == rights) ? "" : rights);
+                String perms = roleService.findObjectById(pd).getString("perms");
+                pd.put("perms", (null == perms) ? "" : perms);
             }
 
-            pd.put("QX_ID", "");
+            pd.put("permId", "");
 
-            String UUID = UuidUtil.genTerseUuid();
+            String uuid = UuidUtil.genTerseUuid();
 
-            pd.put("GL_ID", UUID);
+            pd.put("GL_ID", uuid);
             pd.put("FX_QX", 0);                //发信权限
             pd.put("FW_QX", 0);                //服务权限
             pd.put("QX1", 0);                //操作权限
@@ -181,7 +181,7 @@ public class RoleController extends BaseController {
                 roleService.saveKeFu(pd);
             }//保存到K权限表
 
-            pd.put("U_ID", UUID);
+            pd.put("U_ID", uuid);
             pd.put("C1", 0);                //每日发信数量
             pd.put("C2", 0);
             pd.put("C3", 0);
@@ -193,9 +193,9 @@ public class RoleController extends BaseController {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
                 roleService.saveGYSQX(pd);
             }//保存到G权限表
-            pd.put("QX_ID", UUID);
+            pd.put("QX_ID", uuid);
 
-            pd.put("ROLE_ID", UUID);
+            pd.put("ROLE_ID", uuid);
             pd.put("ADD_QX", "0");
             pd.put("DEL_QX", "0");
             pd.put("EDIT_QX", "0");
@@ -216,12 +216,12 @@ public class RoleController extends BaseController {
      * 请求编辑
      */
     @RequestMapping(value = "/toEdit")
-    public ModelAndView toEdit(String ROLE_ID) throws Exception {
+    public ModelAndView toEdit(String id) throws Exception {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
-            pd.put("ROLE_ID", ROLE_ID);
+            pd.put("id", id);
             pd = roleService.findObjectById(pd);
             mv.setViewName("role/roleEdit");
             mv.addObject("pd", pd);
@@ -253,12 +253,12 @@ public class RoleController extends BaseController {
      * 请求角色菜单授权页面
      */
     @RequestMapping(value = "/auth")
-    public String auth(@RequestParam String ROLE_ID, Model model) {
+    public String auth(@RequestParam String id, Model model) {
 
         try {
             List<Menu> menuList = menuService.listAllMenu();
-            Role role = roleService.getRoleById(ROLE_ID);
-            String roleRights = role.getRIGHTS();
+            RoleBean role = roleService.getRoleById(id);
+            String roleRights = role.getPerms();
             if (!Strings.isNullOrEmpty(roleRights)) {
                 for (Menu menu : menuList) {
                     menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
@@ -274,7 +274,7 @@ public class RoleController extends BaseController {
             String json = arr.toString();
             json = json.replaceAll("MENU_ID", "id").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
             model.addAttribute("zTreeNodes", json);
-            model.addAttribute("roleId", ROLE_ID);
+            model.addAttribute("id", id);
         } catch (Exception e) {
             LOGGER.error("Controller role exception.", e);
         }
@@ -286,21 +286,21 @@ public class RoleController extends BaseController {
      * 请求角色按钮授权页面
      */
     @RequestMapping(value = "/button")
-    public ModelAndView button(@RequestParam String ROLE_ID, @RequestParam String msg, Model model) throws Exception {
+    public ModelAndView button(@RequestParam String id, @RequestParam String msg, Model model) throws Exception {
         ModelAndView mv = new ModelAndView();
         try {
             List<Menu> menuList = menuService.listAllMenu();
-            Role role = roleService.getRoleById(ROLE_ID);
+            RoleBean role = roleService.getRoleById(id);
 
             String roleRights = "";
             if ("add_qx".equals(msg)) {
-                roleRights = role.getADD_QX();
+                roleRights = role.getPermAdd();
             } else if ("del_qx".equals(msg)) {
-                roleRights = role.getDEL_QX();
+                roleRights = role.getPermDel();
             } else if ("edit_qx".equals(msg)) {
-                roleRights = role.getEDIT_QX();
+                roleRights = role.getPermEdit();
             } else if ("cha_qx".equals(msg)) {
-                roleRights = role.getCHA_QX();
+                roleRights = role.getPermQuery();
             }
 
             if (!Strings.isNullOrEmpty(roleRights)) {
@@ -319,7 +319,7 @@ public class RoleController extends BaseController {
             //System.out.println(json);
             json = json.replaceAll("MENU_ID", "id").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
             mv.addObject("zTreeNodes", json);
-            mv.addObject("roleId", ROLE_ID);
+            mv.addObject("id", id);
             mv.addObject("msg", msg);
         } catch (Exception e) {
             LOGGER.error("Controller role exception.", e);
@@ -332,25 +332,25 @@ public class RoleController extends BaseController {
      * 保存角色菜单权限
      */
     @RequestMapping(value = "/auth/save")
-    public void saveAuth(@RequestParam String ROLE_ID, @RequestParam String menuIds, PrintWriter out) throws Exception {
+    public void saveAuth(@RequestParam String id, @RequestParam String menuIds, PrintWriter out) throws Exception {
         PageData pd = new PageData();
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
                 if (null != menuIds && !"".equals(menuIds.trim())) {
                     BigInteger rights = RightsHelper.sumRights(Tools.str2StrArray(menuIds));
-                    Role role = roleService.getRoleById(ROLE_ID);
-                    role.setRIGHTS(rights.toString());
+                    RoleBean role = roleService.getRoleById(id);
+                    role.setPerms(rights.toString());
                     roleService.updateRoleRights(role);
-                    pd.put("rights", rights.toString());
+                    pd.put("perms", rights.toString());
                 } else {
-                    Role role = new Role();
-                    role.setRIGHTS("");
-                    role.setROLE_ID(ROLE_ID);
+                    RoleBean role = new RoleBean();
+                    role.setPerms("");
+                    role.setId(id);
                     roleService.updateRoleRights(role);
-                    pd.put("rights", "");
+                    pd.put("perms", "");
                 }
 
-                pd.put("roleId", ROLE_ID);
+                pd.put("id", id);
                 roleService.setAllRights(pd);
             }
             out.write("success");
@@ -364,18 +364,18 @@ public class RoleController extends BaseController {
      * 保存角色按钮权限
      */
     @RequestMapping(value = "/roleBtn/save")
-    public void roleBtn(@RequestParam String ROLE_ID, @RequestParam String menuIds, @RequestParam String msg, PrintWriter out) throws Exception {
+    public void roleBtn(@RequestParam String id, @RequestParam String menuIds, @RequestParam String msg, PrintWriter out) throws Exception {
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
-                if (null != menuIds && !"".equals(menuIds.trim())) {
+                if (!Strings.isNullOrEmpty(menuIds)) {
                     BigInteger rights = RightsHelper.sumRights(Tools.str2StrArray(menuIds));
                     pd.put("value", rights.toString());
                 } else {
                     pd.put("value", "");
                 }
-                pd.put("ROLE_ID", ROLE_ID);
+                pd.put("id", id);
                 roleService.updateQx(msg, pd);
             }
             out.write("success");
@@ -390,14 +390,14 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Object deleteRole(@RequestParam String ROLE_ID) throws Exception {
+    public Object deleteRole(@RequestParam String id) throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         PageData pd = new PageData();
         String errInfo = "";
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "del")) {
-                pd.put("ROLE_ID", ROLE_ID);
-                List<Role> roleList_z = roleService.listAllRolesByPId(pd);        //列出此部门的所有下级
+                pd.put("id", id);
+                List<RoleBean> roleList_z = roleService.listAllRolesByPId(pd);        //列出此部门的所有下级
                 if (roleList_z.size() > 0) {
                     errInfo = "false";
                 } else {
@@ -407,9 +407,9 @@ public class RoleController extends BaseController {
                     if (userlist.size() > 0 || appuserlist.size() > 0) {
                         errInfo = "false2";
                     } else {
-                        roleService.deleteRoleById(ROLE_ID);
-                        roleService.deleteKeFuById(ROLE_ID);
-                        roleService.deleteGById(ROLE_ID);
+                        roleService.deleteRoleById(id);
+                        roleService.deleteKeFuById(id);
+                        roleService.deleteGById(id);
                         errInfo = "success";
                     }
                 }

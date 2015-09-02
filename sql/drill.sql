@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50520
 File Encoding         : 65001
 
-Date: 2015-08-26 18:16:59
+Date: 2015-09-02 22:04:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,7 @@ CREATE TABLE `t_advert` (
 -- ----------------------------
 -- Records of t_advert
 -- ----------------------------
-INSERT INTO `t_advert` VALUES ('6', 'dfsaxxxx', '<p>fasfasfasf</p>', '0', 'ccebf0679bc84e9ba93c15554e7fab19.png', '', '2015-08-26 17:18:07', '2015-08-26 17:47:24', '', '', '0', '');
+INSERT INTO `t_advert` VALUES ('6', 'mmmmmmmmmmmmmmmmm', '<p>fasfasfasf</p>', '0', '', '', '2015-08-26 17:18:07', '2015-08-31 10:56:43', '', '', '0', '');
 INSERT INTO `t_advert` VALUES ('7', 'fdsa', '<p>fdasfasfs</p>', '0', '', '', '2015-08-26 17:47:33', '2015-08-26 17:47:33', '', '', '0', '');
 
 -- ----------------------------
@@ -46,32 +46,33 @@ INSERT INTO `t_advert` VALUES ('7', 'fdsa', '<p>fdasfasfs</p>', '0', '', '', '20
 -- ----------------------------
 DROP TABLE IF EXISTS `t_dict`;
 CREATE TABLE `t_dict` (
-  `ZD_ID` varchar(100) NOT NULL,
-  `NAME` varchar(100) DEFAULT NULL,
-  `BIANMA` varchar(100) DEFAULT NULL,
-  `ORDY_BY` int(10) DEFAULT NULL,
-  `PARENT_ID` varchar(100) DEFAULT NULL,
-  `JB` int(10) DEFAULT NULL,
-  `P_BM` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`ZD_ID`)
+  `id` varchar(100) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  `level` int(10) DEFAULT NULL,
+  `orderId` int(10) DEFAULT NULL,
+  `parentId` varchar(100) DEFAULT NULL,
+  `parentCode` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_dict
 -- ----------------------------
-INSERT INTO `t_dict` VALUES ('01ff49267db1487b8bc173f08f34036d', '负载算法', 'loadbanlance', '4', '0', '1', 'loadbanlance');
-INSERT INTO `t_dict` VALUES ('212a6765fddc4430941469e1ec8c8e6c', '人事部', '001', '1', 'c067fdaf51a141aeaa56ed26b70de863', '2', 'BM_001');
-INSERT INTO `t_dict` VALUES ('3cec73a7cc8a4cb79e3f6ccc7fc8858c', '行政部', '002', '2', 'c067fdaf51a141aeaa56ed26b70de863', '2', 'BM_002');
-INSERT INTO `t_dict` VALUES ('48724375640341deb5ef01ac51a89c34', '北京', 'dq001', '1', 'cdba0b5ef20e4fc0a5231fa3e9ae246a', '2', 'DQ_dq001');
-INSERT INTO `t_dict` VALUES ('5a1547632cca449db378fbb9a042b336', '研发部', '004', '4', 'c067fdaf51a141aeaa56ed26b70de863', '2', 'BM_004');
-INSERT INTO `t_dict` VALUES ('7f9cd74e60a140b0aea5095faa95cda3', '财务部', '003', '3', 'c067fdaf51a141aeaa56ed26b70de863', '2', 'BM_003');
-INSERT INTO `t_dict` VALUES ('830ae0dffabf4af5b946b420d69c4e93', '互联网', 'internet', '3', '0', '1', 'internet');
-INSERT INTO `t_dict` VALUES ('b72e7fa102984bd8b57bf2ba68acd473', '轮询', 'poll', '1', '01ff49267db1487b8bc173f08f34036d', '2', 'loadbanlance_poll');
-INSERT INTO `t_dict` VALUES ('b861bd1c3aba4934acdb5054dd0d0c6e', '科技不', 'kj', '7', 'c067fdaf51a141aeaa56ed26b70de863', '2', 'BM_kj');
-INSERT INTO `t_dict` VALUES ('c067fdaf51a141aeaa56ed26b70de863', '部门', 'BM', '1', '0', '1', 'BM');
-INSERT INTO `t_dict` VALUES ('cdba0b5ef20e4fc0a5231fa3e9ae246a', '地区', 'DQ', '2', '0', '1', 'DQ');
-INSERT INTO `t_dict` VALUES ('f184bff5081d452489271a1bd57599ed', '上海', 'SH', '2', 'cdba0b5ef20e4fc0a5231fa3e9ae246a', '2', 'DQ_SH');
-INSERT INTO `t_dict` VALUES ('f30bf95e216d4ebb8169ff0c86330b8f', '客服部', '006', '6', 'c067fdaf51a141aeaa56ed26b70de863', '2', 'BM_006');
+INSERT INTO `t_dict` VALUES ('01ff49267db1487b8bc173f08f34036d', '负载算法', 'loadbanlance', '1', '4', '0', 'loadbanlance');
+INSERT INTO `t_dict` VALUES ('212a6765fddc4430941469e1ec8c8e6c', '人事部', '001', '2', '1', 'c067fdaf51a141aeaa56ed26b70de863', 'BM_001');
+INSERT INTO `t_dict` VALUES ('3cec73a7cc8a4cb79e3f6ccc7fc8858c', '行政部', '002', '2', '2', 'c067fdaf51a141aeaa56ed26b70de863', 'BM_002');
+INSERT INTO `t_dict` VALUES ('48724375640341deb5ef01ac51a89c34', '北京', 'dq001', '2', '1', 'cdba0b5ef20e4fc0a5231fa3e9ae246a', 'DQ_dq001');
+INSERT INTO `t_dict` VALUES ('4e125b23b10d47d58188ed96c3b08885', '书籍', 'book', '1', '5', '0', 'book');
+INSERT INTO `t_dict` VALUES ('5a1547632cca449db378fbb9a042b336', '研发部', '004', '2', '4', 'c067fdaf51a141aeaa56ed26b70de863', 'BM_004');
+INSERT INTO `t_dict` VALUES ('7f9cd74e60a140b0aea5095faa95cda3', '财务部', '003', '2', '3', 'c067fdaf51a141aeaa56ed26b70de863', 'BM_003');
+INSERT INTO `t_dict` VALUES ('830ae0dffabf4af5b946b420d69c4e93', '互联网', 'internet', '1', '3', '0', 'internet');
+INSERT INTO `t_dict` VALUES ('b72e7fa102984bd8b57bf2ba68acd473', '轮询', 'poll', '2', '1', '01ff49267db1487b8bc173f08f34036d', 'loadbanlance_poll');
+INSERT INTO `t_dict` VALUES ('c067fdaf51a141aeaa56ed26b70de863', '部门', 'BM', '1', '1', '0', 'BM');
+INSERT INTO `t_dict` VALUES ('ca1447c75e0b40deb3d6f702e2f79146', '计算机', 'computer', '2', '1', '4e125b23b10d47d58188ed96c3b08885', 'book_computer');
+INSERT INTO `t_dict` VALUES ('cdba0b5ef20e4fc0a5231fa3e9ae246a', '地区', 'DQ', '1', '2', '0', 'DQ');
+INSERT INTO `t_dict` VALUES ('f184bff5081d452489271a1bd57599ed', '上海', 'SH', '2', '2', 'cdba0b5ef20e4fc0a5231fa3e9ae246a', 'DQ_SH');
+INSERT INTO `t_dict` VALUES ('f30bf95e216d4ebb8169ff0c86330b8f', '客服部', '006', '2', '6', 'c067fdaf51a141aeaa56ed26b70de863', 'BM_006');
 
 -- ----------------------------
 -- Table structure for `t_line`
@@ -144,6 +145,7 @@ CREATE TABLE `t_member` (
 -- ----------------------------
 -- Records of t_member
 -- ----------------------------
+INSERT INTO `t_member` VALUES ('db5868a0835b442c904f471419e0504c', 'xxx', 'c4ca4238a0b923820dcc509a6f75849b', 'xiaobai', '', '68f23fc0caee475bae8d52244dea8444', '', '', '1', '', '', '4343', '2015-08-28', '2015-08-31', '0', 'xxxxxx', 'krisibm@163.com');
 
 -- ----------------------------
 -- Table structure for `t_menu`
@@ -172,7 +174,7 @@ INSERT INTO `t_menu` VALUES ('7', '图片管理', 'pic/list', '6', '1', null, '2
 INSERT INTO `t_menu` VALUES ('8', '性能监控', 'druid/index.html', '9', '1', null, '1');
 INSERT INTO `t_menu` VALUES ('9', '系统工具', '#', '0', '3', 'icon-th', '1');
 INSERT INTO `t_menu` VALUES ('10', '接口测试', 'tool/interface', '9', '2', null, '1');
-INSERT INTO `t_menu` VALUES ('11', '发送邮件', 'tool/toSendEmail', '9', '3', null, '1');
+INSERT INTO `t_menu` VALUES ('11', '发送邮件', 'mail/toSendEmailM', '9', '3', null, '1');
 INSERT INTO `t_menu` VALUES ('12', '置二维码', 'tool/toQrCode', '9', '4', null, '1');
 INSERT INTO `t_menu` VALUES ('14', '地图工具', 'tool/map', '9', '6', null, '1');
 INSERT INTO `t_menu` VALUES ('15', '广告管理', 'adv/list', '6', '2', null, '2');
@@ -234,7 +236,7 @@ CREATE TABLE `t_notice` (
   `status` char(2) NOT NULL DEFAULT '0' COMMENT '状态  0默认未启用，1启用',
   `sequence` int(10) DEFAULT '0' COMMENT '公告排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_notice
@@ -258,7 +260,7 @@ CREATE TABLE `t_pic` (
 -- ----------------------------
 -- Records of t_pic
 -- ----------------------------
-INSERT INTO `t_pic` VALUES ('1e67c0bde5d344919f4262419aa192b6', '图片', '0e52008b73f14873baac881c57658b96.jpg', '20150826/0e52008b73f14873baac881c57658b96.jpg', '2015-08-26 17:47:07', '1', '图片管理处上传');
+INSERT INTO `t_pic` VALUES ('1e67c0bde5d344919f4262419aa192b6', 'web', 'e6d9f070f1dd4d189001890bcecd564e.jpg', '20150901/e6d9f070f1dd4d189001890bcecd564e.jpg', '2015-08-26 17:47:07', '1', '图片管理处上传');
 INSERT INTO `t_pic` VALUES ('27a927b19e6948f29792a50615b0fb56', '图片', '3f1285b86f5044c8be3a1ab36da470c4.png', '20150826/3f1285b86f5044c8be3a1ab36da470c4.png', '2015-08-26 17:47:07', '1', '图片管理处上传');
 INSERT INTO `t_pic` VALUES ('301e8674e4614f83aff88773f8433f88', '图片', '2dc04199899648f094b4853462e33387.png', '20150826/2dc04199899648f094b4853462e33387.png', '2015-08-26 17:17:07', '1', '图片管理处上传');
 INSERT INTO `t_pic` VALUES ('34c8955dbd8949b981bc16a8750fe7d0', '图片', '06979a45ab094c768c3f9ef6fa2e29aa.jpg', '20150826/06979a45ab094c768c3f9ef6fa2e29aa.jpg', '2015-08-26 17:47:07', '1', '图片管理处上传');
@@ -293,36 +295,36 @@ INSERT INTO `t_recommend` VALUES ('3', 'dsfdsfdasf', '<p>afdsafsadfdsafsafs</p>'
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
-  `ROLE_ID` varchar(100) NOT NULL,
-  `ROLE_NAME` varchar(100) DEFAULT NULL,
-  `RIGHTS` varchar(255) DEFAULT NULL,
-  `PARENT_ID` varchar(100) DEFAULT NULL,
-  `ADD_QX` varchar(255) DEFAULT NULL,
-  `DEL_QX` varchar(255) DEFAULT NULL,
-  `EDIT_QX` varchar(255) DEFAULT NULL,
-  `CHA_QX` varchar(255) DEFAULT NULL,
-  `QX_ID` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ROLE_ID`)
+  `id` varchar(100) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `perms` varchar(255) DEFAULT NULL,
+  `permId` varchar(100) DEFAULT NULL,
+  `parentId` varchar(100) DEFAULT NULL,
+  `permAdd` varchar(255) DEFAULT NULL,
+  `permEdit` varchar(255) DEFAULT NULL,
+  `permDel` varchar(255) DEFAULT NULL,
+  `permQuery` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', '系统管理员', '1069547510', '0', '1', '1', '1', '1', '1');
-INSERT INTO `t_role` VALUES ('2', '超级管理员', '1069547510', '1', '2097206', '805306368', '', '264241142', '2');
-INSERT INTO `t_role` VALUES ('4', '用户组', '118', '0', '0', '0', '0', '0', null);
-INSERT INTO `t_role` VALUES ('55896f5ce3c0494fa6850775a4e29ff6', '特级会员', '498', '7', '0', '0', '0', '0', '55896f5ce3c0494fa6850775a4e29ff6');
-INSERT INTO `t_role` VALUES ('6', '客户组', '18', '0', '1', '1', '1', '1', null);
-INSERT INTO `t_role` VALUES ('68f23fc0caee475bae8d52244dea8444', '中级会员', '498', '7', '0', '0', '0', '0', '68f23fc0caee475bae8d52244dea8444');
-INSERT INTO `t_role` VALUES ('6f610a47f262435ba546b75781213b28', 'cccc', '54', '4', '805306368', '0', '0', '4161782', '6f610a47f262435ba546b75781213b28');
-INSERT INTO `t_role` VALUES ('7', '会员组', '498', '0', '0', '0', '0', '1', null);
-INSERT INTO `t_role` VALUES ('7dfd8d1f7b6245d283217b7e63eec9b2', '管理员B', '1069547510', '1', '246', '0', '0', '1069547510', '7dfd8d1f7b6245d283217b7e63eec9b2');
-INSERT INTO `t_role` VALUES ('81ea69a7095e481c9776c40816514ce9', 'xx', '118', '4', '0', '0', '0', '0', '81ea69a7095e481c9776c40816514ce9');
-INSERT INTO `t_role` VALUES ('a0723aa56a7c439cb1e7e09ddac4096f', '钻石会员', '', '7', '0', '0', '0', '0', 'a0723aa56a7c439cb1e7e09ddac4096f');
-INSERT INTO `t_role` VALUES ('ac66961adaa2426da4470c72ffeec117', '管理员A', '1069547510', '1', '54', '54', '0', '1069547510', 'ac66961adaa2426da4470c72ffeec117');
-INSERT INTO `t_role` VALUES ('b0c77c29dfa140dc9b14a29c056f824f', '高级会员', '498', '7', '0', '0', '0', '0', 'b0c77c29dfa140dc9b14a29c056f824f');
-INSERT INTO `t_role` VALUES ('e74f713314154c35bd7fc98897859fe3', '黄金客户', '2064594', '6', '260046848', '1', '1', '1', 'e74f713314154c35bd7fc98897859fe3');
-INSERT INTO `t_role` VALUES ('f944a9df72634249bbcb8cb73b0c9b86', '初级会员', '', '7', '1', '1', '1', '1', 'f944a9df72634249bbcb8cb73b0c9b86');
+INSERT INTO `t_role` VALUES ('1', '系统管理员', '1069547510', '1', '0', '1', '1', '1', '1');
+INSERT INTO `t_role` VALUES ('2', '超级管理员', '1069547510', '2', '1', '2097206', '805306368', '', '264241142');
+INSERT INTO `t_role` VALUES ('4', '用户组', '118', null, '0', '0', '0', '0', '0');
+INSERT INTO `t_role` VALUES ('55896f5ce3c0494fa6850775a4e29ff6', '特级会员', '498', '55896f5ce3c0494fa6850775a4e29ff6', '7', '0', '0', '0', '0');
+INSERT INTO `t_role` VALUES ('6', '客户组', '18', null, '0', '1', '1', '1', '1');
+INSERT INTO `t_role` VALUES ('68f23fc0caee475bae8d52244dea8444', '中级会员', '498', '68f23fc0caee475bae8d52244dea8444', '7', '0', '0', '0', '0');
+INSERT INTO `t_role` VALUES ('6f610a47f262435ba546b75781213b28', 'cccc', '54', '6f610a47f262435ba546b75781213b28', '4', '805306368', '0', '0', '4161782');
+INSERT INTO `t_role` VALUES ('7', '会员组', '498', null, '0', '0', '0', '0', '1');
+INSERT INTO `t_role` VALUES ('7dfd8d1f7b6245d283217b7e63eec9b2', '管理员B', '1069547510', '7dfd8d1f7b6245d283217b7e63eec9b2', '1', '246', '0', '0', '1069547510');
+INSERT INTO `t_role` VALUES ('81ea69a7095e481c9776c40816514ce9', 'xx', '118', '81ea69a7095e481c9776c40816514ce9', '4', '0', '0', '0', '0');
+INSERT INTO `t_role` VALUES ('a0723aa56a7c439cb1e7e09ddac4096f', '钻石会员', '', 'a0723aa56a7c439cb1e7e09ddac4096f', '7', '0', '0', '0', '0');
+INSERT INTO `t_role` VALUES ('ac66961adaa2426da4470c72ffeec117', '管理员A', '1069547510', 'ac66961adaa2426da4470c72ffeec117', '1', '54', '54', '0', '1069547510');
+INSERT INTO `t_role` VALUES ('b0c77c29dfa140dc9b14a29c056f824f', '高级会员', '498', 'b0c77c29dfa140dc9b14a29c056f824f', '7', '0', '0', '0', '0');
+INSERT INTO `t_role` VALUES ('e74f713314154c35bd7fc98897859fe3', '黄金客户', '2064594', 'e74f713314154c35bd7fc98897859fe3', '6', '260046848', '1', '1', '1');
+INSERT INTO `t_role` VALUES ('f944a9df72634249bbcb8cb73b0c9b86', '初级会员', '', 'f944a9df72634249bbcb8cb73b0c9b86', '7', '1', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_role_perm`
@@ -381,8 +383,8 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2015-08-26 18:14:24', '0:0:0:0:0:0:0:1', '0', 'xxx', 'default', 'admin@main.com', '001', '18788888888');
-INSERT INTO `t_user` VALUES ('9e23643380d74fd2947ab25af748ff7d', 'zhangsan', '5ee5d458d02fde6170b9c3ebfe06af85dacd131d', '张三', '', '2', '', '', '0', 'zhang', 'default', 'zhangsan@163.com', '111', '18810489560');
+INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2015-09-02 21:54:35', '0:0:0:0:0:0:0:1', '0', 'xxx', 'default', 'admin@main.com', '001', '18788888888');
+INSERT INTO `t_user` VALUES ('9e23643380d74fd2947ab25af748ff7d', 'zhangsan', '5ee5d458d02fde6170b9c3ebfe06af85dacd131d', '张三', '', '2', '', '', '0', 'zhang', 'default', 'krisibm@163.com', '111', '18810489560');
 
 -- ----------------------------
 -- Table structure for `t_user_perm`

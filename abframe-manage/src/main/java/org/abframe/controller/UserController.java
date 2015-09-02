@@ -4,7 +4,7 @@ import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
-import org.abframe.entity.Role;
+import org.abframe.entity.RoleBean;
 import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.service.UserService;
@@ -177,7 +177,7 @@ public class UserController extends BaseController {
             mv.addObject("fx", "user");
         }
 
-        List<Role> roleList = roleService.listAllERRoles();            //列出所有二级角色
+        List<RoleBean> roleList = roleService.listAllERRoles();            //列出所有二级角色
         pd = userService.findByUiId(pd);                            //根据ID读取
         mv.setViewName("user/userEdit");
         mv.addObject("msg", "editU");
@@ -195,7 +195,7 @@ public class UserController extends BaseController {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        List<Role> roleList;
+        List<RoleBean> roleList;
 
         roleList = roleService.listAllERRoles();            //列出所有二级角色
 
@@ -237,7 +237,7 @@ public class UserController extends BaseController {
 
         page.setPd(pd);
         List<PageData> userList = userService.listPdPageUser(page);            //列出用户列表
-        List<Role> roleList = roleService.listAllERRoles();                        //列出所有二级角色
+        List<RoleBean> roleList = roleService.listAllERRoles();                        //列出所有二级角色
 
         mv.setViewName("user/userList");
         mv.addObject("userList", userList);
@@ -375,7 +375,7 @@ public class UserController extends BaseController {
                 }
                 dataMap.put("varList", varList);
                 ObjectExcelView erv = new ObjectExcelView();                    //执行excel操作
-                mv = new ModelAndView(erv,dataMap);
+                mv = new ModelAndView(erv, dataMap);
             }
         } catch (Exception e) {
             LOGGER.error("Controller user exception.", e);
@@ -428,9 +428,9 @@ public class UserController extends BaseController {
             pd.put("STATUS", "0");                    //状态
             pd.put("SKIN", "default");                //默认皮肤
 
-            List<Role> roleList = roleService.listAllERRoles();    //列出所有二级角色
+            List<RoleBean> roleList = roleService.listAllERRoles();    //列出所有二级角色
 
-            pd.put("ROLE_ID", roleList.get(0).getROLE_ID());    //设置角色ID为随便第一个
+            pd.put("ROLE_ID", roleList.get(0).getId());    //设置角色ID为随便第一个
             /**
              * var0 :编号
              * var1 :姓名

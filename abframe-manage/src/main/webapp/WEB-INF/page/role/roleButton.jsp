@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=basePath%>">
-    <meta charset="utf-8"/>
     <title></title>
-    <link href="static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
-    <link type="text/css" rel="stylesheet" href="plugins/zTree/2.6/zTreeStyle.css"/>
-    <link rel="stylesheet" href="static/css/ace.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-responsive.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-skins.min.css"/>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href=";static/css/font-awesome.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/plugins/zTree/2.6/zTreeStyle.css"/>
+    <link rel="stylesheet" href="/static/css/ace.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-responsive.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-skins.min.css"/>
     <style type="text/css">
         footer {
             height: 50px;
@@ -33,12 +27,13 @@
 <div id="zhongxin">
     <ul id="tree" class="tree" style="overflow:auto;"></ul>
 </div>
-<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><img src="static/images/jiazai.gif"/><br/>
+<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/>
+    <img src="/static/images/jiazai.gif"/><br/>
     <h4 class="lighter block green"></h4></div>
 
 
-<script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="plugins//zTree/2.6/jquery.ztree-2.6.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/plugins//zTree/2.6/jquery.ztree-2.6.min.js"></script>
 
 <script type="text/javascript">
     top.hangge();
@@ -71,12 +66,12 @@
             }
         }
 
-        var roleId = "${roleId}";
+        var roleId = "${id}";
         var msg = "${msg}";
-        var url = "<%=basePath%>role/roleBtn/save";
+        var url = "/role/roleBtn/save";
         var postData;
 
-        postData = {"ROLE_ID": roleId, "menuIds": ids, "msg": msg};
+        postData = {"id": roleId, "menuIds": ids, "msg": msg};
 
         $("#zhongxin").hide();
         $("#zhongxin2").show();

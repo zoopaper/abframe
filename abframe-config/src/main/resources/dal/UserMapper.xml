@@ -14,7 +14,7 @@
 		<result column="IP" property="IP"/>
 		<result column="STATUS" property="STATUS"/>
 		<result column="SKIN" property="SKIN"/>
-		<association property="role" column="ROLE_ID" javaType="Role">
+		<association property="role" column="ROLE_ID" javaType="RoleBean">
 			<id column="ROLE_ID" property="ROLE_ID"/>
 			<result column="ROLE_NAME" property="ROLE_NAME"/>
 			<result column="ROLE_RIGHTS" property="RIGHTS"/>
