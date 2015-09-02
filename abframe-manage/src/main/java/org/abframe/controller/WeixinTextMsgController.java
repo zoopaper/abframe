@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
@@ -7,7 +8,10 @@ import org.abframe.entity.Page;
 import org.abframe.service.WeixinCommandService;
 import org.abframe.service.WeixinImgMsgService;
 import org.abframe.service.WeixinTextMsgService;
-import org.abframe.util.*;
+import org.abframe.util.AppUtil;
+import org.abframe.util.Constant;
+import org.abframe.util.ObjectExcelView;
+import org.abframe.util.PageData;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -49,11 +53,11 @@ public class WeixinTextMsgController extends BaseController {
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
             return null;
         }
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        pd.put("TEXTMSG_ID", UuidUtil.genTerseUuid());    //主键
-        pd.put("CREATETIME", Tools.date2Str(new Date())); //创建时间
+        pd.put("TEXTMSG_ID", UuidUtil.genTerseUuid());
+        pd.put("CREATETIME", DateUtil.getDateTimeStr());
         weixinTextMsgService.save(pd);
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
@@ -80,7 +84,7 @@ public class WeixinTextMsgController extends BaseController {
 
     @RequestMapping(value = "/edit")
     public ModelAndView edit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         try {
             if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
                 return null;
@@ -100,7 +104,7 @@ public class WeixinTextMsgController extends BaseController {
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
         //if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -124,7 +128,7 @@ public class WeixinTextMsgController extends BaseController {
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() {
 
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -142,7 +146,7 @@ public class WeixinTextMsgController extends BaseController {
      */
     @RequestMapping(value = "/goSubscribe")
     public ModelAndView goSubscribe() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -177,7 +181,7 @@ public class WeixinTextMsgController extends BaseController {
 
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {

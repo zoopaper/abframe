@@ -1,6 +1,7 @@
 package org.abframe.util;
 
 import net.common.utils.date.DateUtil;
+import net.common.utils.encrypt.MD5Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,15 +57,10 @@ public class Tools {
         return str2StrArray(str, ",\\s*");
     }
 
-    /**
-     * 按照yyyy-MM-dd HH:mm:ss的格式，日期转字符串
-     *
-     * @param date
-     * @return yyyy-MM-dd HH:mm:ss
-     */
-    public static String date2Str(Date date) {
-        return date2Str(date, "yyyy-MM-dd HH:mm:ss");
-    }
+
+//    public static String date2Str(Date date) {
+//        return DateUtil.formatDate(date,DateUtil.DATETIME_STR);
+//    }
 
 
     /**
@@ -75,6 +71,7 @@ public class Tools {
      * @return
      */
     public static String date2Str(Date date, String format) {
+
         if (date != null) {
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             return sdf.format(date);
@@ -160,7 +157,7 @@ public class Tools {
      */
     public static boolean checkKey(String paraname, String FKEY) {
         paraname = (null == paraname) ? "" : paraname;
-        return MD5.md5(paraname + DateUtil.formatDate(new Date(), DateUtil.DATE_STR1) + ",fh,").equals(FKEY);
+        return MD5Util.digestHex(paraname + DateUtil.formatDate(new Date(), DateUtil.DATE_STR1) + ",fh,").equals(FKEY);
     }
 
 

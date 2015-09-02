@@ -68,7 +68,7 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
     public ModelAndView toLogin() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("common/login");
@@ -153,7 +153,7 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(value = "/main/{changeMenu}")
     public ModelAndView login_index(@PathVariable("changeMenu") String changeMenu) {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -280,7 +280,7 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/logout")
     public ModelAndView logout() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
 
         //shiro管理的session

@@ -28,7 +28,7 @@ public class ToolController extends BaseController {
      */
     @RequestMapping(value = "/interface")
     public ModelAndView toInterface() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("interface/interfaceTest");
@@ -73,7 +73,7 @@ public class ToolController extends BaseController {
 
     @RequestMapping(value = "/toSendEmail")
     public ModelAndView toSendEmail() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("mail/email");
@@ -83,7 +83,7 @@ public class ToolController extends BaseController {
 
     @RequestMapping(value = "/toQrCode")
     public ModelAndView toQrCode() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("qrCode/qrCode");
@@ -142,7 +142,7 @@ public class ToolController extends BaseController {
 
     @RequestMapping(value = "/ztree")
     public ModelAndView ztree() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("ztree/ztree");
@@ -152,7 +152,7 @@ public class ToolController extends BaseController {
 
     @RequestMapping(value = "/map")
     public ModelAndView map() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("map/map");
@@ -165,7 +165,7 @@ public class ToolController extends BaseController {
      */
     @RequestMapping(value = "/mapXY")
     public ModelAndView mapXY() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("map/mapXY");

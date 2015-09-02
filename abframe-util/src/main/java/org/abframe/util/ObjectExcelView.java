@@ -1,5 +1,6 @@
 package org.abframe.util;
 
+import net.common.utils.date.DateUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
@@ -27,7 +28,7 @@ public class ObjectExcelView extends AbstractExcelView {
                                       HttpServletResponse response) throws Exception {
 
         Date date = new Date();
-        String filename = Tools.date2Str(date, "yyyyMMddHHmmss");
+        String filename = DateUtil.formatDate(date, "yyyyMMddHHmmss");
         HSSFSheet sheet;
         HSSFCell cell;
         response.setContentType("application/octet-stream");

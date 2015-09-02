@@ -14,6 +14,7 @@ import org.abframe.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ import java.util.Map;
 @RequestMapping(value = "/role")
 public class RoleController extends BaseController {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(RoleController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleController.class);
 
     String menuUrl = "role";
 
@@ -49,7 +50,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/qx")
     public ModelAndView qx() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -70,7 +71,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/kfqx")
     public ModelAndView kfqx() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -91,7 +92,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/gysqxc")
     public ModelAndView gysqxc() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -109,7 +110,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping
     public ModelAndView list(Page page) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
 
@@ -137,7 +138,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd(Page page) {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -151,7 +152,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ModelAndView add() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -216,7 +217,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit(String ROLE_ID) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -232,7 +233,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "/edit")
     public ModelAndView edit() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -286,7 +287,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/button")
     public ModelAndView button(@RequestParam String ROLE_ID, @RequestParam String msg, Model model) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         try {
             List<Menu> menuList = menuService.listAllMenu();
             Role role = roleService.getRoleById(ROLE_ID);

@@ -1,6 +1,8 @@
 package org.abframe.util;
 
 import org.codehaus.jackson.map.util.JSONPObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.Map;
 
 public class AppUtil {
 
-    protected static Logger logger = Logger.getLogger(AppUtil.class);
+    protected static Logger logger = LoggerFactory.getLogger(AppUtil.class);
 
     public static boolean checkParam(String method, PageData pd) {
         boolean result = false;

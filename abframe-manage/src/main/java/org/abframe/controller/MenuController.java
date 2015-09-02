@@ -27,7 +27,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping
     public ModelAndView list() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         try {
             List<Menu> menuList = menuService.listAllParentMenu();
             mv.addObject("menuList", menuList);
@@ -40,7 +40,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         try {
             List<Menu> menuList = menuService.listAllParentMenu();
             mv.addObject("menuList", menuList);
@@ -53,7 +53,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/add")
     public ModelAndView add(Menu menu) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -78,7 +78,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit(String MENU_ID) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -96,7 +96,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/toEditIcon")
     public ModelAndView toEditIcon(String MENU_ID) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -117,7 +117,7 @@ public class MenuController extends BaseController {
      */
     @RequestMapping(value = "/editIcon")
     public ModelAndView editIcon() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -133,7 +133,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "/edit")
     public ModelAndView edit() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();

@@ -1,8 +1,8 @@
 package org.abframe.config;
 
 import com.google.common.collect.ImmutableMap;
-import net.common.utils.config.ConfigOper;
 import net.common.utils.config.MapConfig;
+import net.common.utils.config.MapConfigOperate;
 
 import javax.annotation.PostConstruct;
 
@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
  * Date: 2015/8/31
  * Time: 10:15
  */
-public class ConfigBean extends ConfigOper {
+public class ConfigBean extends MapConfigOperate {
 
     private String cfgXml;
 

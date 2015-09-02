@@ -1,11 +1,15 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.WeixinCommandService;
-import org.abframe.util.*;
+import org.abframe.util.AppUtil;
+import org.abframe.util.Constant;
+import org.abframe.util.ObjectExcelView;
+import org.abframe.util.PageData;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -41,11 +45,11 @@ public class WeixinCommandController extends BaseController {
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
             return null;
         }
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        pd.put("COMMAND_ID", UuidUtil.genTerseUuid());    //主键
-        pd.put("CREATETIME", Tools.date2Str(new Date()));    //创建时间
+        pd.put("COMMAND_ID", UuidUtil.genTerseUuid());
+        pd.put("CREATETIME", DateUtil.getDateTimeStr());
         weixinCommandService.save(pd);
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
@@ -73,7 +77,7 @@ public class WeixinCommandController extends BaseController {
 
     @RequestMapping(value = "/edit")
     public ModelAndView edit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
             return null;
         }
@@ -93,7 +97,7 @@ public class WeixinCommandController extends BaseController {
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
         //if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -116,7 +120,7 @@ public class WeixinCommandController extends BaseController {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -134,7 +138,7 @@ public class WeixinCommandController extends BaseController {
      */
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {

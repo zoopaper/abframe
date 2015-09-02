@@ -51,7 +51,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/saveU")
     public ModelAndView saveU(PrintWriter out) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
 
@@ -145,7 +145,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/editU")
     public ModelAndView editU() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         if (pd.getString("PASSWORD") != null && !"".equals(pd.getString("PASSWORD"))) {
@@ -164,7 +164,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/toEditU")
     public ModelAndView toEditU() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
 
@@ -192,7 +192,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/toAddU")
     public ModelAndView toAddU() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         List<Role> roleList;
@@ -212,7 +212,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/list")
     public ModelAndView listUsers(Page page) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
 
@@ -253,7 +253,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/listTabUser")
     public ModelAndView listtabUser(Page page) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         List<PageData> userList = userService.listAllUser(pd);            //列出用户列表
@@ -322,7 +322,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/excel")
     public ModelAndView exportExcel() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -375,7 +375,7 @@ public class UserController extends BaseController {
                 }
                 dataMap.put("varList", varList);
                 ObjectExcelView erv = new ObjectExcelView();                    //执行excel操作
-                mv = new ModelAndView(erv, dataMap);
+                mv = new ModelAndView(erv,dataMap);
             }
         } catch (Exception e) {
             LOGGER.error("Controller user exception.", e);
@@ -388,7 +388,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/toUploadExcel")
     public ModelAndView toUploadExcel() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         mv.setViewName("user/uploadExcel");
         return mv;
     }
@@ -410,7 +410,7 @@ public class UserController extends BaseController {
     public ModelAndView readExcel(
             @RequestParam(value = "excel", required = false) MultipartFile file
     ) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
             return null;

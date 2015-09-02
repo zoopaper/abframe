@@ -52,7 +52,7 @@ public class OnlineUserController extends BaseController {
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
             return null;
         }
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.addObject("msg", "success");
@@ -64,7 +64,7 @@ public class OnlineUserController extends BaseController {
     public ModelAndView list(Page page) {
 
         //if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -78,13 +78,11 @@ public class OnlineUserController extends BaseController {
         return mv;
     }
 
-    /**
-     * 去新增页面
-     */
+
     @RequestMapping(value = "/goAdd")
     public ModelAndView toAdd() {
 
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {

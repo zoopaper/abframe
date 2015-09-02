@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import net.common.utils.encrypt.MD5Util;
 import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
@@ -7,10 +8,14 @@ import org.abframe.entity.Page;
 import org.abframe.entity.Role;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.RoleService;
-import org.abframe.util.*;
+import org.abframe.util.AppUtil;
+import org.abframe.util.Constant;
+import org.abframe.util.ObjectExcelView;
+import org.abframe.util.PageData;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -30,21 +35,19 @@ import java.util.*;
 @RequestMapping(value = "/member")
 public class MemberUserController extends BaseController {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MemberUserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemberUserController.class);
 
     String menuUrl = "member/listUser";
 
     @Autowired
     private MemberUserService memberUserService;
 
-
     @Autowired
     private RoleService roleService;
 
-
     @RequestMapping(value = "/saveU")
     public ModelAndView saveU(PrintWriter out) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
 
@@ -54,7 +57,7 @@ public class MemberUserController extends BaseController {
         pd.put("IP", "");                        //IP
         //pd.put("STATUS", "0");				//状态
 
-        pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
+        pd.put("PASSWORD", MD5Util.digestHex(pd.getString("PASSWORD")));
 
         if (null == memberUserService.findByUId(pd)) {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
@@ -71,11 +74,11 @@ public class MemberUserController extends BaseController {
 
     @RequestMapping(value = "/editU")
     public ModelAndView editU(PrintWriter out) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         if (pd.getString("PASSWORD") != null && !"".equals(pd.getString("PASSWORD"))) {
-            pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
+            pd.put("PASSWORD", MD5Util.digestHex(pd.getString("PASSWORD")));
         }
         if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
             memberUserService.editU(pd);
@@ -151,7 +154,7 @@ public class MemberUserController extends BaseController {
 
     @RequestMapping(value = "/toEditU")
     public ModelAndView toEditU() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -170,7 +173,7 @@ public class MemberUserController extends BaseController {
 
     @RequestMapping(value = "/toAddU")
     public ModelAndView toAddU() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -188,7 +191,7 @@ public class MemberUserController extends BaseController {
 
     @RequestMapping(value = "/listUser")
     public ModelAndView listUsers(Page page) {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -272,7 +275,7 @@ public class MemberUserController extends BaseController {
      */
     @RequestMapping(value = "/excel")
     public ModelAndView exportExcel() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {

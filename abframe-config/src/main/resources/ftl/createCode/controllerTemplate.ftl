@@ -53,7 +53,7 @@ public class ${objectName}Controller extends BaseController {
 	public ModelAndView save() throws Exception{
 		logBefore(logger, "新增${objectName}");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
-		ModelAndView mv = this.getModelAndView();
+		ModelAndView mv = new ModelAndView()()();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("${objectNameUpper}_ID", this.get32UUID());	//主键
@@ -98,7 +98,7 @@ public class ${objectName}Controller extends BaseController {
 	public ModelAndView edit() throws Exception{
 		logBefore(logger, "修改${objectName}");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
-		ModelAndView mv = this.getModelAndView();
+		ModelAndView mv = new ModelAndView()()();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		${objectNameLower}Service.edit(pd);
@@ -114,7 +114,7 @@ public class ${objectName}Controller extends BaseController {
 	public ModelAndView list(Page page){
 		logBefore(logger, "列表${objectName}");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
-		ModelAndView mv = this.getModelAndView();
+		ModelAndView mv = new ModelAndView()()();
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
@@ -136,7 +136,7 @@ public class ${objectName}Controller extends BaseController {
 	@RequestMapping(value="/goAdd")
 	public ModelAndView goAdd(){
 		logBefore(logger, "去新增${objectName}页面");
-		ModelAndView mv = this.getModelAndView();
+		ModelAndView mv = new ModelAndView()()();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
@@ -155,7 +155,7 @@ public class ${objectName}Controller extends BaseController {
 	@RequestMapping(value="/goEdit")
 	public ModelAndView goEdit(){
 		logBefore(logger, "去修改${objectName}页面");
-		ModelAndView mv = this.getModelAndView();
+		ModelAndView mv = new ModelAndView()()();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
@@ -208,7 +208,7 @@ public class ${objectName}Controller extends BaseController {
 	public ModelAndView exportExcel(){
 		logBefore(logger, "导出${objectName}到excel");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView()();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try{
@@ -233,7 +233,7 @@ public class ${objectName}Controller extends BaseController {
 			}
 			dataMap.put("varList", varList);
 			ObjectExcelView erv = new ObjectExcelView();
-			mv = new ModelAndView(erv,dataMap);
+			mv = new ModelAndView()(erv,dataMap);
 		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}

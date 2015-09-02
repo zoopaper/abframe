@@ -96,7 +96,7 @@ public class ConfigController extends BaseController {
 
     @RequestMapping(value = "/editEmail")
     public ModelAndView editEmail() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("config/editEmail");
@@ -106,7 +106,7 @@ public class ConfigController extends BaseController {
 
     @RequestMapping(value = "/toSendSms")
     public ModelAndView toSendSms() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("config/sendSms");
@@ -201,7 +201,7 @@ public class ConfigController extends BaseController {
      */
     @RequestMapping(value = "/saveSys2")
     public ModelAndView saveSys2() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
 //        Tools.writeFile(Constant.FWATERM, pd.getString("isCheck1") + ",fh," + pd.getString("fcontent") + ",fh," + pd.getString("fontSize") + ",fh," + pd.getString("fontX") + ",fh," + pd.getString("fontY"));    //文字水印配置
@@ -217,7 +217,7 @@ public class ConfigController extends BaseController {
      */
     @RequestMapping(value = "/toProductCode")
     public ModelAndView toProductCode() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         mv.setViewName("config/productCode");
         return mv;
     }

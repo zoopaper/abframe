@@ -36,7 +36,7 @@ public class DictController extends BaseController {
 
     @RequestMapping(value = "/save")
     public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
 
         PageData pd = new PageData();
         pd = this.getPageData();
@@ -83,7 +83,7 @@ public class DictController extends BaseController {
     @RequestMapping
     public ModelAndView list(Page page) {
 
-        ModelAndView modelAndView = this.getModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         String parentId = pd.getString("parentId");
@@ -144,7 +144,7 @@ public class DictController extends BaseController {
 
     @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
     public ModelAndView toAdd(Page page) {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -159,7 +159,7 @@ public class DictController extends BaseController {
 
     @RequestMapping(value = "/toEdit", method = RequestMethod.GET)
     public ModelAndView toEdit(String ROLE_ID) throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         pd = dictService.findById(pd);

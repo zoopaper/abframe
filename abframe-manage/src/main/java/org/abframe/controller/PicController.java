@@ -56,7 +56,7 @@ public class PicController extends BaseController {
                 pd.put("TITLE", "图片");                                //标题
                 pd.put("NAME", fileName);                            //文件名
                 pd.put("PATH", ffile + "/" + fileName);                //路径
-                pd.put("CREATETIME", Tools.date2Str(new Date()));    //创建时间
+                pd.put("CREATETIME", DateUtil.getDateTimeStr());
                 pd.put("MASTER_ID", "1");                            //附属与
                 pd.put("BZ", "图片管理处上传");                        //备注
                 //加水印
@@ -98,7 +98,7 @@ public class PicController extends BaseController {
             @RequestParam(value = "MASTER_ID", required = false) String MASTER_ID,
             @RequestParam(value = "BZ", required = false) String BZ
     ) {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -134,7 +134,7 @@ public class PicController extends BaseController {
 
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -160,7 +160,7 @@ public class PicController extends BaseController {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -174,7 +174,7 @@ public class PicController extends BaseController {
 
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {

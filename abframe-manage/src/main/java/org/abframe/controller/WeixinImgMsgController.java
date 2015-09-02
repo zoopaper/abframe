@@ -1,5 +1,6 @@
 package org.abframe.controller;
 
+import net.common.utils.date.DateUtil;
 import net.common.utils.uuid.UuidUtil;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
@@ -40,11 +41,11 @@ public class WeixinImgMsgController extends BaseController {
         if (!PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
             return null;
         } //校验权限
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         pd.put("IMGMSG_ID", UuidUtil.genTerseUuid());    //主键
-        pd.put("CREATETIME", Tools.date2Str(new Date()));    //创建时间
+        pd.put("CREATETIME", DateUtil.getDateStr());
         weixinImgMsgService.save(pd);
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
@@ -71,7 +72,7 @@ public class WeixinImgMsgController extends BaseController {
 
     @RequestMapping(value = "/edit")
     public ModelAndView edit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         try {
             if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
                 return null;
@@ -90,7 +91,7 @@ public class WeixinImgMsgController extends BaseController {
     @RequestMapping(value = "/list")
     public ModelAndView list(Page page) {
         //if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
@@ -112,7 +113,7 @@ public class WeixinImgMsgController extends BaseController {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
@@ -128,7 +129,7 @@ public class WeixinImgMsgController extends BaseController {
 
     @RequestMapping(value = "/toEdit")
     public ModelAndView toEdit() {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {

@@ -48,7 +48,7 @@ public class MailController extends BaseController {
 
     @RequestMapping(value = "/toSendEmailM")
     public ModelAndView toSendEmailT() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("mail/email");
@@ -58,7 +58,7 @@ public class MailController extends BaseController {
 
     @RequestMapping(value = "/toSendEmail")
     public ModelAndView toSendEmail() throws Exception {
-        ModelAndView mv = this.getModelAndView();
+        ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         mv.setViewName("mail/sendEmail");
@@ -75,7 +75,6 @@ public class MailController extends BaseController {
         String mailPassword = configBean.getString(MailConst.MAIL_PASSWORD, configBean.getCfgMap(), "");
         String mailName = configBean.getString(MailConst.MAIL_NAME, configBean.getCfgMap(), "");
         boolean mailAuth = configBean.getBoolean(MailConst.MAIL_SMTP_AUTH, configBean.getCfgMap(), true);
-
 
 
         MailInfo info = new MailInfo();
