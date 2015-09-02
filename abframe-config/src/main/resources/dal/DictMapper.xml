@@ -68,7 +68,6 @@
         </if>
     </select>
 
-    <!-- 删除用户 -->
     <delete id="delete" parameterType="pd">
 		delete from t_dict where id = #{id}
 	</delete>

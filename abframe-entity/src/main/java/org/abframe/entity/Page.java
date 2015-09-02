@@ -2,15 +2,32 @@ package org.abframe.entity;
 
 import org.abframe.util.PageData;
 
+
 public class Page {
 
-    private int showCount; //每页显示记录数
-    private int totalPage;        //总页数
-    private int totalResult;    //总记录数
-    private int currentPage;    //当前页
-    private int currentResult;    //当前记录起始索引
-    private boolean entityOrField;    //true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性
-    private String pageStr;        //最终页面显示的底部翻页导航，详细见：getPageStr();
+    /**
+     * 每页显示记录数
+     */
+    private int showCount;
+
+    //总页数
+    private int totalPage;
+
+    //总记录数
+    private int totalResult;
+
+    //当前页
+    private int currentPage;
+
+    //当前记录起始索引
+    private int currentResult;
+
+    //true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性
+    private boolean entityOrField;
+
+    //最终页面显示的底部翻页导航，详细见：getPageStr();
+    private String pageStr;
+
     private PageData pd = new PageData();
 
 
