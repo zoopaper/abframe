@@ -197,7 +197,7 @@
 		select 
 			<include refid="allAttribute"/>
 		from t_role
-		where perentId = '0'
+		where parentId = '0'
 		ORDER BY id
 	</select>
 

@@ -208,12 +208,12 @@
 				u.EMAIL,
 				u.NUMBER,
 				u.PHONE,
-				r.ROLE_ID,
-				r.ROLE_NAME
+				r.id,
+				r.name
 		from t_user u, t_role r
-		where u.ROLE_ID = r.ROLE_ID 
+		where u.ROLE_ID = r.id
 		and u.USERNAME != 'admin'
-		and (r.ROLE_ID != '7' and r.PARENT_ID != '7')
+		and (r.id != '7' and r.parentId != '7')
 		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -251,12 +251,12 @@
 				u.EMAIL,
 				u.NUMBER,
 				u.PHONE,
-				r.ROLE_ID,
-				r.ROLE_NAME
+				r.id,
+				r.name
 		from t_user u, t_role r
-		where u.ROLE_ID = r.ROLE_ID 
+		where u.ROLE_ID = r.id
 		and u.USERNAME != 'admin'
-		and (r.ROLE_ID != '7' and r.PARENT_ID != '7')
+		and (r.id != '7' and r.parentId != '7')
 		<if test="USERNAME != null and USERNAME != ''"><!-- 关键词检索 -->
 			and
 				(
