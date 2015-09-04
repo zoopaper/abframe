@@ -2,6 +2,7 @@ package org.abframe.controller;
 
 import com.google.common.base.Strings;
 import net.common.utils.date.DateUtil;
+import net.common.utils.ip.IPUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.RoleBean;
@@ -16,6 +17,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +37,7 @@ import java.util.Map;
 @Controller
 public class LoginController extends BaseController {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
@@ -51,15 +53,10 @@ public class LoginController extends BaseController {
      *
      * @throws Exception
      */
-    public void getRemortIP(String USERNAME) throws Exception {
+    public void getRemoteIP(String USERNAME) throws Exception {
         PageData pd = new PageData();
         HttpServletRequest request = this.getRequest();
-        String ip = "";
-        if (request.getHeader("x-forwarded-for") == null) {
-            ip = request.getRemoteAddr();
-        } else {
-            ip = request.getHeader("x-forwarded-for");
-        }
+        String ip = IPUtil.getIP(getRequest());
         pd.put("USERNAME", USERNAME);
         pd.put("IP", ip);
         userService.saveIP(pd);
@@ -173,22 +170,22 @@ public class LoginController extends BaseController {
                     user = userr;
                 }
                 RoleBean role = user.getRole();
-                String roleRights = role != null ? role.getPerms() : "";
+                String rolePerms = role != null ? role.getPerms() : "";
                 //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
-                session.setAttribute(Constant.SESSION_ROLE_RIGHTS, roleRights);        //将角色权限存入session
+                session.setAttribute(Constant.SESSION_ROLE_RIGHTS, rolePerms);        //将角色权限存入session
                 session.setAttribute(Constant.SESSION_USERNAME, user.getUSERNAME());    //放入用户名
 
                 List<Menu> allmenuList = new ArrayList<Menu>();
 
                 if (null == session.getAttribute(Constant.SESSION_allmenuList)) {
                     allmenuList = menuService.listAllMenu();
-                    if (!Strings.isNullOrEmpty(roleRights)) {
+                    if (!Strings.isNullOrEmpty(rolePerms)) {
                         for (Menu menu : allmenuList) {
-                            menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
+                            menu.setHasMenu(RightsHelper.testRights(rolePerms, menu.getMENU_ID()));
                             if (menu.isHasMenu()) {
                                 List<Menu> subMenuList = menu.getSubMenu();
                                 for (Menu sub : subMenuList) {
-                                    sub.setHasMenu(RightsHelper.testRights(roleRights, sub.getMENU_ID()));
+                                    sub.setHasMenu(RightsHelper.testRights(rolePerms, sub.getMENU_ID()));
                                 }
                             }
                         }
@@ -317,15 +314,15 @@ public class LoginController extends BaseController {
         PageData pd = new PageData();
         Map<String, String> map = new HashMap<String, String>();
         try {
-            String USERNAME = session.getAttribute(Constant.SESSION_USERNAME).toString();
-            pd.put(Constant.SESSION_USERNAME, USERNAME);
-            String ROLE_ID = userService.findByUId(pd).get("ROLE_ID").toString();
+            String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
+            pd.put(Constant.SESSION_USERNAME, userName);
+            String id = userService.findByUId(pd).get("id").toString();
 
-            pd.put("ROLE_ID", ROLE_ID);
+            pd.put("id", id);
 
             PageData pd2 = new PageData();
-            pd2.put(Constant.SESSION_USERNAME, USERNAME);
-            pd2.put("ROLE_ID", ROLE_ID);
+            pd2.put(Constant.SESSION_USERNAME, userName);
+            pd2.put("id", id);
 
             pd = roleService.findObjectById(pd);
 
@@ -338,7 +335,7 @@ public class LoginController extends BaseController {
                 map.put("QX3", pd2.get("QX3").toString());
                 map.put("QX4", pd2.get("QX4").toString());
 
-                pd2.put("ROLE_ID", ROLE_ID);
+                pd2.put("ROLE_ID", id);
                 pd2 = roleService.findYHbyrid(pd2);
                 map.put("C1", pd2.get("C1").toString());
                 map.put("C2", pd2.get("C2").toString());
@@ -354,7 +351,7 @@ public class LoginController extends BaseController {
             map.put("dels", pd.getString("DEL_QX"));
             map.put("edits", pd.getString("EDIT_QX"));
             map.put("chas", pd.getString("CHA_QX"));
-            this.getRemortIP(USERNAME);
+            this.getRemoteIP(userName);
         } catch (Exception e) {
             LOGGER.error("Controller login exception.", e);
         }

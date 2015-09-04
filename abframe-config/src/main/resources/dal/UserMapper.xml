@@ -14,10 +14,10 @@
 		<result column="IP" property="IP"/>
 		<result column="STATUS" property="STATUS"/>
 		<result column="SKIN" property="SKIN"/>
-		<association property="role" column="ROLE_ID" javaType="RoleBean">
-			<id column="ROLE_ID" property="ROLE_ID"/>
-			<result column="ROLE_NAME" property="ROLE_NAME"/>
-			<result column="ROLE_RIGHTS" property="RIGHTS"/>
+		<association property="role" column="id" javaType="RoleBean">
+			<id column="id" property="id"/>
+			<result column="name" property="name"/>
+			<result column="perms" property="perms"/>
 		</association>
 	</resultMap>
 	<resultMap type="User" id="userResultMap">
@@ -52,12 +52,12 @@
 				u.RIGHTS as USER_RIGHTS,
 				u.PASSWORD,
 				u.SKIN,
-				r.ROLE_ID,
-				r.ROLE_NAME,
-				r.RIGHTS as ROLE_RIGHTS 
+				r.id,
+				r.name,
+				r.perms
 		from t_user u
 		left join t_role r
-		on u.ROLE_ID=r.ROLE_ID 
+		on u.ROLE_ID=r.id
 		where u.STATUS=0 
 		and u.USER_ID=#{USER_ID}
 	</select>
