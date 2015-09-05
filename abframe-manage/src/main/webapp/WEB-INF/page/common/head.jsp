@@ -86,7 +86,7 @@
 
                         <li>
                             <a href="javascript:alert('预留功能,待开发');">
-                                <img alt="Alex's Avatar" class="msg-photo" src="static/avatars/avatar.png"/>
+                                <img alt="Alex's Avatar" class="msg-photo" src="/static/avatars/avatar.png"/>
 									<span class="msg-body">
 										<span class="msg-title">
 											<span class="blue">张三:</span>
@@ -101,7 +101,7 @@
 
                         <li>
                             <a href="javascript:alert('预留功能,待开发');">
-                                <img alt="Susan's Avatar" class="msg-photo" src="static/avatars/avatar3.png"/>
+                                <img alt="Susan's Avatar" class="msg-photo" src="/static/avatars/avatar3.png"/>
 									<span class="msg-body">
 										<span class="msg-title">
 											<span class="blue">李四:</span>
@@ -116,7 +116,7 @@
 
                         <li>
                             <a href="javascript:alert('预留功能,待开发');">
-                                <img alt="Bob's Avatar" class="msg-photo" src="static/avatars/avatar4.png"/>
+                                <img alt="Bob's Avatar" class="msg-photo" src="/static/avatars/avatar4.png"/>
 									<span class="msg-body">
 										<span class="msg-title">
 											<span class="blue">王五:</span>
@@ -149,7 +149,7 @@
 
                 <li class="light-blue user-profile">
                     <a class="user-menu dropdown-toggle" href="javascript:;" data-toggle="dropdown">
-                        <img alt="FH" src="static/avatars/user.jpg" class="nav-user-photo"/>
+                        <img alt="FH" src="/static/avatars/user.jpg" class="nav-user-photo"/>
 							<span id="user_info">
 							</span>
                         <i class="icon-caret-down"></i>
@@ -169,4 +169,4 @@
     </div>
 </div>
 <!--引入属于此页面的js -->
-<script type="text/javascript" src="static/js/myjs/head.js"></script>
+<script type="text/javascript" src="/static/js/myjs/head.js"></script>

@@ -209,7 +209,7 @@
 				u.NUMBER,
 				u.PHONE,
 				r.id,
-				r.name
+				r.name as roleName
 		from t_user u, t_role r
 		where u.ROLE_ID = r.id
 		and u.USERNAME != 'admin'

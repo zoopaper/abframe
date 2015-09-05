@@ -11,7 +11,10 @@ import org.abframe.entity.base.IMybatisEntity;
  */
 public class RoleBean extends IMybatisEntity {
 
+    private String ROLE_ID;
     private String name;
+
+    private String roleName;
 
     private String parentId;
 
@@ -90,5 +93,21 @@ public class RoleBean extends IMybatisEntity {
 
     public void setPermQuery(String permQuery) {
         this.permQuery = permQuery;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getROLE_ID() {
+        return ROLE_ID;
+    }
+
+    public void setROLE_ID(String ROLE_ID) {
+        this.ROLE_ID = ROLE_ID;
     }
 }
