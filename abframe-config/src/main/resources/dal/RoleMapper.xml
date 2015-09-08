@@ -60,7 +60,7 @@
 		select userId
 		from t_member
 		where 
-		ROLE_ID = #{id}
+		ROLE_ID = #{roleId}
 	</select>
 
     <!-- 通过当前登录用的角色id获取管理权限数据 -->
@@ -80,7 +80,7 @@
 		and 
 			a.roleId = c.roleId
 		and
-			c.roleId =  '${id}'
+			c.roleId =  '${roleId}'
 		limit 0,1
 	</select>
 
@@ -100,7 +100,7 @@
 		where 
 			a.permId = b.U_ID
 		and 
-			a.id = c.roleId
+			a.roleId = c.roleId
 		and
 			c.roleId =  '${id}'
 		limit 0,1
@@ -129,31 +129,31 @@
     <update id="setAllRights" parameterType="pd">
 		update t_role
 		set perms=#{perms}
-		where parentId=#{id}
+		where parentId=#{roleId}
 	</update>
 
     <update id="add_qx" parameterType="pd">
 		update t_role
 		set permAdd=#{value}
-		where roleId=#{id}
+		where roleId=#{roleId}
 	</update>
 
     <update id="del_qx" parameterType="pd">
 		update t_role
 		set permDel=#{value}
-		where roleId=#{id}
+		where roleId=#{roleId}
 	</update>
 
     <update id="edit_qx" parameterType="pd">
 		update t_role
 		set permEdit=#{value}
-		where roleId=#{id}
+		where roleId=#{roleId}
 	</update>
 
     <update id="cha_qx" parameterType="pd">
 		update t_role
 		set permQuery=#{value}
-		where roleId=#{id}
+		where roleId=#{roleId}
 	</update>
 
     <update id="kfqx1" parameterType="pd">
@@ -189,7 +189,7 @@
     <select id="listAllRolesByPId" resultMap="roleResultMap">
         select
         <include refid="allAttribute"/>
-        from t_role where parentId = #{id} order by id
+        from t_role where parentId = #{roleId} order by roleId
     </select>
 
 
@@ -207,7 +207,7 @@
 		where roleId=#{roleId}
 	</update>
     <delete id="deleteRoleById" parameterType="String">
-		delete from t_role where roleId=#{id}
+		delete from t_role where roleId=#{roleId}
 	</delete>
 
     <!-- 删除K权限表里对应的数据 -->

@@ -114,9 +114,9 @@ public class RoleController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        String roleId = pd.getString("id");
+        String roleId = pd.getString("roleId");
         if (Strings.isNullOrEmpty(roleId)) {
-            pd.put("id", "1");
+            pd.put("roleId", "1");
         }
         List<RoleBean> roleList = roleService.listAllRoles();                //列出所有部门
         List<RoleBean> roleList_z = roleService.listAllRolesByPId(pd);        //列出此部门的所有下级
@@ -158,7 +158,7 @@ public class RoleController extends BaseController {
             pd = this.getPageData();
 
             String parentId = pd.getString("parentId");
-            pd.put("id", parentId);
+            pd.put("roleId", parentId);
             if ("0".equals(parentId)) {
                 pd.put("perms", "");
             } else {
@@ -221,7 +221,7 @@ public class RoleController extends BaseController {
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
-            pd.put("id", id);
+            pd.put("roleId", id);
             pd = roleService.findObjectById(pd);
             mv.setViewName("role/roleEdit");
             mv.addObject("pd", pd);
@@ -350,7 +350,7 @@ public class RoleController extends BaseController {
                     pd.put("perms", "");
                 }
 
-                pd.put("id", id);
+                pd.put("roleId", id);
                 roleService.setAllRights(pd);
             }
             out.write("success");
@@ -375,7 +375,7 @@ public class RoleController extends BaseController {
                 } else {
                     pd.put("value", "");
                 }
-                pd.put("id", id);
+                pd.put("roleId", id);
                 roleService.updateQx(msg, pd);
             }
             out.write("success");
@@ -396,7 +396,7 @@ public class RoleController extends BaseController {
         String errInfo = "";
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "del")) {
-                pd.put("id", id);
+                pd.put("roleId", id);
                 List<RoleBean> roleList_z = roleService.listAllRolesByPId(pd);        //列出此部门的所有下级
                 if (roleList_z.size() > 0) {
                     errInfo = "false";

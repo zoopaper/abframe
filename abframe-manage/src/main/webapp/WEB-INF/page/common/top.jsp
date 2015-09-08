@@ -18,6 +18,6 @@
 <!-- 日期框 -->
 <!--引入弹窗组件start-->
 <script type="text/javascript" src="/plugins/attention/zDialog/zDrag.js"></script>
-<script type="text/javascript" src="/plugins/attention/zDialog/zDialog.js"></script>
+<script type="text/javascript" src="/plugins/attention/zDialog/zDialog-origin.js"></script>
 <!--引入弹窗组件end-->
 <script type="text/javascript" src="/static/js/jquery.tips.js"></script>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50520
 File Encoding         : 65001
 
-Date: 2015-09-02 22:04:05
+Date: 2015-09-08 20:45:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -295,7 +295,7 @@ INSERT INTO `t_recommend` VALUES ('3', 'dsfdsfdasf', '<p>afdsafsadfdsafsafs</p>'
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
-  `id` varchar(100) NOT NULL,
+  `roleId` varchar(100) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `perms` varchar(255) DEFAULT NULL,
   `permId` varchar(100) DEFAULT NULL,
@@ -304,7 +304,7 @@ CREATE TABLE `t_role` (
   `permEdit` varchar(255) DEFAULT NULL,
   `permDel` varchar(255) DEFAULT NULL,
   `permQuery` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -346,7 +346,7 @@ CREATE TABLE `t_role_perm` (
 -- Records of t_role_perm
 -- ----------------------------
 INSERT INTO `t_role_perm` VALUES ('1', '2', '1', '1', '1', '1', '1', '1');
-INSERT INTO `t_role_perm` VALUES ('2', '1', '1', '1', '1', '1', '1', '1');
+INSERT INTO `t_role_perm` VALUES ('2', '1', '1', '1', '0', '1', '1', '1');
 INSERT INTO `t_role_perm` VALUES ('55896f5ce3c0494fa6850775a4e29ff6', '7', '0', '0', '0', '0', '0', '0');
 INSERT INTO `t_role_perm` VALUES ('68f23fc0caee475bae8d52244dea8444', '7', '0', '0', '1', '1', '0', '0');
 INSERT INTO `t_role_perm` VALUES ('6f610a47f262435ba546b75781213b28', '4', '0', '1', '0', '0', '0', '0');
@@ -363,27 +363,27 @@ INSERT INTO `t_role_perm` VALUES ('f944a9df72634249bbcb8cb73b0c9b86', '7', '1', 
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
-  `USER_ID` varchar(100) NOT NULL,
-  `USERNAME` varchar(255) DEFAULT NULL,
-  `PASSWORD` varchar(255) DEFAULT NULL,
-  `NAME` varchar(255) DEFAULT NULL,
-  `RIGHTS` varchar(255) DEFAULT NULL,
-  `ROLE_ID` varchar(100) DEFAULT NULL,
-  `LAST_LOGIN` varchar(255) DEFAULT NULL,
-  `IP` varchar(100) DEFAULT NULL,
-  `STATUS` varchar(32) DEFAULT NULL,
-  `BZ` varchar(255) DEFAULT NULL,
-  `SKIN` varchar(100) DEFAULT NULL,
-  `EMAIL` varchar(32) DEFAULT NULL,
-  `NUMBER` varchar(100) DEFAULT NULL,
-  `PHONE` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`USER_ID`)
+  `userId` varchar(100) NOT NULL,
+  `userName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `perms` varchar(255) DEFAULT NULL,
+  `roleId` varchar(100) DEFAULT NULL,
+  `lastLogin` varchar(255) DEFAULT NULL,
+  `ip` varchar(100) DEFAULT NULL,
+  `status` varchar(32) DEFAULT NULL,
+  `bz` varchar(255) DEFAULT NULL,
+  `skin` varchar(100) DEFAULT NULL,
+  `email` varchar(32) DEFAULT NULL,
+  `number` varchar(100) DEFAULT NULL,
+  `phone` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2015-09-02 21:54:35', '0:0:0:0:0:0:0:1', '0', 'xxx', 'default', 'admin@main.com', '001', '18788888888');
+INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2015-09-08 20:43:21', '0:0:0:0:0:0:0:1', '0', 'xxx', 'default', 'admin@main.com', '001', '18788888888');
 INSERT INTO `t_user` VALUES ('9e23643380d74fd2947ab25af748ff7d', 'zhangsan', '5ee5d458d02fde6170b9c3ebfe06af85dacd131d', '张三', '', '2', '', '', '0', 'zhang', 'default', 'krisibm@163.com', '111', '18810489560');
 
 -- ----------------------------
