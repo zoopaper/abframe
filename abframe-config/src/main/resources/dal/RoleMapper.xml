@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="RoleMapper">
 
-	<sql id="allAttribute">
+    <sql id="allAttribute">
 		<![CDATA[
 			roleId,
 			name,
@@ -33,22 +33,22 @@
 
     <!-- 列出二级角色信息 -->
     <select id="listAllERRoles" resultMap="roleResultMap">
-		select
-			<include refid="allAttribute"/>
-		from t_role
-		where 
-			parentId != '0'
-		 	and parentId != '7'
-	</select>
+        select
+        <include refid="allAttribute"/>
+        from t_role
+        where
+        parentId != '0'
+        and parentId != '7'
+    </select>
 
     <!-- 列出会员二级角色信息 -->
     <select id="listAllappERRoles" resultMap="roleResultMap">
-		select
-		<include refid="allAttribute"/>
-		from t_role
-		where 
-		 	parentId = '7'
-	</select>
+        select
+        <include refid="allAttribute"/>
+        from t_role
+        where
+        parentId = '7'
+    </select>
 
     <!-- 列出此角色下的所有用户 -->
     <select id="listAllUByRid" parameterType="pd" resultType="pd">
@@ -122,17 +122,7 @@
 
     <!-- 列出G权限表里的数据 -->
     <select id="listAllGysQX" parameterType="pd" resultType="pd">
-		select 
-			U_ID,
-			C1,
-			C2,
-			C3,
-			C4,
-			Q1,
-			Q2,
-			Q3,
-			Q4
-		from t_user_perm
+		select U_ID,C1,C2,C3,C4,Q1,Q2,Q3,Q4 from t_user_perm
 	</select>
 
     <!-- 给全部子职位加菜单权限 -->
@@ -191,24 +181,24 @@
 	</update>
 
     <select id="listAllRoles" resultMap="roleResultMap">
-		select 
-			<include refid="allAttribute"/>
-		from t_role where parentId = '0' order by roleId
-	</select>
+        select
+        <include refid="allAttribute"/>
+        from t_role where parentId = '0' order by roleId
+    </select>
 
     <select id="listAllRolesByPId" resultMap="roleResultMap">
-		select
-		<include refid="allAttribute"/>
-		from t_role where parentId = #{id} order by id
-	</select>
+        select
+        <include refid="allAttribute"/>
+        from t_role where parentId = #{id} order by id
+    </select>
 
 
     <select id="getRoleById" parameterType="String" resultMap="roleResultMap">
-		select
-		<include refid="allAttribute"/>
-		from t_role
-		where roleId=#{roleId}
-	</select>
+        select
+        <include refid="allAttribute"/>
+        from t_role
+        where roleId=#{roleId}
+    </select>
 
 
     <update id="updateRoleRights" parameterType="RoleBean">
@@ -307,11 +297,11 @@
 
     <!-- 通过id查找 -->
     <select id="findObjectById" parameterType="pd" resultType="pd">
-		select
-		<include refid="allAttribute"/>
-		from t_role
-		where roleId = #{roleId}
-	</select>
+        select
+        <include refid="allAttribute"/>
+        from t_role
+        where roleId = #{roleId}
+    </select>
 
     <!-- 编辑角色 -->
     <update id="edit" parameterType="pd">
