@@ -73,7 +73,7 @@
             ,password = #{password}
         </if>
         where
-        id = #{id}
+        userId = #{userId}
     </update>
 
     <!-- 通过user_id获取数据 -->
@@ -82,8 +82,8 @@
 			<include refid="allAttribute"/>
 		from 
 			t_user
-		where 
-			id = #{id}
+		where
+        userId = #{userId}
 	</select>
 
     <!-- 通过邮箱获取数据 -->
@@ -121,7 +121,7 @@
     <!-- 新增用户 -->
     <insert id="saveU" parameterType="pd" flushCache="false">
 		insert into t_user (
-			id,
+			userId,
 			userName,
 			password,
 		    name
@@ -136,7 +136,7 @@
 			number,
 			phone
 		) values (
-			#{id},
+			#{userId},
 			#{userName},
 			#{password},
 			#{name},
