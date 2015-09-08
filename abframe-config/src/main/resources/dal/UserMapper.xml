@@ -1,71 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
-	<sql id="userColumns">USERNAME,NAME,PASSWORD,RIGHTS,STATUS,ROLE_ID</sql>
+    <sql id="allAttribute">
+		<![CDATA[
+			userId,
+			userName,
+			name,
+			password,
+			perms,
+			status,
+			roleId,
+			lastLogin,
+			ip,
+			email,
+			number,
+			phone,
+			bz
+        ]]>
+	</sql>
 
-	<resultMap type="User" id="userAndRoleResultMap">
-		<id column="USER_ID" property="USER_ID"/>
-		<result column="USERNAME" property="USERNAME"/>
-		<result column="PASSWORD" property="PASSWORD"/>
-		<result column="NAME" property="NAME"/>
-		<result column="RIGHTS" property="RIGHTS"/>
-		<result column="LAST_LOGIN" property="LAST_LOGIN"/>
-		<result column="IP" property="IP"/>
-		<result column="STATUS" property="STATUS"/>
-		<result column="SKIN" property="SKIN"/>
-		<association property="role" column="id" javaType="RoleBean">
-			<id column="id" property="id"/>
-			<result column="name" property="name"/>
-			<result column="perms" property="perms"/>
-		</association>
-	</resultMap>
-	<resultMap type="User" id="userResultMap">
-		<id column="USER_ID" property="USER_ID"/>
-		<result column="USERNAME" property="USERNAME"/>
-		<result column="PASSWORD" property="PASSWORD"/>
-		<result column="NAME" property="NAME"/>
-		<result column="RIGHTS" property="RIGHTS"/>
-		<result column="LAST_LOGIN" property="LAST_LOGIN"/>
-		<result column="IP" property="IP"/>
-		<result column="STATUS" property="STATUS"/>
-		<result column="ROLE_ID" property="ROLE_ID"/>
-		<result column="SKIN" property="SKIN"/>
-	</resultMap>
-	
-	<!-- 判断用户名和密码 -->
-	<select id="getUserInfo" parameterType="User" resultMap="userResultMap">
-		select * from t_user
-		where 1=1
-		<if test="USERNAME!=null and PASSWORD!=null">
-		and USERNAME = #{USERNAME} and PASSWORD=#{PASSWORD}
-		</if>
-		<if test="USER_ID!=null and USER_ID>0">
-		and USER_ID = #{USER_ID}
-		</if>
-	</select>
-	
-	<select id="getUserAndRoleById" parameterType="String" resultMap="userAndRoleResultMap">
-		select  u.USER_ID,
-				u.USERNAME,
-				u.NAME,
-				u.RIGHTS as USER_RIGHTS,
-				u.PASSWORD,
-				u.SKIN,
-				r.id,
+    <resultMap type="User" id="userAndRoleResultMap">
+        <id column="userId" property="userId"/>
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="perms" property="perms"/>
+        <result column="lastLogin" property="lastLogin"/>
+        <result column="ip" property="ip"/>
+        <result column="status" property="status"/>
+        <result column="skin" property="skin"/>
+        <association property="role" column="roleId" javaType="RoleBean">
+            <id column="roleId" property="roleId"/>
+            <result column="name" property="name"/>
+            <result column="perms" property="perms"/>
+        </association>
+    </resultMap>
+    <resultMap type="User" id="userResultMap">
+        <id column="userId" property="userId"/>
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="perms" property="perms"/>
+        <result column="lastLogin" property="lastLogin"/>
+        <result column="ip" property="ip"/>
+        <result column="status" property="status"/>
+        <result column="roleId" property="roleId"/>
+        <result column="skin" property="skin"/>
+    </resultMap>
+
+    <!-- 判断用户名和密码 -->
+    <select id="getUserInfo" parameterType="User" resultMap="userResultMap">
+        select * from t_user
+        where 1=1
+        <if test="userName!=null and password!=null">
+            and userName = #{userName} and password=#{password}
+        </if>
+        <if test="userId!=null and userId>0">
+            and userId = #{userId}
+        </if>
+    </select>
+
+    <select id="getUserAndRoleById" parameterType="String" resultMap="userAndRoleResultMap">
+		select  u.userId,
+				u.userName,
+				u.name,
+				u.perms,
+				u.password,
+				u.skin,
+				r.roleId,
 				r.name,
 				r.perms
 		from t_user u
 		left join t_role r
-		on u.ROLE_ID=r.id
-		where u.STATUS=0 
-		and u.USER_ID=#{USER_ID}
+		on u.roleId=r.roleId
+		where u.status=0
+		and u.userId=#{userId}
 	</select>
 
-	<update id="updateLastLogin" parameterType="User">
+    <update id="updateLastLogin" parameterType="User">
 		update t_user set
-		LAST_LOGIN=#{LAST_LOGIN} 
-		where USER_ID=#{USER_ID}
+		lastLogin=#{lastLogin}
+		where userId=#{userId}
 	</update>
-	
+
 </mapper>

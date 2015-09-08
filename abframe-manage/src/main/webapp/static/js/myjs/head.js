@@ -1,14 +1,3 @@
-var locat = (window.location + '').split('/');
-$(function () {
-    if ('main' == locat[3]) {
-        locat = locat[0] + '//' + locat[2];
-    } else {
-        locat = locat[0] + '//' + locat[2] + '/' + locat[3];
-    }
-    ;
-});
-
-
 //菜单状态切换
 var fmid = "fhindex";
 var mid = "fhindex";
@@ -35,40 +24,39 @@ $(function () {
     $("#skin-colorpicker").ace_colorpicker().on("change", function () {
         var b = $(this).find("option:selected").data("class");
         hf(b);
-        var url = locat + '/config/setSKIN?SKIN=' + b + '&tm=' + new Date().getTime();
+        var url ='/config/setSkin?skin=' + b + '&tm=' + new Date().getTime();
         $.get(url, function (data) {
         });
 
     });
 });
 
-var USER_ID;
+var userId;
 
-var user = "FH";	//用于即时通讯（ 当前登录用户）
+var user = "";
 
 $(function () {
     $.ajax({
         type: "POST",
-        url: locat + '/config/getUname?tm=' + new Date().getTime(),
+        url: '/config/getUname?tm=' + new Date().getTime(),
         data: encodeURI(""),
         dataType: 'json',
         //beforeSend: validateData,
         cache: false,
         success: function (data) {
-            //alert(data.list.length);
             $.each(data.list, function (i, list) {
                 //登陆者资料
-                $("#user_info").html('<small>Welcome</small> ' + list.NAME + '');
-                user = list.USERNAME;
-                USER_ID = list.USER_ID;//用户ID
-                hf(list.SKIN);//皮肤
-                if (list.USERNAME != 'admin') {
+                $("#user_info").html('<small>Welcome</small> ' + list.name + '');
+                user = list.userName;
+                userId = list.userId;
+                hf(list.skin);//皮肤
+                if (list.userName != 'admin') {
                     $("#adminmenu").hide();	//隐藏菜单设置
                     $("#adminzidian").hide();	//隐藏数据字典
                     $("#systemset").hide();	//隐藏系统设置
                 }
                 $("#productCode").hide();	//隐藏代码生成
-                online();//连接在线管理
+               // online();//连接在线管理
             });
         }
     });
@@ -93,6 +81,7 @@ function online() {
         //消息接收
         websocket.onmessage = function (message) {
             var message = JSON.parse(message.data);
+            alert(message.type);
             if (message.type == 'count') {
                 userCount = message.msg;
             } else if (message.type == 'goOut') {
@@ -123,7 +112,7 @@ function getUserlist() {
 //强制下线
 function goOut(msg) {
     alert(msg);
-    window.location.href = locat + "/logout";
+    window.location.href = "/logout";
 }
 //强制某用户下线
 function goOutUser(theuser) {
@@ -168,7 +157,7 @@ function editUserH() {
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "个人资料";
-    diag.URL = locat + '/user/toEditU?USER_ID=' + USER_ID + '&fx=head';
+    diag.URL = '/user/toEditU?userId=' + userId + '&fx=head';
     diag.Width = 225;
     diag.Height = 389;
     diag.CancelEvent = function () {
@@ -183,7 +172,7 @@ function editSys() {
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "系统设置";
-    diag.URL = locat + '/config/toSystem';
+    diag.URL = '/config/toSystem';
     diag.Width = 600;
     diag.Height = 596;
     diag.CancelEvent = function () {
@@ -198,7 +187,7 @@ function productCode() {
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "代码生成器";
-    diag.URL = locat + '/config/toProductCode';
+    diag.URL = '/config/toProductCode';
     diag.Width = 800;
     diag.Height = 450;
     diag.CancelEvent = function () {
@@ -214,7 +203,7 @@ function zidian() {
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "数据字典";
-    diag.URL = locat + '/dict?parentId=0';
+    diag.URL = '/dict?parentId=0';
     diag.Width = 799;
     diag.Height = 460;
     diag.CancelEvent = function () {
@@ -230,7 +219,7 @@ function menu() {
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "菜单编辑";
-    diag.URL = locat + '/menu';
+    diag.URL = '/menu';
     diag.Width = 720;
     diag.Height = 390;
     diag.CancelEvent = function () {
@@ -243,7 +232,7 @@ function menu() {
 //切换菜单
 function changeMenu() {
     websocket.send('[leave]' + user);
-    window.location.href = locat + '/main/yes';
+    window.location.href = '/main/yes';
 }
 
 //清除加载进度

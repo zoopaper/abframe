@@ -1,9 +1,11 @@
 package org.abframe.controller;
 
 import org.abframe.util.Constant;
+import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +21,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * 验证码
+ */
 @Controller
-@RequestMapping("/code")
-public class SecCodeController {
+@RequestMapping("/validateCode")
+public class ValidateCodeController {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(SecCodeController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValidateCodeController.class);
 
     @RequestMapping
     public void generate(HttpServletResponse response) {
@@ -37,6 +42,7 @@ public class SecCodeController {
         try {
             ServletOutputStream out = response.getOutputStream();
             output.writeTo(out);
+            IOUtils.closeQuietly(output);
         } catch (IOException e) {
             e.printStackTrace();
         }

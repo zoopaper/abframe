@@ -1,9 +1,9 @@
 package org.abframe.interceptor;
 
+import org.abframe.entity.UserBean;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.abframe.entity.User;
 import org.abframe.util.Constant;
 import org.abframe.common.PermissionHandler;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -23,7 +23,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
             //shiro管理的session
             Subject currentUser = SecurityUtils.getSubject();
             Session session = currentUser.getSession();
-            User user = (User) session.getAttribute(Constant.SESSION_USER);
+            UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
             if (user != null) {
                 path = path.substring(1, path.length());
                 boolean b = PermissionHandler.hasJurisdiction(path);

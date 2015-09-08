@@ -5,7 +5,7 @@
 
 	<sql id="allAttribute">
 		<![CDATA[
-			id,
+			roleId,
 			name,
 			perms,
 			permId,
@@ -18,7 +18,7 @@
 	</sql>
 
     <resultMap type="RoleBean" id="roleResultMap">
-        <id column="id" property="id"/>
+        <id column="roleId" property="roleId"/>
         <result column="name" property="name"/>
         <result column="perms" property="perms"/>
     </resultMap>
@@ -52,15 +52,12 @@
 
     <!-- 列出此角色下的所有用户 -->
     <select id="listAllUByRid" parameterType="pd" resultType="pd">
-		select USER_ID
-		from t_user
-		where 
-		ROLE_ID = #{id}
+		select userId from t_user where roleId = #{roleId}
 	</select>
 
     <!-- 列出此角色下的所有会员 -->
     <select id="listAllAppUByRid" parameterType="pd" resultType="pd">
-		select USER_ID
+		select userId
 		from t_member
 		where 
 		ROLE_ID = #{id}
@@ -81,9 +78,9 @@
 		where 
 			a.permId = b.GL_ID
 		and 
-			a.id = c.ROLE_ID
+			a.roleId = c.roleId
 		and
-			c.ROLE_ID =  '${id}'
+			c.roleId =  '${id}'
 		limit 0,1
 	</select>
 
@@ -103,9 +100,9 @@
 		where 
 			a.permId = b.U_ID
 		and 
-			a.id = c.ROLE_ID
+			a.id = c.roleId
 		and
-			c.ROLE_ID =  '${id}'
+			c.roleId =  '${id}'
 		limit 0,1
 	</select>
 
@@ -148,25 +145,25 @@
     <update id="add_qx" parameterType="pd">
 		update t_role
 		set permAdd=#{value}
-		where id=#{id}
+		where roleId=#{id}
 	</update>
 
     <update id="del_qx" parameterType="pd">
 		update t_role
 		set permDel=#{value}
-		where id=#{id}
+		where roleId=#{id}
 	</update>
 
     <update id="edit_qx" parameterType="pd">
 		update t_role
 		set permEdit=#{value}
-		where id=#{id}
+		where roleId=#{id}
 	</update>
 
     <update id="cha_qx" parameterType="pd">
 		update t_role
 		set permQuery=#{value}
-		where id=#{id}
+		where roleId=#{id}
 	</update>
 
     <update id="kfqx1" parameterType="pd">
@@ -196,18 +193,13 @@
     <select id="listAllRoles" resultMap="roleResultMap">
 		select 
 			<include refid="allAttribute"/>
-		from t_role
-		where parentId = '0'
-		ORDER BY id
+		from t_role where parentId = '0' order by roleId
 	</select>
 
     <select id="listAllRolesByPId" resultMap="roleResultMap">
 		select
 		<include refid="allAttribute"/>
-		from t_role
-		where 
-			parentId = #{id}
-		ORDER BY id
+		from t_role where parentId = #{id} order by id
 	</select>
 
 
@@ -215,18 +207,17 @@
 		select
 		<include refid="allAttribute"/>
 		from t_role
-		where id=#{id}
+		where roleId=#{roleId}
 	</select>
 
 
     <update id="updateRoleRights" parameterType="RoleBean">
 		update t_role
 		set perms=#{perms}
-		where id=#{id}
+		where roleId=#{roleId}
 	</update>
     <delete id="deleteRoleById" parameterType="String">
-		delete from t_role
-		where id=#{id}
+		delete from t_role where roleId=#{id}
 	</delete>
 
     <!-- 删除K权限表里对应的数据 -->
@@ -292,7 +283,7 @@
     <!-- 添加 -->
     <insert id="insert" parameterType="pd">
 		insert into t_role (
-			id,
+			roleId,
 			name,
 			perms,
 			parentId,
@@ -302,7 +293,7 @@
 			permQuery,
 			permId
 		) values (
-			#{id},
+			#{roleId},
 			#{name},
 			#{perms},
 			#{parentId},
@@ -319,13 +310,13 @@
 		select
 		<include refid="allAttribute"/>
 		from t_role
-		where id = #{id}
+		where roleId = #{roleId}
 	</select>
 
     <!-- 编辑角色 -->
     <update id="edit" parameterType="pd">
 		update t_role
 		set name = #{name}
-		where id = #{id}
+		where roleId = #{roleId}
 	</update>
 </mapper>

@@ -57,8 +57,9 @@
                                         </li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li><a href="javascript:void(0);"><i
-                                                class="icon-double-angle-right"></i>${sub.MENU_NAME }</a></li>
+                                        <li>
+                                            <a href="javascript:void(0);">
+                                                <i  class="icon-double-angle-right"></i>${sub.MENU_NAME }</a></li>
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>

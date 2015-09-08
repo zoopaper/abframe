@@ -40,7 +40,7 @@ public class ChatServer extends WebSocketServer {
      */
     @Override
     public void onMessage(WebSocket conn, String message) {
-        message = message.toString();
+        
         if (null != message && message.startsWith(Constant.WEB_SOCKET_USER_CONN)) {
             this.userjoin(message.replaceFirst(Constant.WEB_SOCKET_USER_CONN, ""), conn);
         }

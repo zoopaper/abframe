@@ -46,20 +46,19 @@ public class ConfigController extends BaseController {
             pd = this.getPageData();
             List<PageData> pdList = new ArrayList<PageData>();
 
-            //shiro管理的session
-            Subject currentUser = SecurityUtils.getSubject();
-            Session session = currentUser.getSession();
+
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession();
 
             PageData pds = new PageData();
             pds = (PageData) session.getAttribute(Constant.SESSION_userpds);
 
             if (null == pds) {
-                String USERNAME = session.getAttribute(Constant.SESSION_USERNAME).toString();    //获取当前登录者loginname
-                pd.put("USERNAME", USERNAME);
+                String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();    //获取当前登录者loginname
+                pd.put("userName", userName);
                 pds = userService.findByUId(pd);
                 session.setAttribute(Constant.SESSION_userpds, pds);
             }
-
             pdList.add(pds);
             map.put("list", pdList);
         } catch (Exception e) {
@@ -71,19 +70,18 @@ public class ConfigController extends BaseController {
     /**
      * 保存皮肤
      */
-    @RequestMapping(value = "/setSKIN")
+    @RequestMapping(value = "/setSkin")
     public void setSKIN(PrintWriter out) {
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
 
-            //shiro管理的session
-            Subject currentUser = SecurityUtils.getSubject();
-            Session session = currentUser.getSession();
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession();
 
-            String USERNAME = session.getAttribute(Constant.SESSION_USERNAME).toString();//获取当前登录者loginname
-            pd.put("USERNAME", USERNAME);
-            userService.setSKIN(pd);
+            String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
+            pd.put("userName", userName);
+            userService.setSkin(pd);
             session.removeAttribute(Constant.SESSION_userpds);
             session.removeAttribute(Constant.SESSION_USERROL);
             out.write("success");

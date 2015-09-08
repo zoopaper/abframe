@@ -11,6 +11,7 @@ import org.abframe.entity.base.IMybatisEntity;
  */
 public class RoleBean extends IMybatisEntity {
 
+    private String roleId;
     private String ROLE_ID;
     private String name;
 
@@ -109,5 +110,13 @@ public class RoleBean extends IMybatisEntity {
 
     public void setROLE_ID(String ROLE_ID) {
         this.ROLE_ID = ROLE_ID;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 }

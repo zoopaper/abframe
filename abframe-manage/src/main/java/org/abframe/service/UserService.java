@@ -2,7 +2,7 @@ package org.abframe.service;
 
 import org.abframe.dao.BaseDaoSupport;
 import org.abframe.entity.Page;
-import org.abframe.entity.User;
+import org.abframe.entity.UserBean;
 import org.abframe.util.PageData;
 import org.springframework.stereotype.Service;
 
@@ -63,8 +63,8 @@ public class UserService {
     /*
     * 换皮肤
     */
-    public void setSKIN(PageData pd) throws Exception {
-        dao.update("UserXMapper.setSKIN", pd);
+    public void setSkin(PageData pd) throws Exception {
+        dao.update("UserXMapper.setSkin", pd);
     }
 
     /*
@@ -126,8 +126,8 @@ public class UserService {
     /*
     *通过id获取数据
     */
-    public User getUserAndRoleById(String USER_ID) throws Exception {
-        return (User) dao.findForObject("UserMapper.getUserAndRoleById", USER_ID);
+    public UserBean getUserAndRoleById(String USER_ID) throws Exception {
+        return (UserBean) dao.findForObject("UserMapper.getUserAndRoleById", USER_ID);
     }
 
 

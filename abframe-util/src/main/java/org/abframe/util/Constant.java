@@ -80,7 +80,7 @@ public class Constant {
     public static final String FILEPATHTWODIMENSIONCODE = "uploadFiles/twoDimensionCode/";
 
     //不对匹配该值的访问路径拦截（正则）
-    public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(toLogin)|(logout)|(code)|(app)|(weixin)|(static)|(main)|(websocket)).*";
+    public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(toLogin)|(logout)|(validateCode)|(app)|(weixin)|(static)|(main)|(websocket)).*";
 
 
     public static ApplicationContext WEB_APP_CONTEXT = null; //该值会在web容器启动时由WebAppContextListener初始化

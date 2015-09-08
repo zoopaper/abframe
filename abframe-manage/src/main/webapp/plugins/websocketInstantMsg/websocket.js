@@ -82,6 +82,7 @@ function creatw() {
             //消息接收
             websocket.onmessage = function (message) {
                 var message = JSON.parse(message.data);
+                alert(message);
                 //接收用户发送的消息
                 if (message.type == 'message') {
                     output.receive(message);

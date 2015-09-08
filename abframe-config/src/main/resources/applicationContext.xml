@@ -79,14 +79,10 @@
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="delete*" propagation="REQUIRED" read-only="false"
-                       rollback-for="java.lang.Exception"/>
-            <tx:method name="insert*" propagation="REQUIRED" read-only="false"
-                       rollback-for="java.lang.Exception"/>
-            <tx:method name="update*" propagation="REQUIRED" read-only="false"
-                       rollback-for="java.lang.Exception"/>
-            <tx:method name="save*" propagation="REQUIRED" read-only="false"
-                       rollback-for="java.lang.Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" read-only="false"   rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
 
@@ -130,7 +126,7 @@
                 /static/js/myjs/** = authc
                 /static/js/** = anon
                 /uploadFiles/uploadImgs/** = anon
-                /code.do = anon
+                /validateCode = anon
                 /login = anon
                 /app**/** = anon
                 /weixin/** = anon

@@ -1,303 +1,258 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserXMapper">
-	
-    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-	
-	<!-- 换皮肤-->
-	<update id="setSKIN" parameterType="pd" flushCache="false">
-		update t_user set
-		SKIN = #{SKIN} 
-		where USERNAME = #{USERNAME}
-	</update>
-	
-	<!-- 更新登录时间 -->
-	<update id="updateLastLogin" parameterType="pd" flushCache="false">
-		update t_user set
-		LAST_LOGIN = #{LAST_LOGIN} 
-		where USER_ID = #{USER_ID}
-	</update>
-	
-	<!-- 判断用户名和密码 -->
-	<select id="getUserInfo" parameterType="pd" resultType="pd" useCache="false"><!-- insert update delete (flushCache="true/false") -->
-		select * from t_user
-		where 1=1
-		<if test="USERNAME != null and PASSWORD != null">
-	  	and	(
-	  		(USERNAME = #{USERNAME} and PASSWORD = #{PASSWORD})
-	  		or
-	  		(EMAIL = #{USERNAME} and PASSWORD = #{PASSWORD})
-	  		or
-	  		(NUMBER = #{USERNAME} and PASSWORD = #{PASSWORD})
-	  		)
-		</if>
-		<if test="USER_ID != null and USER_ID != ''">
-		and USER_ID = #{USER_ID}
-		</if>
-	</select>
-	
 
-	
-	<!-- 存入IP -->
-	<update id="saveIP" parameterType="pd" flushCache="false">
-		update t_user
-			set 
-				IP = #{IP}
-			where 
-				USERNAME = #{USERNAME}
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <sql id="allAttribute">
+        <![CDATA[
+			userId,
+			userName,
+			name,
+			password,
+			perms,
+			status,
+			roleId,
+			lastLogin,
+			ip,
+			email,
+			number,
+			phone,
+			skin,
+			bz
+        ]]>
+    </sql>
+    <!-- 换皮肤-->
+    <update id="setSKIN" parameterType="pd" flushCache="false">
+		update t_user set
+		skin = #{skin}
+		where userName = #{userName}
 	</update>
-	
-	<!-- 修改 -->
-	<update id="editU" parameterType="pd" flushCache="false">
-		update  t_user
-			set USERNAME				= #{USERNAME},
-				NAME 					= #{NAME},
-				ROLE_ID 				= #{ROLE_ID},
-				BZ						= #{BZ},
-				EMAIL					= #{EMAIL},
-				NUMBER					= #{NUMBER},
-				PHONE					= #{PHONE}
-			<if test="PASSWORD != null and PASSWORD != ''">
-				,PASSWORD				= #{PASSWORD}
-			</if>
-			where 
-				USER_ID = #{USER_ID}
+
+    <!-- 更新登录时间 -->
+    <update id="updateLastLogin" parameterType="pd" flushCache="false">
+		update t_user set
+		lastLogin = #{lastLogin}
+		where userId = #{userId}
 	</update>
-	
-	<!-- 通过user_id获取数据 -->
-	<select id="findByUiId" parameterType="pd" resultType="pd" useCache="false">
+
+    <!-- 判断用户名和密码 -->
+    <select id="getUserInfo" parameterType="pd" resultType="pd"
+            useCache="false"><!-- insert update delete (flushCache="true/false") -->
+        select * from t_user
+        where 1=1
+        <if test="userName != null and password != null">
+            and (
+            (userName = #{userName} and password = #{password})
+            or
+            (email = #{userName} and password = #{password})
+            )
+        </if>
+        <if test="userId != null and userId != ''">
+            and userId = #{userId}
+        </if>
+    </select>
+
+
+
+    <update id="saveIP" parameterType="pd" flushCache="false">
+		update t_user set 	ip = #{ip} where userName = #{userName}
+	</update>
+
+    <!-- 修改 -->
+    <update id="editU" parameterType="pd" flushCache="false">
+        update t_user
+        set userName = #{userName},
+        name = #{name},
+        roleId = #{roleId},
+        bz = #{bz},
+        email = #{email},
+        number = #{number},
+        phone = #{phone}
+        <if test="password != null and password != ''">
+            ,password = #{password}
+        </if>
+        where
+        id = #{id}
+    </update>
+
+    <!-- 通过user_id获取数据 -->
+    <select id="findByUiId" parameterType="pd" resultType="pd" useCache="false">
 		select 
-			USER_ID,
-			USERNAME,
-			PASSWORD,
-			NAME,
-			RIGHTS,
-			ROLE_ID,
-			LAST_LOGIN,
-			IP,
-			STATUS,
-			BZ,
-			SKIN,
-			EMAIL,
-			NUMBER,
-			PHONE
+			<include refid="allAttribute"/>
 		from 
 			t_user
 		where 
-			USER_ID = #{USER_ID}
+			id = #{id}
 	</select>
-		
-	<!-- 通过邮箱获取数据 -->
-	<select id="findByUE" parameterType="pd" resultType="pd" useCache="false">
-		select 
-			USER_ID,
-			USERNAME,
-			PASSWORD,
-			NAME,
-			RIGHTS,
-			ROLE_ID,
-			LAST_LOGIN,
-			IP,
-			STATUS,
-			BZ,
-			SKIN,
-			EMAIL,
-			NUMBER,
-			PHONE
-		from
-		t_user
-		where 
-			EMAIL = #{EMAIL}
-		<if test="USERNAME != null and USERNAME != ''">
-			and USERNAME != #{USERNAME} 
-		</if>
-	</select>
-	
-	<!-- 通过编号获取数据 -->
-	<select id="findByUN" parameterType="pd" resultType="pd" useCache="false">
-		select 
-			USER_ID,
-			USERNAME,
-			PASSWORD,
-			NAME,
-			RIGHTS,
-			ROLE_ID,
-			LAST_LOGIN,
-			IP,
-			STATUS,
-			BZ,
-			SKIN,
-			EMAIL,
-			NUMBER,
-			PHONE
-		from
-		t_user
-		where 
-			NUMBER = #{NUMBER}
-		<if test="USERNAME != null and USERNAME != ''">
-			and USERNAME != #{USERNAME} 
-		</if>
-	</select>
-	
-	<!-- 通过USERNAME获取数据 -->
-	<select id="findByUId" parameterType="pd" resultType="pd" useCache="false">
-		select 
-			USER_ID,
-			USERNAME,
-			PASSWORD,
-			NAME,
-			RIGHTS,
-			ROLE_ID,
-			LAST_LOGIN,
-			IP,
-			STATUS,
-			BZ,
-			SKIN,
-			EMAIL,
-			NUMBER,
-			PHONE
+
+    <!-- 通过邮箱获取数据 -->
+    <select id="findByUE" parameterType="pd" resultType="pd" useCache="false">
+        select
+        <include refid="allAttribute"/>
+        where
+        email = #{email}
+        <if test="userName != null and userName != ''">
+            and userName != #{userName}
+        </if>
+    </select>
+
+    <!-- 通过编号获取数据 -->
+    <select id="findByUN" parameterType="pd" resultType="pd" useCache="false">
+        select
+        <include refid="allAttribute"/>
+        from  t_user where
+        number = #{number}
+        <if test="userName != null and userName != ''">
+            and userName != #{userName}
+        </if>
+    </select>
+
+    <!-- 通过USERNAME获取数据 -->
+    <select id="findByUId" parameterType="pd" resultType="pd" useCache="false">
+		select
+        <include refid="allAttribute"/>
 		from 
 			t_user
-		where 
-			USERNAME = #{USERNAME}
+		where
+        userName = #{userName}
 	</select>
-	
-	<!-- 新增用户 -->
-	<insert id="saveU" parameterType="pd" flushCache="false">
+
+    <!-- 新增用户 -->
+    <insert id="saveU" parameterType="pd" flushCache="false">
 		insert into t_user (
-			USER_ID,
-			USERNAME,
-			PASSWORD,
-			NAME,
-			RIGHTS,
-			ROLE_ID,
-			LAST_LOGIN,
-			IP,
-			STATUS,
-			BZ,
-			SKIN,
-			EMAIL,
-			NUMBER,
-			PHONE
+			id,
+			userName,
+			password,
+		    name
+			perms,
+			roleId,
+			lastLogin,
+			ip,
+			status,
+			bz,
+			skip,
+			email,
+			number,
+			phone
 		) values (
-			#{USER_ID},
-			#{USERNAME},
-			#{PASSWORD},
-			#{NAME},
-			#{RIGHTS},
-			#{ROLE_ID},
-			#{LAST_LOGIN},
-			#{IP},
-			#{STATUS},
-			#{BZ},
-			#{SKIN},
-			#{EMAIL},
-			#{NUMBER},
-			#{PHONE}
+			#{id},
+			#{userName},
+			#{password},
+			#{name},
+			#{perms},
+			#{roleId},
+			#{lastLogin},
+			#{ip},
+			#{status},
+			#{bz},
+			#{skin},
+			#{email},
+			#{number},
+			#{phone}
 		)
 	</insert>
-	<!-- 用户列表(用户组) -->
-	<select id="userlistPage" parameterType="page" resultType="pd" useCache="false">
-		select  u.USER_ID,
-				u.USERNAME,
-				u.PASSWORD,
-				u.LAST_LOGIN,
-				u.NAME,
-				u.IP,
-				u.EMAIL,
-				u.NUMBER,
-				u.PHONE,
-				r.id,
-				r.name as roleName
-		from t_user u, t_role r
-		where u.ROLE_ID = r.id
-		and u.USERNAME != 'admin'
-		and (r.id != '7' and r.parentId != '7')
-		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 关键词检索 -->
-			and
-				(
-					 u.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-					 or 
-					 u.EMAIL LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%') 
-					 or
-					 u.NUMBER LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-					 or
-					 u.NAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-					 or
-					 u.PHONE LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-				)
-		</if>
-		<if test="pd.ROLE_ID != null and pd.ROLE_ID != ''"><!-- 角色检索 -->
-			and u.ROLE_ID=#{pd.ROLE_ID} 
-		</if>
-		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &gt;= #{pd.lastLoginStart} 
-		</if>
-		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &lt;= #{pd.lastLoginEnd} 
-		</if>
-		order by u.LAST_LOGIN desc
-	</select>
-	
-	<!-- 用户列表(全部) -->
-	<select id="listAllUser" parameterType="pd" resultType="pd" useCache="false">
-		select  u.USER_ID,
-				u.USERNAME,
-				u.PASSWORD,
-				u.LAST_LOGIN,
-				u.NAME,
-				u.IP,
-				u.EMAIL,
-				u.NUMBER,
-				u.PHONE,
-				r.id,
-				r.name
-		from t_user u, t_role r
-		where u.ROLE_ID = r.id
-		and u.USERNAME != 'admin'
-		and (r.id != '7' and r.parentId != '7')
-		<if test="USERNAME != null and USERNAME != ''"><!-- 关键词检索 -->
-			and
-				(
-					 u.USERNAME LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-					 or 
-					 u.EMAIL LIKE CONCAT(CONCAT('%', #{USERNAME}),'%') 
-					 or
-					 u.NUMBER LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-					 or
-					 u.NAME LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-					  or
-					 u.PHONE LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-				)
-		</if>
-		<if test="ROLE_ID != null and ROLE_ID != ''"><!-- 角色检索 -->
-			and u.ROLE_ID=#{ROLE_ID} 
-		</if>
-		<if test="lastLoginStart!=null and lastLoginStart!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &gt;= #{lastLoginStart} 
-		</if>
-		<if test="lastLoginEnd!=null and lastLoginEnd!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &lt;= #{lastLoginEnd} 
-		</if>
-		order by u.LAST_LOGIN desc
-	</select>
-	
-	<!-- 删除用户 -->
-	<delete id="deleteU" parameterType="pd" flushCache="false">
+    <!-- 用户列表(用户组) -->
+    <select id="userlistPage" parameterType="page" resultType="pd" useCache="false">
+        select u.userId,
+        u.userName,
+        u.password,
+        u.lastLogin,
+        u.name,
+        u.ip,
+        u.email,
+        u.number,
+        u.phone,
+        r.roleId,
+        r.name as roleName
+        from t_user u, t_role r
+        where u.roleId = r.roleId
+        and u.userName != 'admin'
+        and (r.id != '7' and r.parentId != '7')
+        <if test="pd.userName != null and pd.userName != ''">
+            and
+            (
+            u.userName LIKE CONCAT(CONCAT('%', #{pd.userName}),'%')
+            or
+            u.email LIKE CONCAT(CONCAT('%', #{pd.userName}),'%')
+            or
+            u.number LIKE CONCAT(CONCAT('%', #{pd.userName}),'%')
+            or
+            u.name LIKE CONCAT(CONCAT('%', #{pd.userName}),'%')
+            or
+            u.phone LIKE CONCAT(CONCAT('%', #{pd.userName}),'%')
+            )
+        </if>
+        <if test="pd.roleId != null and pd.roleId != ''">
+            and u.roleId=#{pd.roleId}
+        </if>
+        <if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''">
+            <![CDATA[and u.lastLogin >= #{pd.lastLoginStart}]]>
+        </if>
+        <if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''">
+            <![CDATA[ and u.lastLogin <= #{pd.lastLoginEnd}]]>
+        </if>
+        order by u.lastLogin desc
+    </select>
+
+    <!-- 用户列表(全部) -->
+    <select id="listAllUser" parameterType="pd" resultType="pd" useCache="false">
+        select u.userId,
+        u.userName,
+        u.password,
+        u.lastLogin,
+        u.name,
+        u.ip,
+        u.email,
+        u.number,
+        u.phone,
+        r.roleId,
+        r.name
+        from t_user u, t_role r
+        where u.roleId = r.roleId
+        and u.userName != 'admin'
+        and (r.id != '7' and r.parentId != '7')
+        <if test="userName != null and userName != ''"><!-- 关键词检索 -->
+            and
+            (
+            u.userName LIKE CONCAT(CONCAT('%', #{userName}),'%')
+            or
+            u.email LIKE CONCAT(CONCAT('%', #{userName}),'%')
+            or
+            u.number LIKE CONCAT(CONCAT('%', #{userName}),'%')
+            or
+            u.name LIKE CONCAT(CONCAT('%', #{userName}),'%')
+            or
+            u.phone LIKE CONCAT(CONCAT('%', #{userName}),'%')
+            )
+        </if>
+        <if test="roleId != null and roleId != ''"><!-- 角色检索 -->
+            and u.roleId=#{roleId}
+        </if>
+        <if test="lastLoginStart!=null and lastLoginStart!=''"><!-- 登录时间检索 -->
+            and u.lastLogin &gt;= #{lastLoginStart}
+        </if>
+        <if test="lastLoginEnd!=null and lastLoginEnd!=''"><!-- 登录时间检索 -->
+            and u.lastLogin &lt;= #{lastLoginEnd}
+        </if>
+        order by u.lastLogin desc
+    </select>
+
+    <!-- 删除用户 -->
+    <delete id="deleteU" parameterType="pd" flushCache="false">
 		delete from t_user
 		where 
-			USER_ID = #{USER_ID}
+			userId = #{userId}
 	</delete>
-	
-	<!-- 批量删除用户 -->
-	<delete id="deleteAllU" parameterType="String" flushCache="false">
-		delete from t_user
-		where 
-			USER_ID in
-  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-                  #{item}
-             </foreach>
-	</delete>
-	
+
+    <!-- 批量删除用户 -->
+    <delete id="deleteAllU" parameterType="String" flushCache="false">
+        delete from t_user
+        where
+        userId in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

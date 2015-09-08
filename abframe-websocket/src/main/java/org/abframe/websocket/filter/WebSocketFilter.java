@@ -21,15 +21,15 @@ public class WebSocketFilter implements Filter {
 
     public void init(FilterConfig fc) throws ServletException {
 
-        this.startWebsocketInstantMsg();
+        this.startWebSocketInstantMsg();
 
-        this.startWebsocketOnline();
+        this.startWebSocketOnline();
     }
 
     /**
      * 启动即时聊天服务
      */
-    public void startWebsocketInstantMsg() {
+    public void startWebSocketInstantMsg() {
         WebSocketImpl.DEBUG = false;
         ChatServer chartServer;
         try {
@@ -47,12 +47,13 @@ public class WebSocketFilter implements Filter {
     /**
      * 启动在线管理服务
      */
-    public void startWebsocketOnline() {
+    public void startWebSocketOnline() {
         WebSocketImpl.DEBUG = false;
         int port = 8889;
         OnlineChatServer s;
         try {
             s = new OnlineChatServer(port);
+            LOGGER.info("");
             s.start();
         } catch (UnknownHostException e) {
             e.printStackTrace();

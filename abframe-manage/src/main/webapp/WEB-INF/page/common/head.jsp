@@ -28,29 +28,29 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript:alert('预留功能,待开发');">
-                                <div class="clearfix">
-                                    <span class="pull-left">软件更新</span>
-                                    <span class="pull-right">35%</span>
-                                </div>
-                                <div class="progress progress-mini progress-danger">
-                                    <div class="bar" style="width:35%"></div>
-                                </div>
-                            </a>
-                        </li>
+                        <%--<li>--%>
+                            <%--<a href="javascript:alert('预留功能,待开发');">--%>
+                                <%--<div class="clearfix">--%>
+                                    <%--<span class="pull-left">软件更新</span>--%>
+                                    <%--<span class="pull-right">35%</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="progress progress-mini progress-danger">--%>
+                                    <%--<div class="bar" style="width:35%"></div>--%>
+                                <%--</div>--%>
+                            <%--</a>--%>
+                        <%--</li>--%>
 
-                        <li>
-                            <a href="javascript:alert('预留功能,待开发');">
-                                <div class="clearfix">
-                                    <span class="pull-left">运行测试</span>
-                                    <span class="pull-right">15%</span>
-                                </div>
-                                <div class="progress progress-mini progress-warning">
-                                    <div class="bar" style="width:15%"></div>
-                                </div>
-                            </a>
-                        </li>
+                        <%--<li>--%>
+                            <%--<a href="javascript:alert('预留功能,待开发');">--%>
+                                <%--<div class="clearfix">--%>
+                                    <%--<span class="pull-left">运行测试</span>--%>
+                                    <%--<span class="pull-right">15%</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="progress progress-mini progress-warning">--%>
+                                    <%--<div class="bar" style="width:15%"></div>--%>
+                                <%--</div>--%>
+                            <%--</a>--%>
+                        <%--</li>--%>
 
                         <li>
                             <a href="javascript:alert('预留功能,待开发');">

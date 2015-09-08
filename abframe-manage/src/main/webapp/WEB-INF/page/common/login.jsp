@@ -158,7 +158,7 @@
     }
 
     function changeCode() {
-        $("#codeImg").attr("src", "code.do?t=" + genTimestamp());
+        $("#codeImg").attr("src", "validateCode?t=" + genTimestamp());
     }
 
     //客户端校验

@@ -6,22 +6,16 @@ import java.util.*;
 
 /**
  * 在线管理
- *
- * @author FH
- *         QQ 313596790
- *         2015-5-25
  */
 public class OnlineChatServerPool {
 
-    private static final Map<WebSocket, String> userconnections = new HashMap<WebSocket, String>();
+    private static final Map<WebSocket, String> userConnection = new HashMap<WebSocket, String>();
 
     /**
      * 获取用户名
-     *
-     * @param session
      */
     public static String getUserByKey(WebSocket conn) {
-        return userconnections.get(conn);
+        return userConnection.get(conn);
     }
 
     /**
@@ -30,7 +24,7 @@ public class OnlineChatServerPool {
      * @param
      */
     public static int getUserCount() {
-        return userconnections.size();
+        return userConnection.size();
     }
 
     /**
@@ -39,11 +33,11 @@ public class OnlineChatServerPool {
      * @param user
      */
     public static WebSocket getWebSocketByUser(String user) {
-        Set<WebSocket> keySet = userconnections.keySet();
+        Set<WebSocket> keySet = userConnection.keySet();
         synchronized (keySet) {
             for (WebSocket conn : keySet) {
-                String cuser = userconnections.get(conn);
-                if (cuser.equals(user)) {
+                String u = userConnection.get(conn);
+                if (u.equals(user)) {
                     return conn;
                 }
             }
@@ -54,10 +48,11 @@ public class OnlineChatServerPool {
     /**
      * 向连接池中添加连接
      *
-     * @param inbound
+     * @param user
+     * @param conn
      */
     public static void addUser(String user, WebSocket conn) {
-        userconnections.put(conn, user);    //添加连接
+        userConnection.put(conn, user);    //添加连接
     }
 
     /**
@@ -66,22 +61,20 @@ public class OnlineChatServerPool {
      * @return
      */
     public static Collection<String> getOnlineUser() {
-        List<String> setUsers = new ArrayList<String>();
-        Collection<String> setUser = userconnections.values();
-        for (String u : setUser) {
-            setUsers.add(u);
+        List<String> userList = new ArrayList<String>();
+        Collection<String> userSet = userConnection.values();
+        for (String user : userSet) {
+            userList.add(user);
         }
-        return setUsers;
+        return userList;
     }
 
     /**
      * 移除连接池中的连接
-     *
-     * @param inbound
      */
     public static boolean removeUser(WebSocket conn) {
-        if (userconnections.containsKey(conn)) {
-            userconnections.remove(conn);    //移除连接
+        if (userConnection.containsKey(conn)) {
+            userConnection.remove(conn);    //移除连接
             return true;
         } else {
             return false;
@@ -91,7 +84,6 @@ public class OnlineChatServerPool {
     /**
      * 向特定的用户发送数据
      *
-     * @param user
      * @param message
      */
     public static void sendMessageToUser(WebSocket conn, String message) {
@@ -106,10 +98,10 @@ public class OnlineChatServerPool {
      * @param message
      */
     public static void sendMessage(String message) {
-        Set<WebSocket> keySet = userconnections.keySet();
+        Set<WebSocket> keySet = userConnection.keySet();
         synchronized (keySet) {
             for (WebSocket conn : keySet) {
-                String user = userconnections.get(conn);
+                String user = userConnection.get(conn);
                 if (user != null) {
                     conn.send(message);
                 }

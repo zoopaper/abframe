@@ -48,9 +48,9 @@ public class OnlineChatServer extends WebSocketServer {
      */
     @Override
     public void onMessage(WebSocket conn, String message) {
-        message = message.toString();
+
         if (null != message && message.startsWith("[join]")) {
-            this.userjoin(message.replaceFirst("\\[join\\]", ""), conn);
+            this.joinUser(message.replaceFirst("\\[join\\]", ""), conn);
         }
         if (null != message && message.startsWith("[goOut]")) {
             this.goOut(message.replaceFirst("\\[goOut\\]", ""));
@@ -85,7 +85,7 @@ public class OnlineChatServer extends WebSocketServer {
      *
      * @param user
      */
-    public void userjoin(String user, WebSocket conn) {
+    public void joinUser(String user, WebSocket conn) {
         if (null == OnlineChatServerPool.getWebSocketByUser(user)) {                //判断用户是否在其它终端登录
             OnlineChatServerPool.addUser(user, conn);                            //向连接池添加当前的连接对象
         } else {

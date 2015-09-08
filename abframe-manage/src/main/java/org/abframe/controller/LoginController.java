@@ -6,7 +6,7 @@ import net.common.utils.ip.IPUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.RoleBean;
-import org.abframe.entity.User;
+import org.abframe.entity.UserBean;
 import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.service.UserService;
@@ -76,72 +76,74 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/login", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public Object login() throws Exception {
+    public Object login() {
         Map<String, String> map = new HashMap<String, String>();
         PageData pd = new PageData();
         pd = this.getPageData();
-        String errInfo = "";
+        String result = "";
         String userName = pd.getString("userName");
         String password = pd.getString("password");
         String code = pd.getString("code");
+        try {
+            if (!Strings.isNullOrEmpty(userName) && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(code)) {
+                //shiro管理的session
+                Subject currentUser = SecurityUtils.getSubject();
+                Session session = currentUser.getSession();
+                String sessionCode = (String) session.getAttribute(Constant.SESSION_SECURITY_CODE);
 
-        if (!Strings.isNullOrEmpty(userName) && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(code)) {
-            //shiro管理的session
-            Subject currentUser = SecurityUtils.getSubject();
-            Session session = currentUser.getSession();
-            String sessionCode = (String) session.getAttribute(Constant.SESSION_SECURITY_CODE);        //获取session中的验证码
-
-            if (null == code || "".equals(code)) {
-                errInfo = "nullcode"; //验证码为空
-            } else {
-                pd.put("USERNAME", userName);
-                if (!Strings.isNullOrEmpty(code) && sessionCode.equalsIgnoreCase(code)) {
-                    String passwd = new SimpleHash("SHA-1", userName, password).toString();    //密码加密
-                    pd.put("PASSWORD", passwd);
-                    pd = userService.getUserByNameAndPwd(pd);
-                    if (pd != null) {
-                        pd.put("LAST_LOGIN", DateUtil.getDateTimeStr().toString());
-                        userService.updateLastLogin(pd);
-                        User user = new User();
-                        user.setUSER_ID(pd.getString("USER_ID"));
-                        user.setUSERNAME(pd.getString("USERNAME"));
-                        user.setPASSWORD(pd.getString("PASSWORD"));
-                        user.setNAME(pd.getString("NAME"));
-                        user.setRIGHTS(pd.getString("RIGHTS"));
-                        user.setROLE_ID(pd.getString("ROLE_ID"));
-                        user.setLAST_LOGIN(pd.getString("LAST_LOGIN"));
-                        user.setIP(pd.getString("IP"));
-                        user.setSTATUS(pd.getString("STATUS"));
-                        session.setAttribute(Constant.SESSION_USER, user);
-                        session.removeAttribute(Constant.SESSION_SECURITY_CODE);
-
-                        //shiro加入身份验证
-                        Subject subject = SecurityUtils.getSubject();
-                        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-                        try {
-                            subject.login(token);
-                        } catch (AuthenticationException e) {
-                            errInfo = "身份验证失败！";
-                        }
-
-                    } else {
-                        //用户名或密码有误
-                        errInfo = "usererror";
-                    }
+                if (null == code || "".equals(code)) {
+                    result = "nullcode";
                 } else {
-                    //验证码输入有误
-                    errInfo = "codeerror";
+                    pd.put("userName", userName);
+                    if (!Strings.isNullOrEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)) {
+                        String passwd = new SimpleHash("SHA-1", userName, password).toString();    //密码加密
+                        pd.put("password", passwd);
+                        pd = userService.getUserByNameAndPwd(pd);
+                        if (pd != null) {
+                            pd.put("lastLogin", DateUtil.getDateTimeStr().toString());
+                            userService.updateLastLogin(pd);
+                            UserBean user = new UserBean();
+                            user.setUserId(pd.getString("userId"));
+                            user.setUserName(pd.getString("userName"));
+                            user.setPassword(pd.getString("password"));
+                            user.setName(pd.getString("name"));
+                            user.setPerms(pd.getString("perms"));
+                            user.setRoleId(pd.getString("roleId"));
+                            user.setLastLogin(pd.getString("lastLogin"));
+                            user.setIp(pd.getString("ip"));
+                            user.setStatus(pd.getString("status"));
+                            session.setAttribute(Constant.SESSION_USER, user);
+                            session.removeAttribute(Constant.SESSION_SECURITY_CODE);
+
+                            //shiro加入身份验证
+                            Subject subject = SecurityUtils.getSubject();
+                            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+                            try {
+                                subject.login(token);
+                            } catch (AuthenticationException e) {
+                                result = "身份验证失败！";
+                            }
+
+                        } else {
+                            //用户名或密码有误
+                            result = "usererror";
+                        }
+                    } else {
+                        //验证码输入有误
+                        result = "codeerror";
+                    }
+                    if (Tools.isEmpty(result)) {
+                        //验证成功
+                        result = "success";
+                    }
                 }
-                if (Tools.isEmpty(errInfo)) {
-                    //验证成功
-                    errInfo = "success";
-                }
+            } else {
+                result = "error";
             }
-        } else {
-            //缺少参数
-            errInfo = "error";
+        } catch (Exception e) {
+            LOGGER.error("Controller login exception.", e);
         }
-        map.put("result", errInfo);
+        map.put("result", result);
         return AppUtil.returnObject(new PageData(), map);
     }
 
@@ -149,22 +151,20 @@ public class LoginController extends BaseController {
      * 访问系统首页
      */
     @RequestMapping(value = "/main/{changeMenu}")
-    public ModelAndView login_index(@PathVariable("changeMenu") String changeMenu) {
+    public ModelAndView index(@PathVariable("changeMenu") String changeMenu) {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
 
-            //shiro管理的session
             Subject currentUser = SecurityUtils.getSubject();
             Session session = currentUser.getSession();
 
-            User user = (User) session.getAttribute(Constant.SESSION_USER);
+            UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
             if (user != null) {
-
-                User userr = (User) session.getAttribute(Constant.SESSION_USERROL);
+                UserBean userr = (UserBean) session.getAttribute(Constant.SESSION_USERROL);
                 if (null == userr) {
-                    user = userService.getUserAndRoleById(user.getUSER_ID());
+                    user = userService.getUserAndRoleById(user.getUserId());
                     session.setAttribute(Constant.SESSION_USERROL, user);
                 } else {
                     user = userr;
@@ -173,7 +173,7 @@ public class LoginController extends BaseController {
                 String rolePerms = role != null ? role.getPerms() : "";
                 //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
                 session.setAttribute(Constant.SESSION_ROLE_RIGHTS, rolePerms);        //将角色权限存入session
-                session.setAttribute(Constant.SESSION_USERNAME, user.getUSERNAME());    //放入用户名
+                session.setAttribute(Constant.SESSION_USERNAME, user.getUserName());    //放入用户名
 
                 List<Menu> allmenuList = new ArrayList<Menu>();
 
@@ -267,8 +267,6 @@ public class LoginController extends BaseController {
 
     /**
      * 进入首页后的默认页面
-     *
-     * @return
      */
     @RequestMapping(value = "/default")
     public String defaultPage() {
@@ -315,14 +313,16 @@ public class LoginController extends BaseController {
         Map<String, String> map = new HashMap<String, String>();
         try {
             String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
-            pd.put(Constant.SESSION_USERNAME, userName);
-            String id = userService.findByUId(pd).get("id").toString();
+            pd.put("userName", userName);
+            PageData pageData = userService.findByUId(pd);
 
-            pd.put("id", id);
+            String roleId = pageData.get("roleId").toString();
+
+            pd.put("roleId", roleId);
 
             PageData pd2 = new PageData();
-            pd2.put(Constant.SESSION_USERNAME, userName);
-            pd2.put("id", id);
+            pd2.put(userName, userName);
+            pd2.put("roleId", roleId);
 
             pd = roleService.findObjectById(pd);
 
@@ -335,7 +335,7 @@ public class LoginController extends BaseController {
                 map.put("QX3", pd2.get("QX3").toString());
                 map.put("QX4", pd2.get("QX4").toString());
 
-                pd2.put("ROLE_ID", id);
+                pd2.put("ROLE_ID", roleId);
                 pd2 = roleService.findYHbyrid(pd2);
                 map.put("C1", pd2.get("C1").toString());
                 map.put("C2", pd2.get("C2").toString());
