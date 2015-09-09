@@ -55,14 +55,14 @@ public class UserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        pd.put("USER_ID", UuidUtil.genTerseUuid());    //ID
-        pd.put("RIGHTS", "");                    //权限
-        pd.put("LAST_LOGIN", "");                //最后登录时间
-        pd.put("IP", "");                        //IP
-        pd.put("STATUS", "0");                    //状态
-        pd.put("SKIN", "default");                //默认皮肤
+        pd.put("userId", UuidUtil.genTerseUuid());
+        pd.put("perms", "");
+        pd.put("lastLogin", "");
+        pd.put("ip", "");
+        pd.put("status", "0");
+        pd.put("skin", "default");
 
-        pd.put("PASSWORD", new SimpleHash("SHA-1", pd.getString("USERNAME"), pd.getString("PASSWORD")).toString());
+        pd.put("password", new SimpleHash("SHA-1", pd.getString("userName"), pd.getString("password")).toString());
 
         if (null == userService.findByUId(pd)) {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
@@ -148,12 +148,12 @@ public class UserController extends BaseController {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-        if (pd.getString("PASSWORD") != null && !"".equals(pd.getString("PASSWORD"))) {
-            pd.put("PASSWORD", new SimpleHash("SHA-1", pd.getString("USERNAME"), pd.getString("PASSWORD")).toString());
+        if (pd.getString("password") != null && !"".equals(pd.getString("password"))) {
+            pd.put("password", new SimpleHash("SHA-1", pd.getString("userName"), pd.getString("password")).toString());
         }
-        if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+//        if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
             userService.editU(pd);
-        }
+//        }
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
         return mv;
@@ -178,7 +178,7 @@ public class UserController extends BaseController {
         }
 
         List<RoleBean> roleList = roleService.listAllERRoles();            //列出所有二级角色
-        pd = userService.findByUiId(pd);                            //根据ID读取
+        pd = userService.findByUiId(pd);
         mv.setViewName("user/userEdit");
         mv.addObject("msg", "editU");
         mv.addObject("pd", pd);

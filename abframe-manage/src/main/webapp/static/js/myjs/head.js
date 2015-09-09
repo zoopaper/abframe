@@ -156,7 +156,7 @@ function editUserH() {
     jzts();
     var diag = new top.Dialog();
     diag.Drag = true;
-    diag.Title = "个人资料";
+    diag.Title = "修改个人资料";
     diag.URL = '/user/toEditU?userId=' + userId + '&fx=head';
     diag.Width = 225;
     diag.Height = 389;

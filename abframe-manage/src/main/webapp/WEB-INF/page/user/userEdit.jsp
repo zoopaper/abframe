@@ -1,29 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="<%=basePath%>">
     <meta charset="utf-8"/>
-    <title></title>
+    <title>修改个人账户</title>
     <meta name="description" content="overview & stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
     <!-- 下拉框 -->
-    <link rel="stylesheet" href="static/css/chosen.css"/>
-    <link rel="stylesheet" href="static/css/ace.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-responsive.min.css"/>
-    <link rel="stylesheet" href="static/css/ace-skins.min.css"/>
-    <script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
+    <link rel="stylesheet" href="/static/css/chosen.css"/>
+    <link rel="stylesheet" href="/static/css/ace.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-responsive.min.css"/>
+    <link rel="stylesheet" href="/static/css/ace-skins.min.css"/>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
     <!--提示框-->
-    <script type="text/javascript" src="static/js/jquery.tips.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.tips.js"></script>
 
     <script type="text/javascript">
         $(top.hangge());
@@ -176,8 +172,8 @@
             var USERNAME = $.trim($("#loginname").val());
             $.ajax({
                 type: "POST",
-                url: '<%=basePath%>user/hasU.do',
-                data: {USERNAME: USERNAME, tm: new Date().getTime()},
+                url: '/user/hasU',
+                data: {userName: USERNAME, tm: new Date().getTime()},
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
@@ -198,8 +194,8 @@
             var EMAIL = $.trim($("#EMAIL").val());
             $.ajax({
                 type: "POST",
-                url: '<%=basePath%>user/hasE.do',
-                data: {EMAIL: EMAIL, USERNAME: USERNAME, tm: new Date().getTime()},
+                url: '/user/hasE',
+                data: {email: EMAIL, userName: USERNAME, tm: new Date().getTime()},
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
@@ -221,7 +217,7 @@
             var NUMBER = $.trim($("#NUMBER").val());
             $.ajax({
                 type: "POST",
-                url: '<%=basePath%>user/hasN.do',
+                url: '/user/hasN',
                 data: {NUMBER: NUMBER, USERNAME: USERNAME, tm: new Date().getTime()},
                 dataType: 'json',
                 cache: false,
@@ -242,46 +238,50 @@
     </script>
 </head>
 <body>
-<form action="user/${msg }.do" name="userForm" id="userForm" method="post">
-    <input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
+<form action="/user/${msg}" name="userForm" id="userForm" method="post">
+    <input type="hidden" name="userId" id="user_id" value="${pd.userId}"/>
 
     <div id="zhongxin">
         <table>
-
             <c:if test="${fx != 'head'}">
-                <c:if test="${pd.ROLE_ID != '1'}">
+                <c:if test="${pd.roleId != '1'}">
                     <tr class="info">
                         <td>
-                            <select class="chzn-select" name="ROLE_ID" id="role_id" data-placeholder="请选择职位"
+                            <select class="chzn-select" name="roleId" id="roleId" data-placeholder="请选择职位"
                                     style="vertical-align:top;">
                                 <option value=""></option>
                                 <c:forEach items="${roleList}" var="role">
-                                    <option value="${role.ROLE_ID }"
-                                            <c:if test="${role.ROLE_ID == pd.ROLE_ID }">selected</c:if>>${role.ROLE_NAME }</option>
+                                    <option value="${role.roleId}"
+                                            <c:if test="${role.roleId == pd.roleId}">selected</c:if>>${role.name}</option>
                                 </c:forEach>
                             </select>
                         </td>
                     </tr>
                 </c:if>
-                <c:if test="${pd.ROLE_ID == '1'}">
-                    <input name="ROLE_ID" id="role_id" value="1" type="hidden"/>
+                <c:if test="${pd.roleId == '1'}">
+                    <input name="roleId" id="role_id" value="1" type="hidden"/>
                 </c:if>
             </c:if>
 
             <c:if test="${fx == 'head'}">
-                <input name="ROLE_ID" id="role_id" value="${pd.ROLE_ID }" type="hidden"/>
+                <input name="roleId" id="role_id" value="${pd.roleId }" type="hidden"/>
             </c:if>
 
             <tr>
-                <td><input type="text" name="USERNAME" id="loginname" value="${pd.USERNAME }" maxlength="32"
-                           placeholder="这里输入用户名" title="用户名"/></td>
+                <td>
+                    <input type="text" name="userName" id="loginname" value="${pd.userName }" maxlength="32"
+                           placeholder="这里输入用户名" title="用户名"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="text" name="NUMBER" id="NUMBER" value="${pd.NUMBER }" maxlength="32"
-                           placeholder="这里输入编号" title="编号" onblur="hasN('${pd.USERNAME }')"/></td>
+                <td>
+                    <input type="text" name="number" id="NUMBER" value="${pd.number}" maxlength="32"
+                           placeholder="这里输入编号" title="编号" onblur="hasN('${pd.userName}')"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="password" name="PASSWORD" id="password" maxlength="32" placeholder="输入密码" title="密码"/>
+                <td>
+                    <input type="password" name="password" id="password" maxlength="32" placeholder="输入密码" title="密码"/>
                 </td>
             </tr>
             <tr>
@@ -289,20 +289,28 @@
                 </td>
             </tr>
             <tr>
-                <td><input type="text" name="NAME" id="name" value="${pd.NAME }" maxlength="32" placeholder="这里输入姓名"
-                           title="姓名"/></td>
+                <td>
+                    <input type="text" name="name" id="name" value="${pd.name}" maxlength="32" placeholder="输入姓名"
+                           title="姓名"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="number" name="PHONE" id="PHONE" value="${pd.PHONE }" maxlength="32"
-                           placeholder="这里输入手机号" title="手机号"/></td>
+                <td>
+                    <input type="number" name="phone" id="PHONE" value="${pd.phone}" maxlength="32"
+                           placeholder="输入手机号" title="手机号"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="email" name="EMAIL" id="EMAIL" value="${pd.EMAIL }" maxlength="32" placeholder="这里输入邮箱"
-                           title="邮箱" onblur="hasE('${pd.USERNAME }')"/></td>
+                <td>
+                    <input type="email" name="email" id="EMAIL" value="${pd.email}" maxlength="32" placeholder="输入邮箱"
+                           title="邮箱" onblur="hasE('${pd.userName}')"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="text" name="BZ" id="BZ" value="${pd.BZ }" placeholder="这里输入备注" maxlength="64"
-                           title="备注"/></td>
+                <td>
+                    <input type="text" name="bz" id="BZ" value="${pd.bz}" placeholder="输入备注" maxlength="64"
+                           title="备注"/>
+                </td>
             </tr>
             <tr>
                 <td style="text-align: center;">
@@ -313,17 +321,18 @@
         </table>
     </div>
 
-    <div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><img
-            src="static/images/jiazai.gif"/><br/><h4 class="lighter block green"></h4></div>
+    <div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/>
+        <img src="/static/images/jiazai.gif"/><br/><h4 class="lighter block green"></h4>
+    </div>
 
 </form>
 
 <!-- 引入 -->
 <script type="text/javascript">window.jQuery || document.write("<script src='/static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/ace-elements.min.js"></script>
-<script src="static/js/ace.min.js"></script>
-<script type="text/javascript" src="static/js/chosen.jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/ace-elements.min.js"></script>
+<script src="/static/js/ace.min.js"></script>
+<script type="text/javascript" src="/static/js/chosen.jquery.min.js"></script>
 <!-- 下拉框 -->
 
 <script type="text/javascript">

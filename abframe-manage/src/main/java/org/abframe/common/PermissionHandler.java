@@ -78,7 +78,7 @@ public class PermissionHandler {
 
         for (int i = 0; i < menuList.size(); i++) {
             for (int j = 0; j < menuList.get(i).getSubMenu().size(); j++) {
-                if (menuList.get(i).getSubMenu().get(j).getMENU_URL().split(".do")[0].equals(menuUrl.split(".do")[0])) {
+                if (menuList.get(i).getSubMenu().get(j).getMENU_URL().equals(menuUrl)) {
                     if (!menuList.get(i).getSubMenu().get(j).isHasMenu()) {                //判断有无此菜单权限
                         return false;
                     } else {                                                                //按钮判断
