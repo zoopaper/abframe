@@ -162,12 +162,12 @@ public class LoginController extends BaseController {
 
             UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
             if (user != null) {
-                UserBean userr = (UserBean) session.getAttribute(Constant.SESSION_USERROL);
-                if (null == userr) {
+                UserBean userRole = (UserBean) session.getAttribute(Constant.SESSION_USERROL);
+                if (null == userRole) {
                     user = userService.getUserAndRoleById(user.getUserId());
                     session.setAttribute(Constant.SESSION_USERROL, user);
                 } else {
-                    user = userr;
+                    user = userRole;
                 }
                 RoleBean role = user.getRole();
                 String rolePerms = role != null ? role.getPerms() : "";
@@ -181,8 +181,9 @@ public class LoginController extends BaseController {
                     allmenuList = menuService.listAllMenu();
                     if (!Strings.isNullOrEmpty(rolePerms)) {
                         for (Menu menu : allmenuList) {
-                            menu.setHasMenu(RightsHelper.testRights(rolePerms, menu.getMENU_ID()));
-                            if (menu.isHasMenu()) {
+                            boolean isHasMenu = RightsHelper.testRights(rolePerms, menu.getMENU_ID());
+                            menu.setHasMenu(isHasMenu);
+                            if (isHasMenu) {
                                 List<Menu> subMenuList = menu.getSubMenu();
                                 for (Menu sub : subMenuList) {
                                     sub.setHasMenu(RightsHelper.testRights(rolePerms, sub.getMENU_ID()));

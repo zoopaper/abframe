@@ -161,7 +161,7 @@
                                 <i class="icon-cogs"></i> 代码生成</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout"><i class="icon-off"></i> 退出</a></li>
+                        <li><a href="/logout"><i class="icon-off"></i> 退出</a></li>
                     </ul>
                 </li>
             </ul>

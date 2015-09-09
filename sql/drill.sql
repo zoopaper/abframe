@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50520
 File Encoding         : 65001
 
-Date: 2015-09-08 20:45:01
+Date: 2015-09-09 15:47:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -383,7 +383,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2015-09-08 20:43:21', '0:0:0:0:0:0:0:1', '0', 'xxx', 'default', 'admin@main.com', '001', '18788888888');
+INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1069547510', '1', '2015-09-09 15:44:18', '0:0:0:0:0:0:0:1', '0', 'aaa', 'default', 'admin@main.com', '001', '18788888899');
 INSERT INTO `t_user` VALUES ('9e23643380d74fd2947ab25af748ff7d', 'zhangsan', '5ee5d458d02fde6170b9c3ebfe06af85dacd131d', '张三', '', '2', '', '', '0', 'zhang', 'default', 'krisibm@163.com', '111', '18810489560');
 
 -- ----------------------------

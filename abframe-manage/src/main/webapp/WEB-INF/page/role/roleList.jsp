@@ -1,9 +1,9 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+﻿<%@ include file="../common/common.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <%@ include file="../common/top.jsp" %>
-    <%@ include file="../common/common.jsp" %>
 </head>
 <body>
 
@@ -27,7 +27,7 @@
                                 <c:forEach items="${roleList}" var="role" varStatus="vs">
                                 <td style="width:100px;" class="center"
                                         <c:choose>
-                                            <c:when test="${pd.id == role.id}">
+                                            <c:when test="${pd.roleId == role.roleId}">
                                                 bgcolor="#FFC926" onMouseOut="javascript:this.bgColor='#FFC926';"
                                             </c:when>
                                             <c:otherwise>
@@ -36,7 +36,7 @@
                                         </c:choose>
                                     onMouseMove="javascript:this.bgColor='#FFC926';">
 
-                                    <a href="/role?id=${role.id}"
+                                    <a href="/role?id=${role.roleId}"
                                        style="text-decoration:none; display:block;">
                                         <li class=" icon-group"></li>
                                         &nbsp;
@@ -65,18 +65,18 @@
                             <td>
 
                                 <c:if test="${QX.edit == 1}">
-                                    <a class="btn btn-mini btn-info" onclick="editRole('${pd.id }');">
+                                    <a class="btn btn-mini btn-info" onclick="editRole('${pd.roleId }');">
                                         修改组名称
                                         <i class="icon-arrow-right  icon-on-right"></i>
                                     </a>
                                 </c:if>
 
                                 <c:choose>
-                                    <c:when test="${pd.id == '99'}">
+                                    <c:when test="${pd.roleId == '99'}">
                                     </c:when>
                                     <c:otherwise>
                                         <c:if test="${QX.edit == 1}">
-                                            <a class="btn btn-mini btn-purple" onclick="editRights('${pd.id }');">
+                                            <a class="btn btn-mini btn-purple" onclick="editRights('${pd.roleId }');">
                                                 <i class="icon-pencil"></i>组菜单权限
                                             </a>
                                         </c:if>
@@ -84,12 +84,12 @@
                                 </c:choose>
 
                                 <c:choose>
-                                    <c:when test="${pd.id == '6' or pd.id == '4' or pd.id == '1' or pd.id == '7'}">
+                                    <c:when test="${pd.roleId == '6' or pd.roleId == '4' or pd.roleId == '1' or pd.roleId == '7'}">
                                     </c:when>
                                     <c:otherwise>
                                         <c:if test="${QX.del == 1 }">
                                             <a class='btn btn-mini btn-danger' title="删除"
-                                               onclick="delRole('${pd.id}','z','${pd.name}');">
+                                               onclick="delRole('${pd.roleId}','z','${pd.name}');">
                                                 <i class='icon-trash'></i>
                                             </a>
                                         </c:if>
@@ -150,7 +150,8 @@
                                         <c:if test="${QX.edit == 1}">
                                             <td style="width:60px;" class="center">
                                                 <label>
-                                                    <input type="checkbox" class="ace-switch ace-switch-3"  id="qx1${vs.index+1}"
+                                                    <input type="checkbox" class="ace-switch ace-switch-3"
+                                                           id="qx1${vs.index+1}"
                                                             <c:if test="${qx1 == 1 }">
                                                                 checked="checked"
                                                             </c:if>

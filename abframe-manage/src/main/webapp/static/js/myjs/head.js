@@ -231,8 +231,8 @@ function menu() {
 
 //切换菜单
 function changeMenu() {
-    websocket.send('[leave]' + user);
     window.location.href = '/main/yes';
+    websocket.send('[leave]' + user);
 }
 
 //清除加载进度
