@@ -100,66 +100,67 @@
 
                     <tr>
                         <td class='center' style="width: 30px;">
-                            <c:if test="${user.USERNAME != 'admin'}">
+                            <c:if test="${user.userName != 'admin'}">
                                 <label>
-                                    <input type='checkbox' name='ids' value="${user.USER_ID }"
-                                           id="${user.EMAIL }" alt="${user.PHONE }"/>
+                                    <input type='checkbox' name='ids' value="${user.userId}"
+                                           id="${user.email}" alt="${user.phone}"/>
                                     <span class="lbl"></span>
                                 </label>
                             </c:if>
-                            <c:if test="${user.USERNAME == 'admin'}">
+                            <c:if test="${user.userName == 'admin'}">
                                 <label>
                                     <input type='checkbox' disabled="disabled"/>
                                     <span class="lbl"></span></label>
                             </c:if>
                         </td>
                         <td class='center' style="width: 30px;">${vs.index+1}</td>
-                        <td>${user.NUMBER }</td>
-                        <td><a>${user.USERNAME }</a></td>
-                        <td>${user.NAME }</td>
+                        <td>${user.number}</td>
+                        <td><a>${user.userName}</a></td>
+                        <td>${user.name}</td>
                         <td>${user.roleName }</td>
                         <c:if test="${QX.FX_QX == 1 }">
                             <td><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;"
-                                   onclick="sendEmail('${user.EMAIL }');">${user.EMAIL }&nbsp;
+                                   onclick="sendEmail('${user.email}');">${user.EMAIL }&nbsp;
                                 <i class="icon-envelope"></i>
                             </a>
                             </td>
                         </c:if>
                         <c:if test="${QX.FX_QX != 1 }">
                             <td><a title="您无权发送电子邮件"
-                                   style="text-decoration:none;cursor:pointer;">${user.EMAIL }&nbsp;<i
+                                   style="text-decoration:none;cursor:pointer;">${user.email}&nbsp;<i
                                     class="icon-envelope"></i></a></td>
                         </c:if>
-                        <td>${user.LAST_LOGIN}</td>
-                        <td>${user.IP}</td>
+                        <td>${user.lastLogin}</td>
+                        <td>${user.ip}</td>
                         <td style="width: 60px;">
                             <div class='hidden-phone visible-desktop btn-group'>
 
                                 <c:if test="${QX.FW_QX == 1 }">
                                     <a class='btn btn-mini btn-warning' title="发送短信"
-                                       onclick="sendSms('${user.PHONE }');"><i
+                                       onclick="sendSms('${user.phone}');"><i
                                             class='icon-envelope'></i></a>
                                 </c:if>
 
                                 <c:if test="${QX.edit == 1 }">
-                                    <c:if test="${user.USERNAME != 'admin'}"><a
+                                    <c:if test="${user.userName != 'admin'}"><a
                                             class='btn btn-mini btn-info' title="编辑"
                                             onclick="editUser('${user.USER_ID }');"><i
                                             class='icon-edit'></i></a></c:if>
-                                    <c:if test="${user.USERNAME == 'admin'}"><a
+                                    <c:if test="${user.userName == 'admin'}"><a
                                             class='btn btn-mini btn-info' title="您不能编辑"><i
                                             class='icon-edit'></i></a></c:if>
                                 </c:if>
                                 <c:choose>
-                                    <c:when test="${user.USERNAME=='admin'}">
+                                    <c:when test="${user.userName=='admin'}">
                                         <a class='btn btn-mini btn-danger' title="不能删除"><i
                                                 class='icon-trash'></i></a>
                                     </c:when>
                                     <c:otherwise>
                                         <c:if test="${QX.del == 1 }">
                                             <a class='btn btn-mini btn-danger' title="删除"
-                                               onclick="delUser('${user.USER_ID }','${user.USERNAME }');"><i
-                                                    class='icon-trash'></i></a>
+                                               onclick="delUser('${user.userId}','${user.userName}');">
+                                                <i class='icon-trash'></i>
+                                            </a>
                                         </c:if>
                                     </c:otherwise>
                                 </c:choose>

@@ -168,7 +168,7 @@
         from t_user u, t_role r
         where u.roleId = r.roleId
         and u.userName != 'admin'
-        and (r.id != '7' and r.parentId != '7')
+        and (r.roleId != '7' and r.parentId != '7')
         <if test="pd.userName != null and pd.userName != ''">
             and
             (
@@ -211,7 +211,7 @@
         from t_user u, t_role r
         where u.roleId = r.roleId
         and u.userName != 'admin'
-        and (r.id != '7' and r.parentId != '7')
+        and (r.roleId != '7' and r.parentId != '7')
         <if test="userName != null and userName != ''"><!-- 关键词检索 -->
             and
             (

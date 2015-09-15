@@ -216,11 +216,11 @@ public class UserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        String USERNAME = pd.getString("USERNAME");
+        String userName = pd.getString("USERNAME");
 
-        if (null != USERNAME && !"".equals(USERNAME)) {
-            USERNAME = USERNAME.trim();
-            pd.put("USERNAME", USERNAME);
+        if (null != userName && !"".equals(userName)) {
+            userName = userName.trim();
+            pd.put("userName", userName);
         }
 
         String lastLoginStart = pd.getString("lastLoginStart");

@@ -27,7 +27,6 @@ public class PermissionHandler {
         //shiro管理的session
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
-        Boolean b = true;
         List<Menu> menuList = (List) session.getAttribute(Constant.SESSION_allmenuList); //获取菜单列表
 
         for (int i = 0; i < menuList.size(); i++) {
