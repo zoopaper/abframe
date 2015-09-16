@@ -3,15 +3,15 @@ package org.abframe.service;
 import org.abframe.dao.BaseDaoSupport;
 import org.abframe.entity.RoleBean;
 import org.abframe.util.PageData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Service("roleService")
+@Service
 public class RoleService {
 
-    @Resource(name = "daoSupport")
+    @Autowired
     private BaseDaoSupport dao;
 
 

@@ -3,15 +3,15 @@ package org.abframe.service;
 import org.abframe.dao.BaseDaoSupport;
 import org.abframe.entity.Menu;
 import org.abframe.util.PageData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Service("menuService")
+@Service
 public class MenuService {
 
-    @Resource(name = "daoSupport")
+    @Autowired
     private BaseDaoSupport dao;
 
 

@@ -3,15 +3,16 @@ package org.abframe.service;
 import org.abframe.dao.BaseDaoSupport;
 import org.abframe.entity.Page;
 import org.abframe.util.PageData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service("dictService")
+@Service
 public class DictService {
 
-    @Resource(name = "daoSupport")
+    @Autowired
     private BaseDaoSupport dao;
 
 

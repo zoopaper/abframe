@@ -4,15 +4,15 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Repository("daoSupport")
+@Repository
 public class BaseDaoSupport implements BaseDao {
 
-    @Resource(name = "sqlSessionTemplate")
+    @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
     /**

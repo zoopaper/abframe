@@ -4,16 +4,17 @@ import org.abframe.dao.BaseDaoSupport;
 import org.abframe.entity.Page;
 import org.abframe.entity.UserBean;
 import org.abframe.util.PageData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 
-@Service("userService")
+@Service
 public class UserService {
 
-    @Resource(name = "daoSupport")
+    @Autowired
     private BaseDaoSupport dao;
 
     //======================================================================================
