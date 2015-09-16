@@ -5,8 +5,8 @@ import java.util.*;
 
 public class PageData extends HashMap implements Map {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 5226918731997559284L;
+    
     private Map map = null;
 
     private HttpServletRequest request;
