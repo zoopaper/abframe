@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50520
 File Encoding         : 65001
 
-Date: 2015-09-09 15:47:57
+Date: 2015-09-16 15:45:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,6 +40,31 @@ CREATE TABLE `t_advert` (
 -- ----------------------------
 INSERT INTO `t_advert` VALUES ('6', 'mmmmmmmmmmmmmmmmm', '<p>fasfasfasf</p>', '0', '', '', '2015-08-26 17:18:07', '2015-08-31 10:56:43', '', '', '0', '');
 INSERT INTO `t_advert` VALUES ('7', 'fdsa', '<p>fdasfasfs</p>', '0', '', '', '2015-08-26 17:47:33', '2015-08-26 17:47:33', '', '', '0', '');
+
+-- ----------------------------
+-- Table structure for `t_company`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_company`;
+CREATE TABLE `t_company` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `companyName` varchar(40) DEFAULT NULL,
+  `industry` varchar(100) DEFAULT NULL,
+  `scale` varchar(50) DEFAULT NULL,
+  `site` varchar(100) DEFAULT NULL,
+  `financing` varchar(50) DEFAULT NULL,
+  `location` varchar(20) DEFAULT NULL,
+  `introduction` text,
+  `address` varchar(100) DEFAULT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  `map` varchar(100) DEFAULT NULL,
+  `manager` varchar(50) DEFAULT NULL,
+  `managerAvatar` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=69941 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_company
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `t_dict`
@@ -190,7 +215,7 @@ INSERT INTO `t_menu` VALUES ('25', '图文回复', 'imgmsg/list', '23', '2', nul
 INSERT INTO `t_menu` VALUES ('26', '文本回复', 'textMsg/list', '23', '3', null, '2');
 INSERT INTO `t_menu` VALUES ('27', '关注回复', 'textMsg/goSubscribe', '23', '4', null, '2');
 INSERT INTO `t_menu` VALUES ('28', '数据挖掘', '#', '0', '6', 'icon-edit', '2');
-INSERT INTO `t_menu` VALUES ('29', '数据采集', 'crawl', '28', '1', null, '2');
+INSERT INTO `t_menu` VALUES ('29', '招聘公司', 'company/companyList', '28', '1', null, '2');
 
 -- ----------------------------
 -- Table structure for `t_news`
@@ -209,7 +234,7 @@ CREATE TABLE `t_news` (
   `recommand` char(2) DEFAULT '0' COMMENT '推荐  0默认未推荐，1推荐',
   `status` char(2) DEFAULT '0' COMMENT '状态  0默认未发布，1发布',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_news
@@ -221,6 +246,10 @@ INSERT INTO `t_news` VALUES ('6', 'aaaa', '<p><img src=\"http://img.baidu.com/hi
 INSERT INTO `t_news` VALUES ('7', '足球新闻部', '<p>sdfs</p>', 'sdf', '2015-04-19 03:01:06', '2015-04-19 03:02:13', '127.0.0.1', '0', '3', '0', '0');
 INSERT INTO `t_news` VALUES ('8', 'fsdafsadfsadfsdaf', '<p>dsafdasfasdfafa</p>', 'fdsaf', '2015-08-24 21:20:42', '2015-08-24 21:20:48', '0:0:0:0:0:0:0:1', '0', '12121', '1', '1');
 INSERT INTO `t_news` VALUES ('9', 'safsadf', '<p>sadfasf</p>', 'dsfsafa', '2015-08-26 17:54:33', '2015-08-26 17:54:33', '0:0:0:0:0:0:0:1', '0', '0', '0', '0');
+INSERT INTO `t_news` VALUES ('10', 'df', '<p>dsfafa</p>', 'dfsaf', '2015-09-16 13:50:16', '2015-09-16 13:50:16', '0:0:0:0:0:0:0:1', '0', '0', '0', '0');
+INSERT INTO `t_news` VALUES ('11', 'bbbb', '<p>bbbbbb</p>', 'bbb', '2015-09-16 13:52:01', '2015-09-16 13:52:01', '0:0:0:0:0:0:0:1', '0', '0', '0', '0');
+INSERT INTO `t_news` VALUES ('12', 'ccc', '<p>cccc</p>', 'ccc', '2015-09-16 13:52:05', '2015-09-16 13:52:05', '0:0:0:0:0:0:0:1', '0', '0', '0', '0');
+INSERT INTO `t_news` VALUES ('13', 'ddd', '<p>ddddd</p>', 'ddd', '2015-09-16 13:52:12', '2015-09-16 13:52:12', '0:0:0:0:0:0:0:1', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `t_notice`
@@ -383,7 +412,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1069547510', '1', '2015-09-09 15:44:18', '0:0:0:0:0:0:0:1', '0', 'aaa', 'default', 'admin@main.com', '001', '18788888899');
+INSERT INTO `t_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1069547510', '1', '2015-09-16 15:43:02', '0:0:0:0:0:0:0:1', '0', 'aaa', 'default', 'admin@main.com', '001', '18788888899');
 INSERT INTO `t_user` VALUES ('9e23643380d74fd2947ab25af748ff7d', 'zhangsan', '5ee5d458d02fde6170b9c3ebfe06af85dacd131d', '张三', '', '2', '', '', '0', 'zhang', 'default', 'krisibm@163.com', '111', '18810489560');
 
 -- ----------------------------

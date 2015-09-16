@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CompanyMapper">
+
+    <sql id="allAttribute">
+		 <![CDATA[
+			id,
+			companyName,
+			industry,
+			scale,
+			site,
+			financing,
+			location,
+			introduction,
+			address,
+			logo,
+			map,
+			manager,
+			managerAvatar
+        ]]>
+	</sql>
+    <!-- 列表 -->
+    <select id="companylistPage" parameterType="page" resultType="pd">
+        select
+        <include refid="allAttribute"/>
+        from t_company where
+        1=1
+        <if test="pd.companyName != null and pd.companyName != ''">
+            and companyName like CONCAT(CONCAT('%', #{pd.companyName}),'%')
+        </if>
+    </select>
+
+
+    <!--<select id="findById" parameterType="pd" resultType="pd">-->
+    <!--select -->
+    <!--*-->
+    <!--from -->
+    <!--t_news-->
+    <!--where -->
+    <!--id = #{id}-->
+    <!--</select>-->
+
+    <!--<delete id="delete" parameterType="pd">-->
+    <!--delete from t_news-->
+    <!--where -->
+    <!--id = #{id}-->
+    <!--</delete>-->
+
+
+</mapper>

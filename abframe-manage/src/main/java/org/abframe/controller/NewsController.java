@@ -8,6 +8,7 @@ import org.abframe.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +27,13 @@ import java.util.Map;
 @RequestMapping(value = "/news")
 public class NewsController extends BaseController {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
 
     @Autowired
     private NewsService newsService;
 
     @RequestMapping(value = "/list")
-    public ModelAndView listUsers(HttpSession session, Page page) throws Exception {
+    public ModelAndView listUsers(HttpSession session, Page page) {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         try {

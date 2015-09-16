@@ -177,7 +177,6 @@ public class PagePlugin implements Interceptor {
             try {
                 throw new PropertyException("dialect property is not found!");
             } catch (PropertyException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -186,7 +185,6 @@ public class PagePlugin implements Interceptor {
             try {
                 throw new PropertyException("pageSqlId property is not found!");
             } catch (PropertyException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

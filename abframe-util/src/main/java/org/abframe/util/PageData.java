@@ -11,6 +11,10 @@ public class PageData extends HashMap implements Map {
 
     private HttpServletRequest request;
 
+    public PageData() {
+        map = new HashMap();
+    }
+
     public PageData(HttpServletRequest request) {
         this.request = request;
         Map properties = request.getParameterMap();
@@ -39,9 +43,6 @@ public class PageData extends HashMap implements Map {
         map = returnMap;
     }
 
-    public PageData() {
-        map = new HashMap();
-    }
 
     @Override
     public Object get(Object key) {
@@ -59,7 +60,6 @@ public class PageData extends HashMap implements Map {
         return (String) get(key);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Object put(Object key, Object value) {
         return map.put(key, value);
@@ -75,7 +75,6 @@ public class PageData extends HashMap implements Map {
     }
 
     public boolean containsKey(Object key) {
-
         return map.containsKey(key);
     }
 
@@ -95,7 +94,6 @@ public class PageData extends HashMap implements Map {
         return map.keySet();
     }
 
-    @SuppressWarnings("unchecked")
     public void putAll(Map t) {
         map.putAll(t);
     }

@@ -7,9 +7,7 @@ import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.PicService;
 import org.abframe.util.*;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -29,7 +27,7 @@ import java.util.*;
 @RequestMapping(value = "/pic")
 public class PicController extends BaseController {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(PicController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PicController.class);
 
     String menuUrl = "pic/list";
 
@@ -147,7 +145,7 @@ public class PicController extends BaseController {
             }
 
             page.setPd(pd);
-            List<PageData> varList = picService.list(page);    //列出Pictures列表
+            List<PageData> varList = picService.list(page);
             mv.setViewName("pic/picList");
             mv.addObject("varList", varList);
             mv.addObject("pd", pd);
@@ -279,14 +277,6 @@ public class PicController extends BaseController {
             LOGGER.error("Controller pic exception.", e);
         }
     }
-
-    /* ===============================权限================================== */
-    public Map<String, String> getHC() {
-        Subject currentUser = SecurityUtils.getSubject();  //shiro管理的session
-        Session session = currentUser.getSession();
-        return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
-    }
-    /* ===============================权限================================== */
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

@@ -18,7 +18,7 @@
         <div class="row-fluid">
             <div class="row-fluid">
                 <!-- 检索  -->
-                <form action="news/list?isM1=${pdm.isM1 }&isM2=${pdm.isM2 }" method="post" name="userForm"
+                <form action="news/list?isM1=${pdm.isM1}&isM2=${pdm.isM2}" method="post" name="userForm"
                       id="userForm">
                     <table border='0'>
                         <tr>
@@ -103,7 +103,7 @@
                                     <c:forEach items="${varList}" var="var" varStatus="vs">
                                         <tr>
                                             <td class='center' style="width: 30px;">${var.sequence}</td>
-                                            <td>${fn:substring(var.title ,0,10)} ...</td>
+                                            <td>${fn:substring(var.title ,0,15)}</td>
                                             <td>${var.publisher }</td>
                                             <td>${var.addtime }</td>
                                             <td>${var.uptime }</td>

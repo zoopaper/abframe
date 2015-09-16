@@ -216,7 +216,7 @@ public class UserController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
 
-        String userName = pd.getString("USERNAME");
+        String userName = pd.getString("userName");
 
         if (null != userName && !"".equals(userName)) {
             userName = userName.trim();
