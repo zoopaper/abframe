@@ -5,9 +5,6 @@ import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.util.Constant;
 import org.abframe.util.PageData;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -20,7 +17,6 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/onlineUser")
@@ -95,14 +91,6 @@ public class OnlineUserController extends BaseController {
         return mv;
     }
 
-
-    /* ===============================权限================================== */
-    public Map<String, String> getHC() {
-        Subject currentUser = SecurityUtils.getSubject();  //shiro管理的session
-        Session session = currentUser.getSession();
-        return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
-    }
-    /* ===============================权限================================== */
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

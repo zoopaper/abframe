@@ -8,9 +8,6 @@ import org.abframe.service.AdvertService;
 import org.abframe.util.Constant;
 import org.abframe.util.PageData;
 import org.apache.commons.io.FileUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 广告管理
@@ -312,13 +308,4 @@ public class AdvertController extends BaseController {
         FileUtils.copyInputStreamToFile(in, file);
         return realName;
     }
-
-
-    /* ===============================权限================================== */
-    public Map<String, String> getHC() {
-        Subject currentUser = SecurityUtils.getSubject();  //shiro管理的session
-        Session session = currentUser.getSession();
-        return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
-    }
-    /* ===============================权限================================== */
 }

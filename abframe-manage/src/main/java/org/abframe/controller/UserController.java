@@ -9,10 +9,7 @@ import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.service.UserService;
 import org.abframe.util.*;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -152,7 +149,7 @@ public class UserController extends BaseController {
             pd.put("password", new SimpleHash("SHA-1", pd.getString("userName"), pd.getString("password")).toString());
         }
 //        if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
-            userService.editU(pd);
+        userService.editU(pd);
 //        }
         mv.addObject("msg", "success");
         mv.setViewName("save_result");
@@ -483,11 +480,4 @@ public class UserController extends BaseController {
     }
 
 
-    /* ===============================权限================================== */
-    public Map<String, String> getHC() {
-        Subject currentUser = SecurityUtils.getSubject();  //shiro管理的session
-        Session session = currentUser.getSession();
-        return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
-    }
-    /* ===============================权限================================== */
 }

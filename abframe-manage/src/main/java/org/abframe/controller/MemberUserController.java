@@ -12,9 +12,6 @@ import org.abframe.util.AppUtil;
 import org.abframe.util.Constant;
 import org.abframe.util.ObjectExcelView;
 import org.abframe.util.PageData;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -348,11 +345,4 @@ public class MemberUserController extends BaseController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(format, true));
     }
 
-    /* ===============================权限================================== */
-    public Map<String, String> getHC() {
-        Subject currentUser = SecurityUtils.getSubject();  //shiro管理的session
-        Session session = currentUser.getSession();
-        return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
-    }
-    /* ===============================权限================================== */
 }

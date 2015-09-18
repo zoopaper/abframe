@@ -4,10 +4,10 @@ import net.common.utils.date.DateUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.NewsService;
-import org.abframe.util.*;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import org.abframe.util.DelAllFile;
+import org.abframe.util.Freemarker;
+import org.abframe.util.PageData;
+import org.abframe.util.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,11 +186,4 @@ public class NewsController extends BaseController {
     }
 
 
-    /* ===============================权限================================== */
-    public Map<String, String> getHC() {
-        Subject currentUser = SecurityUtils.getSubject();  //shiro管理的session
-        Session session = currentUser.getSession();
-        return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
-    }
-    /* ===============================权限================================== */
 }
