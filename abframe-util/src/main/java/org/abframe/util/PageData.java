@@ -6,7 +6,7 @@ import java.util.*;
 public class PageData extends HashMap implements Map {
 
     private static final long serialVersionUID = 5226918731997559284L;
-    
+
     private Map map = null;
 
     private HttpServletRequest request;
@@ -18,29 +18,30 @@ public class PageData extends HashMap implements Map {
     public PageData(HttpServletRequest request) {
         this.request = request;
         Map properties = request.getParameterMap();
-        Map returnMap = new HashMap();
-        Iterator entries = properties.entrySet().iterator();
-        Map.Entry entry;
-        String name;
-        String value = "";
-        while (entries.hasNext()) {
-            entry = (Map.Entry) entries.next();
-            name = (String) entry.getKey();
-            Object valueObj = entry.getValue();
-            if (null == valueObj) {
-                value = "";
-            } else if (valueObj instanceof String[]) {
-                String[] values = (String[]) valueObj;
+        Map paramMap = new HashMap();
+        Iterator iter = properties.entrySet().iterator();
+
+
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            String paramName = (String) entry.getKey();
+            Object paramValue = entry.getValue();
+
+            String paramValues = "";
+            if (null == paramValue) {
+                paramValues = "";
+            } else if (paramValue instanceof String[]) {
+                String[] values = (String[]) paramValue;
                 for (int i = 0; i < values.length; i++) {
-                    value = values[i] + ",";
+                    paramValues = values[i] + ",";
                 }
-                value = value.substring(0, value.length() - 1);
+                paramValues = paramValues.substring(0, paramValues.length() - 1);
             } else {
-                value = valueObj.toString();
+                paramValues = paramValue.toString();
             }
-            returnMap.put(name, value);
+            paramMap.put(paramName, paramValues);
         }
-        map = returnMap;
+        map = paramMap;
     }
 
 
