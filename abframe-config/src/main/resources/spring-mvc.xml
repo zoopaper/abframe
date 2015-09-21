@@ -7,10 +7,15 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd	
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--注解驱动配置-->
     <mvc:annotation-driven/>
 
+    <!-- 配置服务端静态资源处理器，将静态资源的请求转发到默认的Servlet容器。静态资源的配置有多种方式，也可以在web.xml文件中配置。-->
     <mvc:default-servlet-handler/>
 
+    <!--指定扫描的包名，可以指定多个不同包名，以逗号分隔。Spring IOC容器将扫描包下的类，自动注册为Spring Bean.
+        Spring 提供了 @Component, @Repository,@Service, and @Controller注解方式。
+    -->
     <context:component-scan base-package="org.abframe.controller"/>
 
     <mvc:resources mapping="/admin/**" location="/,/admin/"/>

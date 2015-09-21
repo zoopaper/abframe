@@ -35,7 +35,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
                 //登陆过滤
                 response.sendRedirect(request.getContextPath() + Constant.LOGIN);
                 return false;
-                //return true;
+
             }
         }
     }
