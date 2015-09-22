@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
-	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	
-	<settings> 
-        <setting name="cacheEnabled" value="true" />
-        <setting name="useGeneratedKeys" value="true" /> 
-        <setting name="defaultExecutorType" value="REUSE" /> 
+
+    <settings>
+        <!--启用二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="defaultExecutorType" value="REUSE"/>
     </settings>
 
-	<typeAliases>
-		<typeAlias type="org.abframe.entity.UserBean" alias="User"/>
-		<typeAlias type="org.abframe.entity.RoleBean" alias="RoleBean"/>
-		<typeAlias type="org.abframe.entity.Menu" alias="Menu"/>
-		<typeAlias type="org.abframe.util.PageData" alias="pd"/>
-		<!-- 分页 -->
-		<typeAlias type="org.abframe.entity.Page" alias="Page"/>
-	</typeAliases>
-	
-	<plugins>
-		<plugin interceptor="org.abframe.websocket.PagePlugin">
-			<property name="dialect" value="mysql"/>
-			<property name="pageSqlId" value=".*listPage.*"/>
-		</plugin>
-	</plugins>
-	
+    <typeAliases>
+        <typeAlias type="org.abframe.entity.UserBean" alias="User"/>
+        <typeAlias type="org.abframe.entity.RoleBean" alias="RoleBean"/>
+        <typeAlias type="org.abframe.entity.Menu" alias="Menu"/>
+        <typeAlias type="org.abframe.util.PageData" alias="pd"/>
+        <!-- 分页 -->
+        <typeAlias type="org.abframe.entity.Page" alias="Page"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="org.abframe.websocket.PagePlugin">
+            <property name="dialect" value="mysql"/>
+            <property name="pageSqlId" value=".*listPage.*"/>
+        </plugin>
+    </plugins>
+
 </configuration>
