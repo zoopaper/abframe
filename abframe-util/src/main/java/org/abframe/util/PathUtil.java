@@ -8,8 +8,6 @@ import java.io.File;
 
 /**
  * 路径工具类
- *
- * @author
  */
 public class PathUtil {
 
@@ -22,8 +20,7 @@ public class PathUtil {
      */
     public static String getPicturePath(String pathType, String pathCategory) {
         String strResult = "";
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes()).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         StringBuffer strBuf = new StringBuffer();
         if ("visit".equals(pathType)) {
         } else if ("save".equals(pathType)) {
@@ -51,9 +48,6 @@ public class PathUtil {
         return result;
     }
 
-    /*
-     * 获取classpath1
-     */
     public static String getClasspath() {
         String path = (String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../").replaceAll("file:/", "").replaceAll("%20", " ").trim();
         if (path.indexOf(":") != 1) {

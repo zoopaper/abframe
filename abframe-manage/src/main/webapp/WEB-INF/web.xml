@@ -98,22 +98,22 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.js</url-pattern>-->
-        <!--<url-pattern>*.css</url-pattern>-->
-        <!--<url-pattern>*.png</url-pattern>-->
-        <!--<url-pattern>*.jpg</url-pattern>-->
-        <!--<url-pattern>*.gif</url-pattern>-->
-        <!--<url-pattern>*.ico</url-pattern>-->
-        <!--<url-pattern>*.swf</url-pattern>-->
-        <!--<url-pattern>*.eot</url-pattern>-->
-        <!--<url-pattern>*.otf</url-pattern>-->
-        <!--<url-pattern>*.svg</url-pattern>-->
-        <!--<url-pattern>*.ttf</url-pattern>-->
-        <!--<url-pattern>*.woff</url-pattern>-->
-        <!--<url-pattern>*.woff2</url-pattern>-->
-    <!--</servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.gif</url-pattern>
+        <url-pattern>*.ico</url-pattern>
+        <url-pattern>*.swf</url-pattern>
+        <url-pattern>*.eot</url-pattern>
+        <url-pattern>*.otf</url-pattern>
+        <url-pattern>*.svg</url-pattern>
+        <url-pattern>*.ttf</url-pattern>
+        <url-pattern>*.woff</url-pattern>
+        <url-pattern>*.woff2</url-pattern>
+    </servlet-mapping>
 
     <error-page>
         <error-code>404</error-code>

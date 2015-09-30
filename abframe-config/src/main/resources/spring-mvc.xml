@@ -18,10 +18,10 @@
     -->
     <context:component-scan base-package="org.abframe.controller"/>
 
-    <mvc:resources mapping="/admin/**" location="/,/admin/"/>
-    <mvc:resources mapping="/static/**" location="/,/static/"/>
-    <mvc:resources mapping="/plugins/**" location="/,/plugins/"/>
-    <mvc:resources mapping="/uploadFiles/**" location="/,/uploadFiles/"/>
+    <!--<mvc:resources mapping="/admin/**" location="/,/admin/"/>-->
+    <!--<mvc:resources mapping="/static/**" location="/,/static/"/>-->
+    <!--<mvc:resources mapping="/plugins/**" location="/,/plugins/"/>-->
+    <!--<mvc:resources mapping="/uploadFiles/**" location="/,/uploadFiles/"/>-->
 
     <mvc:interceptors>
         <mvc:interceptor>
