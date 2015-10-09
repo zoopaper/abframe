@@ -14,6 +14,8 @@ public class IntTest {
     public static void main(String[] args) {
         BigInteger dd = new BigInteger(8388598 + "");
         boolean d = dd.testBit(22);
+        int two = Integer.bitCount(1000000000);
         System.out.println(d);
+        System.out.println(two);
     }
 }

@@ -13,10 +13,13 @@
 						http://www.springframework.org/schema/tx 
 						http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
-
+    <!--激活注解,AutowiredAnnotationBeanPostProcessor,CommonAnnotationBeanPostProcessor
+        PersistenceAnnotationBeanPostProcessor,RequiredAnnotationBeanPostProcessor注册到容器
+    -->
     <context:annotation-config/>
+    <!--导入-->
     <import resource="spring-config.xml"/>
-
+    <!--扫描指定的类路径判断是否存在注解的方式实现自动装配-->
     <context:component-scan base-package="org.abframe">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
@@ -79,10 +82,10 @@
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="delete*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception"/>
-            <tx:method name="insert*" propagation="REQUIRED" read-only="false"   rollback-for="java.lang.Exception"/>
-            <tx:method name="update*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception"/>
-            <tx:method name="save*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
 

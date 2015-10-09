@@ -26,7 +26,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
             UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
             if (user != null) {
                 path = path.substring(1, path.length());
-                boolean b = PermissionHandler.hasJurisdiction(path);
+                boolean b = PermissionHandler.hasPerm(path);
                 if (!b) {
                     response.sendRedirect(request.getContextPath() + Constant.LOGIN);
                 }
