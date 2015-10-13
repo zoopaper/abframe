@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,14 +38,13 @@ public class AdvertController extends BaseController {
     private AdvertService advertService;
 
     @RequestMapping(value = "/list")
-    public ModelAndView listUsers(HttpSession session, Page page) {
+    public ModelAndView listAdvert(Page page) {
 
         ModelAndView mv = new ModelAndView();
-        PageData pd = new PageData();
+        PageData pd;
         try {
             pd = this.getPageData();
 
-            //检索条件================================
             String title = pd.getString("title");
             String publisher = pd.getString("publisher");
             if (null != title && !"".equals(title)) {
@@ -57,7 +55,6 @@ public class AdvertController extends BaseController {
                 publisher = publisher.trim();
                 pd.put("publisher", publisher);
             }
-            //检索条件================================
 
             page.setPd(pd);
             List<PageData> varList = advertService.list(page);

@@ -66,7 +66,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
     public ModelAndView toLogin() throws Exception {
         ModelAndView mv = new ModelAndView();
-        PageData pd = new PageData();
+        PageData pd;
         pd = this.getPageData();
         mv.setViewName("common/login");
         mv.addObject("pd", pd);
@@ -78,8 +78,7 @@ public class LoginController extends BaseController {
     @ResponseBody
     public Object login() {
         Map<String, String> map = new HashMap<String, String>();
-        PageData pd = new PageData();
-        pd = this.getPageData();
+        PageData pd = this.getPageData();
         String result = "";
         String userName = pd.getString("userName");
         String password = pd.getString("password");

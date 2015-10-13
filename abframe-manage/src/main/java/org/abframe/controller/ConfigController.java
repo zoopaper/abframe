@@ -40,7 +40,7 @@ public class ConfigController extends BaseController {
     @RequestMapping(value = "/getUname")
     @ResponseBody
     public Object getList() {
-        PageData pd = new PageData();
+        PageData pd = null;
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             pd = this.getPageData();
@@ -50,7 +50,7 @@ public class ConfigController extends BaseController {
             Subject subject = SecurityUtils.getSubject();
             Session session = subject.getSession();
 
-            PageData pds = new PageData();
+            PageData pds;
             pds = (PageData) session.getAttribute(Constant.SESSION_userpds);
 
             if (null == pds) {
@@ -72,7 +72,7 @@ public class ConfigController extends BaseController {
      */
     @RequestMapping(value = "/setSkin")
     public void setSKIN(PrintWriter out) {
-        PageData pd = new PageData();
+        PageData pd;
         try {
             pd = this.getPageData();
 
@@ -95,7 +95,7 @@ public class ConfigController extends BaseController {
     @RequestMapping(value = "/editEmail")
     public ModelAndView editEmail() throws Exception {
         ModelAndView mv = new ModelAndView();
-        PageData pd = new PageData();
+        PageData pd;
         pd = this.getPageData();
         mv.setViewName("config/editEmail");
         mv.addObject("pd", pd);
@@ -105,7 +105,7 @@ public class ConfigController extends BaseController {
     @RequestMapping(value = "/toSendSms")
     public ModelAndView toSendSms() throws Exception {
         ModelAndView mv = new ModelAndView();
-        PageData pd = new PageData();
+        PageData pd;
         pd = this.getPageData();
         mv.setViewName("config/sendSms");
         mv.addObject("pd", pd);
@@ -118,7 +118,7 @@ public class ConfigController extends BaseController {
     @RequestMapping(value = "/sendSms")
     @ResponseBody
     public Object sendSms() {
-        PageData pd = new PageData();
+        PageData pd;
         pd = this.getPageData();
         Map<String, Object> map = new HashMap<String, Object>();
         String msg = "ok";        //发送状态

@@ -1,58 +1,60 @@
 package org.abframe.util;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import com.google.common.base.Joiner;
 
-public class PageData extends HashMap implements Map {
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * 前端页面请求参数封装为Map,可以方便的作为Mybatis中的参数使用
+ */
+public class PageData extends ConcurrentHashMap implements Map {
 
     private static final long serialVersionUID = 5226918731997559284L;
 
-    private Map map = null;
+    private final Map paramDataMap = new ConcurrentHashMap();
 
     private HttpServletRequest request;
 
     public PageData() {
-        map = new HashMap();
     }
 
     public PageData(HttpServletRequest request) {
         this.request = request;
-        Map properties = request.getParameterMap();
-        Map paramMap = new HashMap();
-        Iterator iter = properties.entrySet().iterator();
-
+        Map requestParamMap = request.getParameterMap();
+        Iterator iter = requestParamMap.entrySet().iterator();
 
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             String paramName = (String) entry.getKey();
             Object paramValue = entry.getValue();
 
-            String paramValues = "";
+            String paramVal;
             if (null == paramValue) {
-                paramValues = "";
+                paramVal = "";
             } else if (paramValue instanceof String[]) {
                 String[] values = (String[]) paramValue;
-                for (int i = 0; i < values.length; i++) {
-                    paramValues = values[i] + ",";
-                }
-                paramValues = paramValues.substring(0, paramValues.length() - 1);
+                paramVal = Joiner.on(",").join(values);
             } else {
-                paramValues = paramValue.toString();
+                paramVal = paramValue.toString();
             }
-            paramMap.put(paramName, paramValues);
+            paramDataMap.put(paramName, paramVal);
         }
-        map = paramMap;
     }
 
 
     @Override
     public Object get(Object key) {
-        Object obj = null;
-        if (map.get(key) instanceof Object[]) {
-            Object[] arr = (Object[]) map.get(key);
-            obj = request == null ? arr : (request.getParameter((String) key) == null ? arr : arr[0]);
+        Object obj;
+        if (paramDataMap.get(key) instanceof Object[]) {
+            Object[] arr = (Object[]) paramDataMap.get(key);
+            obj = arr[0];
         } else {
-            obj = map.get(key);
+            obj = paramDataMap.get(key);
         }
         return obj;
     }
@@ -61,50 +63,54 @@ public class PageData extends HashMap implements Map {
         return (String) get(key);
     }
 
+    public Integer getInt(Object key) {
+        return Integer.valueOf((String) get(key));
+    }
+
     @Override
     public Object put(Object key, Object value) {
-        return map.put(key, value);
+        return paramDataMap.put(key, value);
     }
 
     @Override
     public Object remove(Object key) {
-        return map.remove(key);
+        return paramDataMap.remove(key);
     }
 
     public void clear() {
-        map.clear();
+        paramDataMap.clear();
     }
 
     public boolean containsKey(Object key) {
-        return map.containsKey(key);
+        return paramDataMap.containsKey(key);
     }
 
     public boolean containsValue(Object value) {
-        return map.containsValue(value);
+        return paramDataMap.containsValue(value);
     }
 
     public Set entrySet() {
-        return map.entrySet();
+        return paramDataMap.entrySet();
     }
 
     public boolean isEmpty() {
-        return map.isEmpty();
+        return paramDataMap.isEmpty();
     }
 
     public Set keySet() {
-        return map.keySet();
+        return paramDataMap.keySet();
     }
 
-    public void putAll(Map t) {
-        map.putAll(t);
+    public void putAll(Map map) {
+        paramDataMap.putAll(map);
     }
 
     public int size() {
-        return map.size();
+        return paramDataMap.size();
     }
 
     public Collection values() {
-        return map.values();
+        return paramDataMap.values();
     }
 
 }
