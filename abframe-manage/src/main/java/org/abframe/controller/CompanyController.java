@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
+ * 招聘公司管理
  * <p/>
  * User : krisibm@163.com
  * Date: 2015/9/16
