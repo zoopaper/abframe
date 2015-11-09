@@ -29,5 +29,5 @@ target/
 Thumbs.db
 
 # others
-uploadFiles
+upload/
 

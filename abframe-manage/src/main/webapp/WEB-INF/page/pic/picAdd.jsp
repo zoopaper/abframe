@@ -41,9 +41,9 @@
                 </div>
                 <div class="statusBar" style="display:none;">
                     <div class="progress">
-                        <span class="text">0%</span>
-                        <span class="percentage"></span>
-                    </div>
+                    <span class="text">0%</span>
+                    <span class="percentage"></span>
+                </div>
                     <div class="info"></div>
                     <div class="btns">
                         <div id="filePicker2"></div>
