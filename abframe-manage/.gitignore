@@ -28,3 +28,6 @@ target/
 .DS_Store
 Thumbs.db
 
+# others
+uploadFiles
+
