@@ -4,7 +4,7 @@ import net.common.utils.date.DateUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Page;
 import org.abframe.service.NewsService;
-import org.abframe.util.DelAllFile;
+import org.abframe.util.FileUtil;
 import org.abframe.util.Freemarker;
 import org.abframe.util.PageData;
 import org.abframe.util.PathUtil;
@@ -168,7 +168,7 @@ public class NewsController extends BaseController {
         try {
             pd = this.getPageData();
             //生成代码前,先清空之前生成的代码
-            DelAllFile.delFolder(PathUtil.getClasspath() + "html/news");
+            FileUtil.delFolder(PathUtil.getClasspath() + "html/news");
             //创建数据模型
             Map<String, Object> root = new HashMap<String, Object>();
             List<PageData> varList = newsService.newslist(pd);

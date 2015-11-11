@@ -1,12 +1,11 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ page import="java.io.BufferedReader"%>
 <%@ page import="java.io.IOException"%>
-<%@ page import="java.io.InputStream"%>
 <%@ page import="java.io.InputStreamReader"%>
 <%@ page import="java.net.MalformedURLException"%>
 <%@ page import="java.net.URL"%>
-<%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.net.URLConnection"%>
+<%@ page import="java.net.URLEncoder"%>
 <%
 request.setCharacterEncoding("utf-8");
 response.setCharacterEncoding("utf-8");

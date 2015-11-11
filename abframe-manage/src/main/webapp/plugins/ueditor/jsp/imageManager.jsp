@@ -1,8 +1,11 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
 <%@ page import="javax.servlet.ServletContext"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
+<%@ page import="java.io.File"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
 <% 
     //仅做示例用，请自行修改
 	String path = "upload";

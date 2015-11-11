@@ -1,8 +1,8 @@
-    <%@page import="java.io.File"%>
-        <%@page import="java.util.Properties"%>
+    <%@page import="ueditor.Uploader"%>
+        <%@page import="java.io.File"%>
         <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-        <%@ page import="ueditor.Uploader" %>
         <%@ page import="java.io.FileInputStream" %>
+        <%@ page import="java.util.Properties" %>
 
 
             <%

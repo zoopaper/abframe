@@ -1,11 +1,11 @@
 package org.abframe.interceptor;
 
+import org.abframe.common.PermissionHandler;
 import org.abframe.entity.UserBean;
+import org.abframe.util.Constant;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.abframe.util.Constant;
-import org.abframe.common.PermissionHandler;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;

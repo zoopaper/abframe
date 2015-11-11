@@ -396,7 +396,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/downExcel")
     public void downExcel(HttpServletResponse response) throws Exception {
 
-        FileDownload.fileDownload(response, PathUtil.getClasspath() + Constant.FILEPATHFILE + "Users.xls", "Users.xls");
+        FileUtil.fileDownload(response, PathUtil.getClasspath() + Constant.FILEPATHFILE + "Users.xls", "Users.xls");
 
     }
 
@@ -414,7 +414,7 @@ public class UserController extends BaseController {
         }
         if (null != file && !file.isEmpty()) {
             String filePath = PathUtil.getClasspath() + Constant.FILEPATHFILE;                                //文件上传路径
-            String fileName = FileUpload.fileUp(file, filePath, "userexcel");                            //执行上传
+            String fileName = FileUtil.fileUp(file, filePath, "userexcel");                            //执行上传
 
             List<PageData> listPd = (List) ObjectExcelRead.readExcel(filePath, fileName, 2, 0, 0);    //执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
 

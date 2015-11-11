@@ -46,7 +46,7 @@ public class CreateCodeController extends BaseController {
         root.put("tabletop", tabletop);                                //表前缀
         root.put("nowDate", new Date());                            //当前日期
 
-        DelAllFile.delFolder(PathUtil.getClasspath() + "admin/ftl"); //生成代码前,先清空之前生成的代码
+        FileUtil.delFolder(PathUtil.getClasspath() + "admin/ftl"); //生成代码前,先清空之前生成的代码
         /* ============================================================================================= */
 
         String filePath = "admin/ftl/code/";                        //存放路径
@@ -79,7 +79,7 @@ public class CreateCodeController extends BaseController {
         FileZip.zip(PathUtil.getClasspath() + "admin/ftl/code", PathUtil.getClasspath() + "admin/ftl/code.zip");
 		
 		/*下载代码*/
-        FileDownload.fileDownload(response, PathUtil.getClasspath() + "admin/ftl/code.zip", "code.zip");
+        FileUtil.fileDownload(response, PathUtil.getClasspath() + "admin/ftl/code.zip", "code.zip");
 
     }
 

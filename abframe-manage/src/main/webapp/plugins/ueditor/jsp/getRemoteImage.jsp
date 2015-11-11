@@ -1,8 +1,14 @@
     <%@ page language="java" pageEncoding="utf-8"%>
-    <%@ page import="java.io.*"%>
-    <%@ page import="java.net.*"%>
-    <%@ page import="java.util.*"%>
-    <%@ page import="ueditor.Uploader" %>
+    <%@ page import="ueditor.Uploader"%>
+    <%@ page import="java.io.File"%>
+    <%@ page import="java.io.FileOutputStream"%>
+    <%@ page import="java.io.InputStream" %>
+    <%@ page import="java.io.OutputStream" %>
+    <%@ page import="java.net.HttpURLConnection" %>
+    <%@ page import="java.net.URL" %>
+    <%@ page import="java.util.Arrays" %>
+    <%@ page import="java.util.Date" %>
+    <%@ page import="java.util.Iterator" %>
     <%
     	request.setCharacterEncoding("utf-8");
     	response.setCharacterEncoding("utf-8");

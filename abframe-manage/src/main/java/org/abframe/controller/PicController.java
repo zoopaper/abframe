@@ -45,7 +45,7 @@ public class PicController extends BaseController {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "add")) {
                 if (null != file && !file.isEmpty()) {
                     String filePath = PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile;        //文件上传路径
-                    fileName = FileUpload.fileUp(file, filePath, UuidUtil.genTerseUuid());                //执行上传
+                    fileName = FileUtil.fileUp(file, filePath, UuidUtil.genTerseUuid());                //执行上传
                 } else {
                     System.out.println("上传失败");
                 }
@@ -75,7 +75,7 @@ public class PicController extends BaseController {
         try {
             if (PermissionHandler.buttonJurisdiction(menuUrl, "del")) {
                 pd = this.getPageData();
-                DelAllFile.delFolder(PathUtil.getClasspath() + Constant.FILEPATHIMG + pd.getString("PATH")); //删除图片
+                FileUtil.delFolder(PathUtil.getClasspath() + Constant.FILEPATHIMG + pd.getString("PATH")); //删除图片
                 picService.delete(pd);
             }
             out.write("success");
@@ -112,7 +112,7 @@ public class PicController extends BaseController {
                 String ffile = DateUtil.formatDate(new Date(), "yyyyMMdd"), fileName = "";
                 if (null != file && !file.isEmpty()) {
                     String filePath = PathUtil.getClasspath() + Constant.FILEPATHIMG + ffile;        //文件上传路径
-                    fileName = FileUpload.fileUp(file, filePath, UuidUtil.genTerseUuid());                //执行上传
+                    fileName = FileUtil.fileUp(file, filePath, UuidUtil.genTerseUuid());                //执行上传
                     pd.put("PATH", ffile + "/" + fileName);                //路径
                     pd.put("NAME", fileName);
                 } else {
@@ -203,7 +203,7 @@ public class PicController extends BaseController {
                     pathList = picService.getAllById(ArrayDATA_IDS);
                     //删除图片
                     for (int i = 0; i < pathList.size(); i++) {
-                        DelAllFile.delFolder(PathUtil.getClasspath() + Constant.FILEPATHIMG + pathList.get(i).getString("PATH"));
+                        FileUtil.delFolder(PathUtil.getClasspath() + Constant.FILEPATHIMG + pathList.get(i).getString("PATH"));
                     }
                     picService.deleteAll(ArrayDATA_IDS);
                     pd.put("msg", "ok");
@@ -267,7 +267,7 @@ public class PicController extends BaseController {
             PageData pd = new PageData();
             pd = this.getPageData();
             String PATH = pd.getString("PATH");                                                            //图片路径
-            DelAllFile.delFolder(PathUtil.getClasspath() + Constant.FILEPATHIMG + pd.getString("PATH"));    //删除图片
+            FileUtil.delFolder(PathUtil.getClasspath() + Constant.FILEPATHIMG + pd.getString("PATH"));    //删除图片
             if (PATH != null) {
                 picService.delTp(pd);                                                                //删除数据中图片数据
             }
