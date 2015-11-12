@@ -23,7 +23,7 @@ public class FileUtil {
      */
     public static void delFolder(String folderPath) {
         try {
-            delAllFile(folderPath);    // 删除完里面所有内容
+            delAllFile(folderPath);
             String filePath = folderPath;
             filePath = filePath.toString();
             File myFilePath = new File(filePath);
@@ -70,18 +70,17 @@ public class FileUtil {
     /**
      * 创建目录
      *
-     * @param destDirName 目标目录名
+     * @param dirName 目标名
      * @return 目录创建成功返回true，否则返回false
      */
-    public static boolean createDir(String destDirName) {
-        File dir = new File(destDirName);
+    public static boolean createDir(String dirName) {
+        File dir = new File(dirName);
         if (dir.exists()) {
             return false;
         }
-        if (!destDirName.endsWith(File.separator)) {
-            destDirName = destDirName + File.separator;
+        if (!dirName.endsWith(File.separator)) {
+            dirName = dirName + File.separator;
         }
-        // 创建单个目录
         if (dir.mkdirs()) {
             return true;
         } else {
@@ -89,13 +88,7 @@ public class FileUtil {
         }
     }
 
-    /**
-     * 删除文件
-     *
-     * @param filePathAndName String 文件路径及名称 如c:/fqf.txt
-     * @param fileContent     String
-     * @return boolean
-     */
+
     public static void delFile(String filePathAndName) {
         try {
             String filePath = filePathAndName;
@@ -263,7 +256,7 @@ public class FileUtil {
      * @return 文件名
      */
     public static String fileUp(MultipartFile file, String filePath, String fileName) {
-        String extName = ""; // 扩展名格式：
+        String extName = "";
         try {
             if (file.getOriginalFilename().lastIndexOf(".") >= 0) {
                 extName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
