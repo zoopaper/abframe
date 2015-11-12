@@ -81,7 +81,7 @@
                                             </td>
                                             <td class='center' style="width: 30px;">${vs.index+1}</td>
                                             <td>
-                                                <a href="<%=basePath%>uploadFiles/uploadImgs/${var.PATH}"
+                                                <a href="<%=basePath%>upload/img/${var.PATH}"
                                                    title="${var.TITLE}" class="bwGal"><img
                                                         src="<%=basePath%>uploadFiles/uploadImgs/${var.PATH}"
                                                         alt="${var.TITLE}" width="100"></a>

@@ -27,7 +27,7 @@ public class FileUtil {
             String filePath = folderPath;
             filePath = filePath.toString();
             File myFilePath = new File(filePath);
-            myFilePath.delete();        // 删除空文件夹
+            myFilePath.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

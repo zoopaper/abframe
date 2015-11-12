@@ -138,8 +138,8 @@
         }
 
 
+
         var locat = (window.location + '').split('/');
-        alert(locat);
         if ('pictures' == locat[3]) {
             locat = locat[0] + '//' + locat[2];
         } else {
