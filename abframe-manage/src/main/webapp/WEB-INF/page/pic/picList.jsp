@@ -9,16 +9,15 @@
 <html lang="en">
 <head>
     <base href="<%=basePath%>">
-    <!-- jsp文件头和头部 -->
     <%@ include file="../common/top.jsp" %>
     <!--查看图片插件 -->
-    <link rel="stylesheet" media="screen" type="text/css" href="plugins/zoomimage/css/zoomimage.css"/>
-    <link rel="stylesheet" media="screen" type="text/css" href="plugins/zoomimage/css/custom.css"/>
-    <script type="text/javascript" src="plugins/zoomimage/js/jquery.js"></script>
-    <script type="text/javascript" src="plugins/zoomimage/js/eye.js"></script>
-    <script type="text/javascript" src="plugins/zoomimage/js/utils.js"></script>
-    <script type="text/javascript" src="plugins/zoomimage/js/zoomimage.js"></script>
-    <script type="text/javascript" src="plugins/zoomimage/js/layout.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="/plugins/zoomimage/css/zoomimage.css"/>
+    <link rel="stylesheet" media="screen" type="text/css" href="/plugins/zoomimage/css/custom.css"/>
+    <script type="text/javascript" src="/plugins/zoomimage/js/jquery.js"></script>
+    <script type="text/javascript" src="/plugins/zoomimage/js/eye.js"></script>
+    <script type="text/javascript" src="/plugins/zoomimage/js/utils.js"></script>
+    <script type="text/javascript" src="/plugins/zoomimage/js/zoomimage.js"></script>
+    <script type="text/javascript" src="/plugins/zoomimage/js/layout.js"></script>
     <!--查看图片插件 -->
 </head>
 <body>
@@ -32,8 +31,7 @@
                         <tr>
                             <td>
                                 <span class="input-icon">
-                                    <input autocomplete="off" id="nav-search-input" type="text" name="keyword"
-                                           value="${pd.keyword}" placeholder="这里输入关键词"/>
+                                    <input autocomplete="off" id="nav-search-input" type="text" name="keyword" value="${pd.keyword}" placeholder="这里输入关键词"/>
                                     <i id="nav-search-icon" class="icon-search"></i>
                                 </span>
                             </td>
@@ -83,7 +81,7 @@
                                             <td>
                                                 <a href="<%=basePath%>upload/img/${var.PATH}"
                                                    title="${var.TITLE}" class="bwGal"><img
-                                                        src="<%=basePath%>uploadFiles/uploadImgs/${var.PATH}"
+                                                        src="<%=basePath%>upload/img/${var.PATH}"
                                                         alt="${var.TITLE}" width="100"></a>
                                             </td>
                                             <td>${var.TITLE}</td>
@@ -157,22 +155,20 @@
     </div>
 </div>
 <!-- 引入 -->
-<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/ace-elements.min.js"></script>
-<script src="static/js/ace.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write("<script src='/static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/ace-elements.min.js"></script>
+<script src="/static/js/ace.min.js"></script>
 <!-- 引入 -->
 <script type="text/javascript">
 
     $(top.hangge());
 
-    //检索
     function search() {
         top.jzts();
         $("#Form").submit();
     }
 
-    //新增
     function add() {
         top.jzts();
         var diag = new top.Dialog();
@@ -193,7 +189,7 @@
         diag.show();
     }
 
-    //删除
+
     function del(Id, PATH) {
 
         if (confirm("确定要删除?")) {
@@ -205,7 +201,6 @@
         }
     }
 
-    //修改
     function edit(Id) {
         top.jzts();
         var diag = new top.Dialog();
@@ -277,7 +272,6 @@
         }
     }
 
-    //导出excel
     function toExcel() {
         window.location.href = '<%=basePath%>pic/excel';
     }
