@@ -46,7 +46,7 @@ $(function () {
         success: function (data) {
             $.each(data.list, function (i, list) {
                 //登陆者资料
-                $("#user_info").html('<small>Welcome</small> ' + list.name + '');
+                $("#user_info").html( list.name + '');
                 user = list.userName;
                 userId = list.userId;
                 hf(list.skin);//皮肤
@@ -55,7 +55,6 @@ $(function () {
                     $("#adminzidian").hide();	//隐藏数据字典
                     $("#systemset").hide();	//隐藏系统设置
                 }
-                $("#productCode").hide();	//隐藏代码生成
                // online();//连接在线管理
             });
         }

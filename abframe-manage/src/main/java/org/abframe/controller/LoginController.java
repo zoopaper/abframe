@@ -48,21 +48,6 @@ public class LoginController extends BaseController {
     @Autowired
     private RoleService roleService;
 
-    /**
-     * 获取登录用户的IP
-     *
-     * @throws Exception
-     */
-    public void getRemoteIP(String USERNAME) throws Exception {
-        PageData pd = new PageData();
-        HttpServletRequest request = this.getRequest();
-        String ip = IPUtil.getIP(getRequest());
-        pd.put("USERNAME", USERNAME);
-        pd.put("IP", ip);
-        userService.saveIP(pd);
-    }
-
-
     @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
     public ModelAndView toLogin() throws Exception {
         ModelAndView mv = new ModelAndView();
@@ -351,7 +336,6 @@ public class LoginController extends BaseController {
             map.put("dels", pd.getString("DEL_QX"));
             map.put("edits", pd.getString("EDIT_QX"));
             map.put("chas", pd.getString("CHA_QX"));
-            this.getRemoteIP(userName);
         } catch (Exception e) {
             LOGGER.error("Controller login exception.", e);
         }
