@@ -116,9 +116,10 @@ public class UserService {
         return (PageData) dao.findForObject("UserXMapper.getUserInfo", pd);
     }
 
-    /*
-    * 跟新登录时间
-    */
+    /**
+     * @param pd
+     * @throws Exception
+     */
     public void updateLastLogin(PageData pd) throws Exception {
         dao.update("UserXMapper.updateLastLogin", pd);
     }

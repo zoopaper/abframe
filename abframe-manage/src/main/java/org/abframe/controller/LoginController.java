@@ -2,7 +2,6 @@ package org.abframe.controller;
 
 import com.google.common.base.Strings;
 import net.common.utils.date.DateUtil;
-import net.common.utils.ip.IPUtil;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.entity.RoleBean;
@@ -10,7 +9,10 @@ import org.abframe.entity.UserBean;
 import org.abframe.service.MenuService;
 import org.abframe.service.RoleService;
 import org.abframe.service.UserService;
-import org.abframe.util.*;
+import org.abframe.util.AppUtil;
+import org.abframe.util.Constant;
+import org.abframe.util.PageData;
+import org.abframe.util.RightsHelper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -27,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,56 +71,48 @@ public class LoginController extends BaseController {
         String code = pd.getString("code");
         try {
             if (!Strings.isNullOrEmpty(userName) && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(code)) {
-                //shiro管理的session
                 Subject currentUser = SecurityUtils.getSubject();
                 Session session = currentUser.getSession();
                 String sessionCode = (String) session.getAttribute(Constant.SESSION_SECURITY_CODE);
 
-                if (null == code || "".equals(code)) {
-                    result = "nullcode";
-                } else {
-                    pd.put("userName", userName);
-                    if (!Strings.isNullOrEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)) {
-                        String passwd = new SimpleHash("SHA-1", userName, password).toString();    //密码加密
-                        pd.put("password", passwd);
-                        pd = userService.getUserByNameAndPwd(pd);
-                        if (pd != null) {
-                            pd.put("lastLogin", DateUtil.getDateTimeStr().toString());
-                            userService.updateLastLogin(pd);
-                            UserBean user = new UserBean();
-                            user.setUserId(pd.getString("userId"));
-                            user.setUserName(pd.getString("userName"));
-                            user.setPassword(pd.getString("password"));
-                            user.setName(pd.getString("name"));
-                            user.setPerms(pd.getString("perms"));
-                            user.setRoleId(pd.getString("roleId"));
-                            user.setLastLogin(pd.getString("lastLogin"));
-                            user.setIp(pd.getString("ip"));
-                            user.setStatus(pd.getString("status"));
-                            session.setAttribute(Constant.SESSION_USER, user);
-                            session.removeAttribute(Constant.SESSION_SECURITY_CODE);
+                pd.put("userName", userName);
+                if (!Strings.isNullOrEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)) {
+                    String passwd = new SimpleHash("SHA-1", userName, password).toString();
+                    pd.put("password", passwd);
+                    pd = userService.getUserByNameAndPwd(pd);
+                    if (pd != null) {
+                        UserBean user = new UserBean();
+                        user.setUserId(pd.getString("userId"));
+                        user.setUserName(pd.getString("userName"));
+                        user.setPassword(pd.getString("password"));
+                        user.setName(pd.getString("name"));
+                        user.setPerms(pd.getString("perms"));
+                        user.setRoleId(pd.getString("roleId"));
+                        user.setLastLogin(pd.getString("lastLogin"));
+                        user.setIp(pd.getString("ip"));
+                        user.setStatus(pd.getString("status"));
+                        session.setAttribute(Constant.SESSION_USER, user);
+                        session.removeAttribute(Constant.SESSION_SECURITY_CODE);
 
-                            //shiro加入身份验证
-                            Subject subject = SecurityUtils.getSubject();
-                            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-                            try {
-                                subject.login(token);
-                            } catch (AuthenticationException e) {
-                                result = "身份验证失败！";
-                            }
+                        Subject subject = SecurityUtils.getSubject();
+                        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
 
-                        } else {
-                            //用户名或密码有误
-                            result = "usererror";
-                        }
-                    } else {
-                        //验证码输入有误
-                        result = "codeerror";
-                    }
-                    if (Tools.isEmpty(result)) {
-                        //验证成功
+                        pd.put("lastLogin", DateUtil.getDateTimeStr().toString());
+                        userService.updateLastLogin(pd);
                         result = "success";
+                        try {
+                            subject.login(token);
+                        } catch (AuthenticationException e) {
+                            result = "身份验证失败!";
+                        }
+
+                    } else {
+                        //用户名或密码有误
+                        result = "usererror";
                     }
+                } else {
+                    //验证码输入有误
+                    result = "codeerror";
                 }
             } else {
                 result = "error";
@@ -219,7 +212,10 @@ public class LoginController extends BaseController {
                 }
 
                 //FusionCharts 报表
-                String strXML = "<graph caption='前12个月订单销量柱状图' xAxisName='月份' yAxisName='值' decimalPrecision='0' formatNumberScale='0'><set name='2013-05' value='4' color='AFD8F8'/><set name='2013-04' value='0' color='AFD8F8'/><set name='2013-03' value='0' color='AFD8F8'/><set name='2013-02' value='0' color='AFD8F8'/><set name='2013-01' value='0' color='AFD8F8'/><set name='2012-01' value='0' color='AFD8F8'/><set name='2012-11' value='0' color='AFD8F8'/><set name='2012-10' value='0' color='AFD8F8'/><set name='2012-09' value='0' color='AFD8F8'/><set name='2012-08' value='0' color='AFD8F8'/><set name='2012-07' value='0' color='AFD8F8'/><set name='2012-06' value='0' color='AFD8F8'/></graph>";
+                String strXML = "<graph caption='前12个月订单销量柱状图' xAxisName='月份' yAxisName='值' decimalPrecision='0' formatNumberScale='0'><set name='2013-05' value='4' color='AFD8F8'/><set name='2013-04' value='0' " +
+                        "color='AFD8F8'/><set name='2013-03' value='0' color='AFD8F8'/><set name='2013-02' value='0' color='AFD8F8'/><set name='2013-01' value='0' color='AFD8F8'/><set name='2012-01' value='0' " +
+                        "color='AFD8F8'/><set name='2012-11' value='0' color='AFD8F8'/><set name='2012-10' value='0' color='AFD8F8'/><set name='2012-09' value='0' color='AFD8F8'/><set name='2012-08' value='0' " +
+                        "color='AFD8F8'/><set name='2012-07' value='0' color='AFD8F8'/><set name='2012-06' value='0' color='AFD8F8'/></graph>";
                 mv.addObject("strXML", strXML);
                 //FusionCharts 报表
 

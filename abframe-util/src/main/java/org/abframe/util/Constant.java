@@ -2,9 +2,12 @@ package org.abframe.util;
 
 import org.springframework.context.ApplicationContext;
 
+/**
+ *
+ */
 public class Constant {
 
-    public static final String SESSION_SECURITY_CODE = "sessionSecCode";
+    public static final String SESSION_SECURITY_CODE = "SESSION_CODE";
 
     public static final String SESSION_USER = "sessionUser";
 
