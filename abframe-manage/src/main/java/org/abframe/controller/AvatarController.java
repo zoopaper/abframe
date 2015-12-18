@@ -36,7 +36,7 @@ public class AvatarController extends BaseController {
         return jsonWrite;
     }
 
-    @RequestMapping(value = "toAvatarEdit", method = RequestMethod.GET)
+    @RequestMapping(value = "/toAvatarEdit", method = RequestMethod.GET)
     public ModelAndView toAvatarEdit() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("avatar/avatarEdit");
@@ -44,11 +44,22 @@ public class AvatarController extends BaseController {
     }
 
 
-    @RequestMapping(value = "cut", method = RequestMethod.POST)
+    @RequestMapping(value = "/cut", method = RequestMethod.POST)
     public ModelAndView cut() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("avatar/avatarEdit");
         return modelAndView;
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonWrite test() {
+        JsonWrite jsonWrite = new JsonWrite();
+        jsonWrite.setMsg("");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", "xxxxxxxx");
+        jsonWrite.setData(jsonObject);
+        return jsonWrite;
+
+    }
 }

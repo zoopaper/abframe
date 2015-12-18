@@ -57,7 +57,31 @@
 
     </script>
 </head>
-<input type="hidden" name="userId" id="user_id" value="${pd.userId}"/>
+<div>
+
+<button onclick="hasU();">dfsafsfafasfa</button>
+    <script>
+
+
+        //判断用户名是否存在
+        function hasU() {
+            $.ajax({
+                type: "POST",
+                url: '/avatar/test',
+                data: {},
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert(data.data.name);
+                    } else {
+                        alert(111);
+                    }
+                }
+            });
+        }
+    </script>
+</div>
 
 <div class="" style="width:900px;">
     <div class="row" style="width:900px;">
