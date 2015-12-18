@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@include file="../common/common.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -240,7 +238,6 @@
 <body>
 <form action="/user/${msg}" name="userForm" id="userForm" method="post">
     <input type="hidden" name="userId" id="user_id" value="${pd.userId}"/>
-
     <div id="zhongxin">
         <table>
             <c:if test="${fx != 'head'}">
@@ -248,7 +245,7 @@
                     <tr class="info">
                         <td>
                             <select class="chzn-select" name="roleId" id="roleId" data-placeholder="请选择职位"
-                                    style="vertical-align:top;">
+                                    style="vertical-align:top;width: 384px;">
                                 <option value=""></option>
                                 <c:forEach items="${roleList}" var="role">
                                     <option value="${role.roleId}"
@@ -269,47 +266,46 @@
 
             <tr>
                 <td>
-                    <input type="text" name="userName" id="loginname" value="${pd.userName }" maxlength="32"
-                           placeholder="这里输入用户名" title="用户名"/>
+                    <input type="text" name="userName" id="loginname" value="${pd.userName}" maxlength="32"  placeholder="这里输入用户名" title="用户名" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <input type="text" name="number" id="NUMBER" value="${pd.number}" maxlength="32"
-                           placeholder="这里输入编号" title="编号" onblur="hasN('${pd.userName}')"/>
+                           placeholder="这里输入编号" title="编号" onblur="hasN('${pd.userName}')" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="password" name="password" id="password" maxlength="32" placeholder="输入密码" title="密码"/>
+                    <input type="password" name="password" id="password" maxlength="32" placeholder="输入密码" title="密码" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
-                <td><input type="password" name="chkpwd" id="chkpwd" maxlength="32" placeholder="确认密码" title="确认密码"/>
+                <td><input type="password" name="chkpwd" id="chkpwd" maxlength="32" placeholder="确认密码" title="确认密码" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <input type="text" name="name" id="name" value="${pd.name}" maxlength="32" placeholder="输入姓名"
-                           title="姓名"/>
+                           title="姓名" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <input type="number" name="phone" id="PHONE" value="${pd.phone}" maxlength="32"
-                           placeholder="输入手机号" title="手机号"/>
+                           placeholder="输入手机号" title="手机号" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <input type="email" name="email" id="EMAIL" value="${pd.email}" maxlength="32" placeholder="输入邮箱"
-                           title="邮箱" onblur="hasE('${pd.userName}')"/>
+                           title="邮箱" onblur="hasE('${pd.userName}')" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <input type="text" name="bz" id="BZ" value="${pd.bz}" placeholder="输入备注" maxlength="64"
-                           title="备注"/>
+                           title="备注" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>

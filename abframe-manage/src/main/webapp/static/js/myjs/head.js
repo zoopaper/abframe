@@ -24,7 +24,7 @@ $(function () {
     $("#skin-colorpicker").ace_colorpicker().on("change", function () {
         var b = $(this).find("option:selected").data("class");
         hf(b);
-        var url ='/config/setSkin?skin=' + b + '&tm=' + new Date().getTime();
+        var url = '/config/setSkin?skin=' + b + '&tm=' + new Date().getTime();
         $.get(url, function (data) {
         });
 
@@ -46,7 +46,7 @@ $(function () {
         success: function (data) {
             $.each(data.list, function (i, list) {
                 //登陆者资料
-                $("#user_info").html( list.name + '');
+                $("#user_info").html(list.name + '');
                 user = list.userName;
                 userId = list.userId;
                 hf(list.skin);//皮肤
@@ -55,7 +55,7 @@ $(function () {
                     $("#adminzidian").hide();	//隐藏数据字典
                     $("#systemset").hide();	//隐藏系统设置
                 }
-               // online();//连接在线管理
+                // online();//连接在线管理
             });
         }
     });
@@ -121,7 +121,6 @@ function goOutUser(theuser) {
 
 //换肤
 function hf(b) {
-
     var a = $(document.body);
     a.attr("class", a.hasClass("navbar-fixed") ? "navbar-fixed" : "");
     if (b != "default") {
@@ -156,9 +155,24 @@ function editUserH() {
     var diag = new top.Dialog();
     diag.Drag = true;
     diag.Title = "修改个人资料";
-    diag.URL = '/user/toEditU?userId=' + userId + '&fx=head';
-    diag.Width = 225;
-    diag.Height = 389;
+    diag.URL = '/user/toEditUser?userId=' + userId + '&fx=head';
+    diag.Width = 400;
+    diag.Height = 400;
+    diag.CancelEvent = function () {
+        diag.close();
+    };
+    diag.show();
+}
+
+//修改头像
+function editAvatar() {
+    jzts();
+    var diag = new top.Dialog();
+    diag.Drag = true;
+    diag.Title = "修改头像";
+    diag.URL = '/avatar/toAvatarEdit';
+    diag.Width = 900;
+    diag.Height = 800;
     diag.CancelEvent = function () {
         diag.close();
     };

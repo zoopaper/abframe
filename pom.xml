@@ -7,6 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>abframe</name>
     <url>http://maven.apache.org</url>
+    <packaging>pom</packaging>
 
     <modules>
         <module>abframe-config</module>
@@ -16,7 +17,6 @@
         <module>abframe-manage</module>
         <module>abframe-websocket</module>
     </modules>
-    <packaging>pom</packaging>
 
     <properties>
         <javax-activation.version>1.1</javax-activation.version>
@@ -25,7 +25,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -118,6 +117,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>aopalliance</groupId>
@@ -404,12 +404,20 @@
             <groupId>net.common.base</groupId>
             <artifactId>common-base</artifactId>
             <version>0.0.1-REALEASE</version>
-            <!--<exclusions>-->
+            <exclusions>
                 <!--<exclusion>-->
                     <!--<groupId>com.alibaba</groupId>-->
                     <!--<artifactId>fastjson</artifactId>-->
                 <!--</exclusion>-->
-            <!--</exclusions>-->
+                <exclusion>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>javax.servlet.jsp-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

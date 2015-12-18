@@ -159,28 +159,24 @@ public class UserController extends BaseController {
     /**
      * 去修改用户页面
      */
-    @RequestMapping(value = "/toEditU")
+    @RequestMapping(value = "/toEditUser")
     public ModelAndView toEditU() throws Exception {
         ModelAndView mv = new ModelAndView();
         PageData pd = new PageData();
         pd = this.getPageData();
-
         //顶部修改个人资料
         String fx = pd.getString("fx");
-
         if ("head".equals(fx)) {
             mv.addObject("fx", "head");
         } else {
             mv.addObject("fx", "user");
         }
-
         List<RoleBean> roleList = roleService.listAllERRoles();            //列出所有二级角色
         pd = userService.findByUiId(pd);
         mv.setViewName("user/userEdit");
         mv.addObject("msg", "editU");
         mv.addObject("pd", pd);
         mv.addObject("roleList", roleList);
-
         return mv;
     }
 

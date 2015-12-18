@@ -6,10 +6,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>abframe-util</artifactId>
     <packaging>jar</packaging>
-
     <name>abframe-util</name>
     <url>http://maven.apache.org</url>
 
