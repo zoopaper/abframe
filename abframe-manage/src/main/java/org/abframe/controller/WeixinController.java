@@ -1,6 +1,6 @@
 package org.abframe.controller;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.abframe.controller.base.BaseController;
 import org.abframe.service.WeixinCommandService;
 import org.abframe.service.WeixinImgMsgService;
@@ -400,7 +400,10 @@ public class WeixinController extends BaseController {
             inputStream.close();
             inputStream = null;
             httpUrlConn.disconnect();
-            jsonobject = JSONObject.fromObject(buffer.toString());
+//            jsonobject = JSONObject.fromObject(buffer.toString());
+//            jsonobject = JSONObject.parse(buffer.toString());
+            jsonobject = new JSONObject();
+            jsonobject.getJSONObject(buffer.toString());
         } catch (ConnectException ce) {
             // TODO: handle exception
         } catch (Exception e) {

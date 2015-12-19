@@ -1,6 +1,6 @@
 package org.abframe.controller;
 
-import net.sf.json.JSONArray;
+import com.alibaba.fastjson.JSONArray;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
 import org.abframe.service.MenuService;
@@ -167,7 +167,8 @@ public class MenuController extends BaseController {
     public void getSub(@RequestParam String MENU_ID, HttpServletResponse response) throws Exception {
         try {
             List<Menu> subMenu = menuService.listSubMenuByParentId(MENU_ID);
-            JSONArray arr = JSONArray.fromObject(subMenu);
+            JSONArray arr = new JSONArray();
+            arr.addAll(subMenu);
             PrintWriter out;
 
             response.setCharacterEncoding("utf-8");

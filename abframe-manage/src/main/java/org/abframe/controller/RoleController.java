@@ -1,8 +1,8 @@
 package org.abframe.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Strings;
 import net.common.utils.uuid.UuidUtil;
-import net.sf.json.JSONArray;
 import org.abframe.common.PermissionHandler;
 import org.abframe.controller.base.BaseController;
 import org.abframe.entity.Menu;
@@ -267,7 +267,8 @@ public class RoleController extends BaseController {
                     }
                 }
             }
-            JSONArray arr = JSONArray.fromObject(menuList);
+            JSONArray arr = new  JSONArray();
+            arr.addAll(menuList);
             String json = arr.toString();
             json = json.replaceAll("MENU_ID", "id").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
             model.addAttribute("zTreeNodes", json);
@@ -311,7 +312,8 @@ public class RoleController extends BaseController {
                     }
                 }
             }
-            JSONArray arr = JSONArray.fromObject(menuList);
+            JSONArray arr = new JSONArray();
+            arr.addAll(menuList);
             String json = arr.toString();
             //System.out.println(json);
             json = json.replaceAll("MENU_ID", "id").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");

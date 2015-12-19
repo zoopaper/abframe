@@ -17,7 +17,7 @@ public class AppUtil {
         int falseCount = 0;
         String[] paramArray = new String[20];
         String[] valueArray = new String[20];
-        String[] tempArray = new String[20];  //临时数组
+        String[] tempArray = new String[20];
 
         if (method == "registered") {// 注册
             paramArray = Constant.APP_REGISTERED_PARAM_ARRAY;  //参数
