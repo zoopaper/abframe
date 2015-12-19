@@ -1,6 +1,6 @@
 package org.abframe.websocket;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.abframe.util.Constant;
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
@@ -28,8 +28,6 @@ public class ChatServer extends WebSocketServer {
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         //待处理
     }
-
-
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         userLeave(conn);
@@ -40,7 +38,7 @@ public class ChatServer extends WebSocketServer {
      */
     @Override
     public void onMessage(WebSocket conn, String message) {
-        
+
         if (null != message && message.startsWith(Constant.WEB_SOCKET_USER_CONN)) {
             this.userjoin(message.replaceFirst(Constant.WEB_SOCKET_USER_CONN, ""), conn);
         }
@@ -50,7 +48,8 @@ public class ChatServer extends WebSocketServer {
         if (null != message && message.contains(Constant.WEB_SOCKET_USER_PRIVATE_MSG)) {
 
             String toUser = message.substring(message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG) + Constant.WEB_SOCKET_USER_PRIVATE_MSG.length(), message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG_2));
-            message = message.substring(0, message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG)) + "[私信]" + message.substring(message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG_2) + Constant.WEB_SOCKET_USER_PRIVATE_MSG_2.length(), message.length());
+            message = message.substring(0, message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG)) + "[私信]" + message.substring(message.indexOf(Constant.WEB_SOCKET_USER_PRIVATE_MSG_2) + Constant
+                    .WEB_SOCKET_USER_PRIVATE_MSG_2.length(), message.length());
 
             //向所某用户发送消息
             ChatServerPool.sendMessageToUser(ChatServerPool.getWebSocketByUser(toUser), message);
@@ -83,15 +82,20 @@ public class ChatServer extends WebSocketServer {
      */
     public void userjoin(String user, WebSocket conn) {
         JSONObject result = new JSONObject();
-        result.element("type", "user_join");
-        result.element("user", "<a onclick=\"toUserMsg('" + user + "');\">" + user + "</a>");
-        ChatServerPool.sendMessage(result.toString());                //把当前用户加入到所有在线用户列表中
+//        JSONObject result = new JSONObject();
+//        result.element("type", "user_join");
+        result.put("type", "user_join");
+//        result.element("user", "<a onclick=\"toUserMsg('" + user + "');\">" + user + "</a>");
+        result.put("user", "<a onclick=\"toUserMsg('" + user + "');\">" + user + "</a>");
+        //把当前用户加入到所有在线用户列表中
+        ChatServerPool.sendMessage(result.toString());
+
         String joinMsg = "{\"from\":\"[系统]\",\"content\":\"" + user + "上线了\",\"timestamp\":" + new Date().getTime() + ",\"type\":\"message\"}";
         ChatServerPool.sendMessage(joinMsg);                        //向所有在线用户推送当前用户上线的消息
         result = new JSONObject();
-        result.element("type", "get_online_user");
+        result.put("type", "get_online_user");
         ChatServerPool.addUser(user, conn);                            //向连接池添加当前的连接对象
-        result.element("list", ChatServerPool.getOnlineUser());
+        result.put("list", ChatServerPool.getOnlineUser());
         ChatServerPool.sendMessageToUser(conn, result.toString());    //向当前连接发送当前在线用户的列表
     }
 
@@ -103,8 +107,8 @@ public class ChatServer extends WebSocketServer {
         boolean b = ChatServerPool.removeUser(conn);                //在连接池中移除连接
         if (b) {
             JSONObject result = new JSONObject();
-            result.element("type", "user_leave");
-            result.element("user", "<a onclick=\"toUserMsg('" + user + "');\">" + user + "</a>");
+            result.put("type", "user_leave");
+            result.put("user", "<a onclick=\"toUserMsg('" + user + "');\">" + user + "</a>");
             ChatServerPool.sendMessage(result.toString());            //把当前用户从所有在线用户列表中删除
             String joinMsg = "{\"from\":\"[系统]\",\"content\":\"" + user + "下线了\",\"timestamp\":" + new Date().getTime() + ",\"type\":\"message\"}";
             ChatServerPool.sendMessage(joinMsg);                    //向在线用户发送当前用户退出的消息

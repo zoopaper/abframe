@@ -1,6 +1,6 @@
 package org.abframe.websocket;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.framing.Framedata;
@@ -110,8 +110,8 @@ public class OnlineChatServer extends WebSocketServer {
      */
     public void goOut(WebSocket conn, String type) {
         JSONObject result = new JSONObject();
-        result.element("type", type);
-        result.element("msg", "goOut");
+        result.put("type", type);
+        result.put("msg", "goOut");
         OnlineChatServerPool.sendMessageToUser(conn, result.toString());
     }
 
@@ -127,8 +127,8 @@ public class OnlineChatServer extends WebSocketServer {
      */
     public void getUserCount(WebSocket conn) {
         JSONObject result = new JSONObject();
-        result.element("type", "count");
-        result.element("msg", OnlineChatServerPool.getUserCount());
+        result.put("type", "count");
+        result.put("msg", OnlineChatServerPool.getUserCount());
         OnlineChatServerPool.sendMessageToUser(conn, result.toString());
     }
 
@@ -137,8 +137,8 @@ public class OnlineChatServer extends WebSocketServer {
      */
     public void getUserList(WebSocket conn) {
         JSONObject result = new JSONObject();
-        result.element("type", "userlist");
-        result.element("list", OnlineChatServerPool.getOnlineUser());
+        result.put("type", "userlist");
+        result.put("list", OnlineChatServerPool.getOnlineUser());
         OnlineChatServerPool.sendMessageToUser(conn, result.toString());
     }
 

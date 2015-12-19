@@ -25,7 +25,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-
+/**
+ * 友情链接
+ */
 @Controller
 @RequestMapping(value = "/link")
 public class LinkController extends BaseController {

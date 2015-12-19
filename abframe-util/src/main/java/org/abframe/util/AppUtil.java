@@ -14,7 +14,6 @@ public class AppUtil {
 
     public static boolean checkParam(String method, PageData pd) {
         boolean result = false;
-
         int falseCount = 0;
         String[] paramArray = new String[20];
         String[] valueArray = new String[20];
@@ -28,8 +27,6 @@ public class AppUtil {
             paramArray = Constant.APP_GETAPPUSER_PARAM_ARRAY;
             valueArray = Constant.APP_GETAPPUSER_VALUE_ARRAY;
         }
-
-
         int size = paramArray.length;
         for (int i = 0; i < size; i++) {
             String param = paramArray[i];
@@ -38,7 +35,6 @@ public class AppUtil {
                 falseCount += 1;
             }
         }
-
         if (falseCount > 0) {
             logger.error(method + "接口，请求协议中缺少 " + falseCount + "个 参数");
             for (int j = 1; j <= falseCount; j++) {
@@ -47,7 +43,6 @@ public class AppUtil {
         } else {
             result = true;
         }
-
         return result;
     }
 
@@ -68,7 +63,6 @@ public class AppUtil {
 
         pd.put("page_now", page_now);
         pd.put("page_start", page_start);
-
         return pd;
     }
 
