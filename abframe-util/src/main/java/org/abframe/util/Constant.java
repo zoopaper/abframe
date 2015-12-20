@@ -16,12 +16,12 @@ public class Constant {
     /**
      * 当前菜单
      */
-    public static final String SESSION_menuList = "menuList";
+    public static final String SESSION_MENU_LIST = "MENU_LIST";
 
     /**
      * 全部菜单
      */
-    public static final String SESSION_allmenuList = "allmenuList";
+    public static final String SESSION_ALL_MENU_LIST = "ALL_MENU_LIST";
 
     public static final String SESSION_QX = "QX";
 

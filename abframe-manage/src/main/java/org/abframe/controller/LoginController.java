@@ -154,7 +154,7 @@ public class LoginController extends BaseController {
 
                 List<Menu> allmenuList = new ArrayList<Menu>();
 
-                if (null == session.getAttribute(Constant.SESSION_allmenuList)) {
+                if (null == session.getAttribute(Constant.SESSION_ALL_MENU_LIST)) {
                     allmenuList = menuService.listAllMenu();
                     if (!Strings.isNullOrEmpty(rolePerms)) {
                         for (Menu menu : allmenuList) {
@@ -168,15 +168,15 @@ public class LoginController extends BaseController {
                             }
                         }
                     }
-                    session.setAttribute(Constant.SESSION_allmenuList, allmenuList);            //菜单权限放入session中
+                    session.setAttribute(Constant.SESSION_ALL_MENU_LIST, allmenuList);            //菜单权限放入session中
                 } else {
-                    allmenuList = (List<Menu>) session.getAttribute(Constant.SESSION_allmenuList);
+                    allmenuList = (List<Menu>) session.getAttribute(Constant.SESSION_ALL_MENU_LIST);
                 }
 
                 //切换菜单=====
                 List<Menu> menuList = new ArrayList<Menu>();
-                //if(null == session.getAttribute(Const.SESSION_menuList) || ("yes".equals(pd.getString("changeMenu")))){
-                if (null == session.getAttribute(Constant.SESSION_menuList) || ("yes".equals(changeMenu))) {
+                //if(null == session.getAttribute(Const.SESSION_MENU_LIST) || ("yes".equals(pd.getString("changeMenu")))){
+                if (null == session.getAttribute(Constant.SESSION_MENU_LIST) || ("yes".equals(changeMenu))) {
                     List<Menu> menuList1 = new ArrayList<Menu>();
                     List<Menu> menuList2 = new ArrayList<Menu>();
 
@@ -190,20 +190,20 @@ public class LoginController extends BaseController {
                         }
                     }
 
-                    session.removeAttribute(Constant.SESSION_menuList);
+                    session.removeAttribute(Constant.SESSION_MENU_LIST);
                     if ("2".equals(session.getAttribute("changeMenu"))) {
-                        session.setAttribute(Constant.SESSION_menuList, menuList1);
+                        session.setAttribute(Constant.SESSION_MENU_LIST, menuList1);
                         session.removeAttribute("changeMenu");
                         session.setAttribute("changeMenu", "1");
                         menuList = menuList1;
                     } else {
-                        session.setAttribute(Constant.SESSION_menuList, menuList2);
+                        session.setAttribute(Constant.SESSION_MENU_LIST, menuList2);
                         session.removeAttribute("changeMenu");
                         session.setAttribute("changeMenu", "2");
                         menuList = menuList2;
                     }
                 } else {
-                    menuList = (List<Menu>) session.getAttribute(Constant.SESSION_menuList);
+                    menuList = (List<Menu>) session.getAttribute(Constant.SESSION_MENU_LIST);
                 }
                 //切换菜单=====
 
@@ -265,8 +265,8 @@ public class LoginController extends BaseController {
 
         session.removeAttribute(Constant.SESSION_USER);
         session.removeAttribute(Constant.SESSION_ROLE_RIGHTS);
-        session.removeAttribute(Constant.SESSION_allmenuList);
-        session.removeAttribute(Constant.SESSION_menuList);
+        session.removeAttribute(Constant.SESSION_ALL_MENU_LIST);
+        session.removeAttribute(Constant.SESSION_MENU_LIST);
         session.removeAttribute(Constant.SESSION_QX);
         session.removeAttribute(Constant.SESSION_userpds);
         session.removeAttribute(Constant.SESSION_USERNAME);
