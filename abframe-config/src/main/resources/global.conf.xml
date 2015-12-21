@@ -5,5 +5,5 @@
 
     <entry key="image.upload.path"></entry>
     <entry key="image.avatar.path">/avatar</entry>
-
+    <entry key="development">development</entry>
 </properties>

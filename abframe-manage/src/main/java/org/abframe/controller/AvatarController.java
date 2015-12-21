@@ -7,7 +7,14 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.abframe.base.config.ConfigService;
 import org.abframe.base.constant.GlobalConstant;
 import org.abframe.controller.base.BaseController;
+import org.abframe.entity.UserBean;
+import org.abframe.service.UserService;
+import org.abframe.util.Constant;
 import org.abframe.util.PathUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +29,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -40,6 +48,9 @@ public class AvatarController extends BaseController {
 
     @Autowired
     private ConfigService configService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * @return
@@ -61,9 +72,22 @@ public class AvatarController extends BaseController {
         JsonWrite jsonWrite = new JsonWrite();
         JSONObject jsonObject = new JSONObject();
         String serverPath = PathUtil.getServerRealPath();
-        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + MD5Util.digestHex(file.getOriginalFilename());
-        String imageSavePath = serverPath + File.separator + filePath;
+        String fileName = file.getOriginalFilename();
+        String fileSuffix = ".jpg";
 
+
+        File tmpFile = new File(serverPath + configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH);
+        if (!tmpFile.exists()) {
+            tmpFile.mkdirs();
+        }
+
+        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + fileSuffix;
+        String imageSavePath = serverPath + filePath;
+        try {
+            IOUtils.copy(file.getInputStream(), new FileOutputStream(imageSavePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             int[] imageProp = getImageWidthAndHeight(file.getInputStream());
             jsonObject.put("width", imageProp[0]);
@@ -71,20 +95,27 @@ public class AvatarController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         jsonWrite.setMsg("上传成功！");
-        jsonObject.put("path", "/static/img/tulips.jpg");
+        jsonObject.put("path", filePath);
         jsonWrite.setData(jsonObject);
         return jsonWrite;
     }
 
     @RequestMapping(value = "/cut", method = RequestMethod.POST)
     @ResponseBody
-    public Object cut(String width, String height, int offsetLeft, int offsetTop) {
+    public Object cut(int width, int height, int offsetLeft, int offsetTop) {
         JsonWrite jsonWrite = new JsonWrite();
         jsonWrite.setMsg("裁剪成功！");
+        String serverPath = PathUtil.getServerRealPath();
+        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + ".jpg";
+        String imageSavePath = serverPath + filePath;
+
+        String filePath2 = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + File.separator + MD5Util.digestHex(getUserName()) + ".jpg";
+        String imageSavePath2 = serverPath + filePath2;
+
+
         try {
-            Thumbnails.of("").sourceRegion(11, 11, 33, 33).toFile(new File(""));
+            Thumbnails.of(new File(imageSavePath)).sourceRegion(offsetLeft, offsetTop, width, height).toFile(new File(imageSavePath2));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,5 +157,13 @@ public class AvatarController extends BaseController {
             }
         }
         return image;
+    }
+
+
+    public String getUserName() {
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
+        return user.getUserName();
     }
 }

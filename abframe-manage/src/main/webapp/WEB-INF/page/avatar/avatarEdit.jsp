@@ -121,7 +121,7 @@
         , 'method': 'post'
         , 'fileObjName': 'file'
         , 'queueSizeLimit': 1
-        , 'fileSizeLimit': '1000KB'
+        , 'fileSizeLimit': '8000KB'
         , 'fileTypeExts': '*.gif; *.jpg; *.png; *.jpeg'
         , 'fileTypeDesc': '只允许.gif .jpg .png .jpeg 图片！'
         , 'onSelect': function (file) {

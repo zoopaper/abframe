@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="configBean" class="org.abframe.base.config.ConfigBean" lazy-init="false" scope="singleton">
+       <bean id="configBean" class="org.abframe.base.config.ConfigService" lazy-init="false" scope="singleton">
            <property name="cfgXml" value="mail.conf.xml,global.conf.xml"/>
        </bean>
 
