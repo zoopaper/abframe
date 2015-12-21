@@ -1,6 +1,6 @@
 package org.abframe.controller;
 
-import org.abframe.config.ConfigBean;
+import org.abframe.base.config.ConfigService;
 import org.abframe.controller.base.BaseController;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.UserService;
@@ -34,7 +34,7 @@ public class ConfigController extends BaseController {
     private MemberUserService appuserService;
 
     @Autowired
-    ConfigBean configBean;
+    ConfigService configService;
 
 
     @RequestMapping(value = "/getUname")

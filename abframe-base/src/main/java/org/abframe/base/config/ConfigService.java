@@ -1,4 +1,4 @@
-package org.abframe.config;
+package org.abframe.base.config;
 
 import com.google.common.collect.ImmutableMap;
 import net.common.utils.config.MapConfig;
@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
  * Date: 2015/8/31
  * Time: 10:15
  */
-public class ConfigBean extends MapConfigOperate {
+public class ConfigService extends MapConfigOperate {
 
     private String cfgXml;
 
@@ -22,10 +22,6 @@ public class ConfigBean extends MapConfigOperate {
     @PostConstruct
     public void init() {
         cfgMap = MapConfig.parseConf(cfgXml);
-    }
-
-    public String getCfgXml() {
-        return cfgXml;
     }
 
     public void setCfgXml(String cfgXml) {

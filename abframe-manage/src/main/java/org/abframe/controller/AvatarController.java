@@ -1,11 +1,16 @@
 package org.abframe.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import net.common.utils.encrypt.MD5Util;
 import net.common.utils.json.JsonWrite;
 import net.coobird.thumbnailator.Thumbnails;
+import org.abframe.base.config.ConfigService;
+import org.abframe.base.constant.GlobalConstant;
 import org.abframe.controller.base.BaseController;
+import org.abframe.util.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +38,9 @@ public class AvatarController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AvatarController.class);
 
+    @Autowired
+    private ConfigService configService;
+
     /**
      * @return
      */
@@ -48,11 +57,13 @@ public class AvatarController extends BaseController {
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Object upload(MultipartFile file) {
+    public Object upload(MultipartFile file, HttpServletRequest request) {
         JsonWrite jsonWrite = new JsonWrite();
         JSONObject jsonObject = new JSONObject();
+        String serverPath = PathUtil.getServerRealPath();
+        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + MD5Util.digestHex(file.getOriginalFilename());
+        String imageSavePath = serverPath + File.separator + filePath;
 
-        String fileName = file.getOriginalFilename();
         try {
             int[] imageProp = getImageWidthAndHeight(file.getInputStream());
             jsonObject.put("width", imageProp[0]);

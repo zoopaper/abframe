@@ -2,7 +2,7 @@ package org.abframe.controller;
 
 import net.common.utils.mail.MailInfo;
 import net.common.utils.mail.MailUtil;
-import org.abframe.config.ConfigBean;
+import org.abframe.base.config.ConfigService;
 import org.abframe.controller.base.BaseController;
 import org.abframe.service.MemberUserService;
 import org.abframe.service.UserService;
@@ -43,7 +43,7 @@ public class MailController extends BaseController {
     private MemberUserService appuserService;
 
     @Autowired
-    ConfigBean configBean;
+    ConfigService configService;
 
 
     @RequestMapping(value = "/toSendEmailM")
@@ -69,12 +69,12 @@ public class MailController extends BaseController {
     @RequestMapping(value = "/sendEmail")
     @ResponseBody
     public Object sendEmail() {
-        String mailHost = configBean.getString(MailConst.MAIL_HOST, configBean.getCfgMap(), "");
-        String mailPort = configBean.getString(MailConst.MAIL_PORT, configBean.getCfgMap(), "");
-        String mailUserName = configBean.getString(MailConst.MAIL_USERNAME, configBean.getCfgMap(), "");
-        String mailPassword = configBean.getString(MailConst.MAIL_PASSWORD, configBean.getCfgMap(), "");
-        String mailName = configBean.getString(MailConst.MAIL_NAME, configBean.getCfgMap(), "");
-        boolean mailAuth = configBean.getBoolean(MailConst.MAIL_SMTP_AUTH, configBean.getCfgMap(), true);
+        String mailHost = configService.getString(MailConst.MAIL_HOST, configService.getCfgMap(), "");
+        String mailPort = configService.getString(MailConst.MAIL_PORT, configService.getCfgMap(), "");
+        String mailUserName = configService.getString(MailConst.MAIL_USERNAME, configService.getCfgMap(), "");
+        String mailPassword = configService.getString(MailConst.MAIL_PASSWORD, configService.getCfgMap(), "");
+        String mailName = configService.getString(MailConst.MAIL_NAME, configService.getCfgMap(), "");
+        boolean mailAuth = configService.getBoolean(MailConst.MAIL_SMTP_AUTH, configService.getCfgMap(), true);
 
 
         MailInfo info = new MailInfo();
