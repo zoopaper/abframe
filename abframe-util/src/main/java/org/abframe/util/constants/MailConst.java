@@ -6,14 +6,12 @@ package org.abframe.util.constants;
 public final class MailConst {
 
     private MailConst() {
-
     }
 
     /**
      * 邮箱主机
      */
     public static final String MAIL_HOST = "mail.host";
-
     /**
      * 邮箱端口
      */
@@ -23,18 +21,14 @@ public final class MailConst {
      * 邮箱帐号
      */
     public static final String MAIL_USERNAME = "mail.username";
-
     /**
      * 邮箱密码
      */
     public static final String MAIL_PASSWORD = "mail.password";
-
     /**
      * 邮箱名称
      */
     public static final String MAIL_NAME = "mail.name";
-
-
     /**
      * 邮件编码
      */

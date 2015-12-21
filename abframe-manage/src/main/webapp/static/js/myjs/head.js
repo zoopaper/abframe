@@ -171,7 +171,7 @@ function editAvatar() {
     diag.Drag = true;
     diag.Title = "修改头像";
     diag.URL = '/avatar/toAvatarEdit';
-    diag.Width = 900;
+    diag.Width = 980;
     diag.Height = 800;
     diag.CancelEvent = function () {
         diag.close();

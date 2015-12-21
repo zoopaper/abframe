@@ -9,10 +9,10 @@ import javax.annotation.PostConstruct;
 /**
  * 配置文件
  * <p/>
-* User : krisibm@163.com
-        * Date: 2015/8/31
-        * Time: 10:15
-        */
+ * User : krisibm@163.com
+ * Date: 2015/8/31
+ * Time: 10:15
+ */
 public class ConfigBean extends MapConfigOperate {
 
     private String cfgXml;
@@ -23,7 +23,6 @@ public class ConfigBean extends MapConfigOperate {
     public void init() {
         cfgMap = MapConfig.parseConf(cfgXml);
     }
-
 
     public String getCfgXml() {
         return cfgXml;

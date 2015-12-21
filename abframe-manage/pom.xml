@@ -13,8 +13,6 @@
 
     <properties>
         <javax-activation.version>1.1</javax-activation.version>
-        <spring.version>4.0.4.RELEASE</spring.version>
-        <mysql-connector-java.version>5.1.34</mysql-connector-java.version>
     </properties>
 
     <dependencies>
@@ -47,15 +45,6 @@
             <artifactId>abframe-websocket</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>json</groupId>-->
-            <!--<artifactId>json-lib</artifactId>-->
-            <!--<version>1.0</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/json-lib-2.4-jdk15.jar</systemPath>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>fcexporter</groupId>
             <artifactId>fcexporter</artifactId>
@@ -63,7 +52,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fcexporter.jar</systemPath>
         </dependency>
-
         <dependency>
             <groupId>fcexporthandler</groupId>
             <artifactId>fcexporthandler</artifactId>
@@ -71,7 +59,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fcexporthandler.jar</systemPath>
         </dependency>
-
         <dependency>
             <groupId>fchelper</groupId>
             <artifactId>fchelper</artifactId>
@@ -79,7 +66,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fchelper.jar</systemPath>
         </dependency>
-
         <dependency>
             <groupId>fcsampleshelper</groupId>
             <artifactId>fcsampleshelper</artifactId>
@@ -112,7 +98,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/sun.misc.BASE64Decoder.jar</systemPath>
         </dependency>
-
         <dependency>
             <groupId>weixinapi</groupId>
             <artifactId>weixinapi</artifactId>
@@ -120,7 +105,10 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/weixinapi.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>abframe-manage</finalName>

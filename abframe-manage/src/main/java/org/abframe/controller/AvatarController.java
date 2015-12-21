@@ -2,6 +2,7 @@ package org.abframe.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import net.common.utils.json.JsonWrite;
+import net.coobird.thumbnailator.Thumbnails;
 import org.abframe.controller.base.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * 用户头像
  * User: shijingui
@@ -21,34 +28,58 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/avatar")
 public class AvatarController extends BaseController {
 
+    private static final String JFS_AVATAR_URL = "";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AvatarController.class);
 
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/toAvatarEdit", method = RequestMethod.GET)
+    public ModelAndView toAvatarEdit() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/avatar/avatarEdit");
+        return modelAndView;
+    }
+
+    /**
+     * @param file
+     * @return
+     */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Object upload(MultipartFile upload) {
+    public Object upload(MultipartFile file) {
         JsonWrite jsonWrite = new JsonWrite();
-        jsonWrite.setMsg("上传成功！");
         JSONObject jsonObject = new JSONObject();
+
+        String fileName = file.getOriginalFilename();
+        try {
+            int[] imageProp = getImageWidthAndHeight(file.getInputStream());
+            jsonObject.put("width", imageProp[0]);
+            jsonObject.put("height", imageProp[1]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jsonWrite.setMsg("上传成功！");
         jsonObject.put("path", "/static/img/tulips.jpg");
-        jsonObject.put("width", "200");
-        jsonObject.put("height", "200");
         jsonWrite.setData(jsonObject);
         return jsonWrite;
     }
 
-    @RequestMapping(value = "/toAvatarEdit", method = RequestMethod.GET)
-    public ModelAndView toAvatarEdit() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("avatar/avatarEdit");
-        return modelAndView;
-    }
-
-
     @RequestMapping(value = "/cut", method = RequestMethod.POST)
-    public ModelAndView cut() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("avatar/avatarEdit");
-        return modelAndView;
+    @ResponseBody
+    public Object cut(String width, String height, int offsetLeft, int offsetTop) {
+        JsonWrite jsonWrite = new JsonWrite();
+        jsonWrite.setMsg("裁剪成功！");
+        try {
+            Thumbnails.of("").sourceRegion(11, 11, 33, 33).toFile(new File(""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("avatar/avatarEdit");
+        return jsonWrite;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
@@ -61,5 +92,28 @@ public class AvatarController extends BaseController {
         jsonWrite.setData(jsonObject);
         return jsonWrite;
 
+    }
+
+    /**
+     * 获取图片的宽度和高度
+     *
+     * @param is
+     * @return
+     */
+    public int[] getImageWidthAndHeight(InputStream is) {
+        int[] image = new int[2];
+        if (is != null) {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(is);
+                int width = bufferedImage.getWidth();
+                int height = bufferedImage.getHeight();
+                image[0] = width;
+                image[1] = height;
+                return image;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return image;
     }
 }

@@ -6,10 +6,10 @@
     <meta charset="utf-8"/>
     <meta name="description" content="overview & stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link href="/plugins/uploadify3.2.1/uploadify.css" rel="stylesheet" type="text/css">
+    <link href="/plugins/bootstrap/3.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/plugins/bootstrap/3.2/css/bootstrap-theme.min.css" rel="stylesheet"/>
     <link href="/plugins/imgareaselect/css/imgareaselect-default.css" rel="stylesheet" type="text/css">
+    <link href="/plugins/uploadify3.2.1/uploadify.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="/plugins/uploadify3.2.1/jquery.uploadify.min.js"></script>
@@ -43,55 +43,13 @@
             left: 0;
         }
     </style>
-
-
-    <script type="text/javascript">
-        $(top.hangge());
-        $(document).ready(function () {
-            if ($("#user_id").val() != "") {
-                $("#loginname").attr("readonly", "readonly");
-                $("#loginname").css("color", "gray");
-            }
-        });
-
-
-    </script>
 </head>
-<div>
 
-<button onclick="hasU();">dfsafsfafasfa</button>
-    <script>
-
-
-        //判断用户名是否存在
-        function hasU() {
-            $.ajax({
-                type: "POST",
-                url: '/avatar/test',
-                data: {},
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    if (data.success) {
-                        alert(data.data.name);
-                    } else {
-                        alert(111);
-                    }
-                }
-            });
-        }
-    </script>
-</div>
-
-<div class="" style="width:900px;">
-    <div class="row" style="width:900px;">
+<div class="container-fluid">
+    <div class="row" style="margin-top: 10px;">
         <div class="col-xs-3">
-            <label for="">图片上传</label>
-            <%--<a id="init" class="btn btn-sm btn-primary" href="#">初始化</a>--%>
-
-            <div id="upload-wrap" style="margin-top:40px;">
+            <div id="upload-wrap">
                 <input type="file" id="file" name="file"/>
-                <span class="help-block">选择测试图片(1M以内)</span>
 
                 <p>
                     <a id="upload" class="btn btn-sm btn-success" style="display:none;" href="#">上传</a>
@@ -113,8 +71,9 @@
                 </div>
             </div>
         </div>
+
         <div class="col-xs-4">
-            <label for="">裁剪区域</label>
+            <label>裁剪区域</label>
 
             <div class="row">
                 <div class="col-xs-12" id="uploaded-wrap" style="display:none;">
@@ -122,7 +81,7 @@
             </div>
         </div>
         <div class="col-xs-4" id="preview-wrap" style="display:none;">
-            <label for="">裁剪预览</label>
+            <label>裁剪预览</label>
 
             <div id="cut-preview-wrap">
                 <img id="cut-preview" src="" alt="">
@@ -137,66 +96,59 @@
     <div class="row" id="cuted-wrap" style="display:none;">
         <div class="col-xs-offset-2 col-xs-8 text-center">
             <div class="page-header">
-                <h4>成品</h4>
+                <h4>生成裁剪图片</h4>
             </div>
             <p>
                 <img id="image-cuted" src="" alt="">
             </p>
 
             <p>
-                <a id="download" style="display:none;" class="btn btn-block btn-danger" href="#">下载成品</a>
+                <a id="download" style="display:none;" class="btn btn-block btn-danger" href="#">下载</a>
             </p>
-
         </div>
     </div>
 </div>
 
+
 <script type="text/javascript">
     var $field = $("input[type='file']");
-    //Uploadify上传插件初始化
-//    $("#init").click(function (e) {
-//        e.preventDefault();
-//        $(this).remove();
-//        $("#upload-wrap").show();
+    $field.uploadify({
+        'buttonText': '选择图片'
+        , 'swf': '/plugins/uploadify3.2.1/uploadify.swf?v=' + ( parseInt(Math.random() * 1000) )
+        , 'uploader': '/avatar/upload'
+        , 'auto': false
+        , 'multi': false
+        , 'method': 'post'
+        , 'fileObjName': 'file'
+        , 'queueSizeLimit': 1
+        , 'fileSizeLimit': '1000KB'
+        , 'fileTypeExts': '*.gif; *.jpg; *.png; *.jpeg'
+        , 'fileTypeDesc': '只允许.gif .jpg .png .jpeg 图片！'
+        , 'onSelect': function (file) {
+            $("#upload").show();
+        }
+        , 'onUploadSuccess': function (file, data, response) {  //上传成功后的触发事件
+            $field.uploadify('disable', true);
+            $("#upload").remove();
 
-        $field.uploadify({
-            'buttonText': '选择图片'
-            , 'swf': '/plugins/uploadify3.2.1/uploadify.swf?v=' + ( parseInt(Math.random() * 1000) )
-            , 'uploader': '/avatar/upload'
-            , 'auto': false
-            , 'multi': false
-            , 'method': 'post'
-            , 'fileObjName': 'upload'
-            , 'queueSizeLimit': 1
-            , 'fileSizeLimit': '1000KB'
-            , 'fileTypeExts': '*.gif; *.jpg; *.png; *.jpeg'
-            , 'fileTypeDesc': '只允许.gif .jpg .png .jpeg 图片！'
-            , 'onSelect': function (file) {//选择文件后的触发事件
-                $("#upload").show();
+            var rst = JSON.parse(data);
+            if (!rst.success) {
+                alert('上传失败:' + rst.info);
+            } else {
+                var imageData = rst.data;
+                var $image = $("<img src='" + imageData.path + "' id='image-uploaded' data-width='" + imageData.width + "' data-height='" + imageData.height + "' data-name='" + imageData.name + "' />");
+                $("#uploaded-wrap").append($image).show();
+                $("#ratio-wrap").show();
+                $image.bind('click', function (e) {
+                    e.preventDefault();
+                    alert('请先设置裁剪宽高比！');
+                });
             }
-            , 'onUploadSuccess': function (file, data, response) {  //上传成功后的触发事件
-                $field.uploadify('disable', true);
-                $("#upload").remove();
-
-                var rst = JSON.parse(data);
-                if (rst.success) {
-                    alert('上传失败:' + rst.info);
-                } else {
-                    var imageData = rst.data;
-                    var $image = $("<img src='" + imageData.path + "' id='image-uploaded' data-width='" + imageData.width + "' data-height='" + imageData.height + "' data-name='" + imageData.name + "' />");
-                    $("#uploaded-wrap").append($image).show();
-                    $("#ratio-wrap").show();
-                    $image.bind('click', function (e) {
-                        e.preventDefault();
-                        alert('请先设置裁剪宽高比！');
-                    });
-                }
-            }
-            , 'onUploadError': function (file, errorCode, errorMsg, errorString) {
-                alert(errorString);
-            }
-        });
-//    });
+        }
+        , 'onUploadError': function (file, errorCode, errorMsg, errorString) {
+            alert(errorString);
+        }
+    });
 
     //点击上传
     $("#upload").click(function (e) {
@@ -300,9 +252,7 @@
                 data: data,
                 success: function (data) {
                     var rst = JSON.parse(data);
-                    if (rst.status == 0) {
-                        alert('失败!' + rst.info);
-                    } else {
+                    if (rst.success) {
                         $this.hide();
                         $("#download").show().prop('href', rst.url).prop('target', '_blank');
                         $("#cuted-wrap").show();
@@ -310,6 +260,8 @@
                         imgArea.setOptions({'disable': true, 'hide': true});//去掉选区功能
 
                         alert('图片已裁剪！点击\'下载成品\'可下载！');
+                    } else {
+                        alert('失败!' + rst.info);
                     }
                 }
             });

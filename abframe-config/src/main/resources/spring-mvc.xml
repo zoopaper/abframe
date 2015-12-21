@@ -15,18 +15,33 @@
         <!--</mvc:message-converters>-->
     <!--</mvc:annotation-driven>-->
 
-    <mvc:annotation-driven  content-negotiation-manager="contentNegotiationManager" />
+    <!--<mvc:annotation-driven  content-negotiation-manager="contentNegotiationManager" />-->
 
-    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-        <property name="favorPathExtension" value="false" />
-        <property name="favorParameter" value="true" />
-        <property name="mediaTypes" >
-            <value>
-                json=application/json
-                xml=application/xml
-            </value>
-        </property>
-    </bean>
+
+    <mvc:annotation-driven >
+        <mvc:message-converters register-defaults="true">
+            <bean  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prefixJson" value="false" />
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json</value>
+                        <value>text/json</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
+        <!--<property name="favorPathExtension" value="false" />-->
+        <!--<property name="favorParameter" value="true" />-->
+        <!--<property name="mediaTypes" >-->
+            <!--<value>-->
+                <!--json=application/json-->
+                <!--xml=application/xml-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!-- 配置服务端静态资源处理器，将静态资源的请求转发到默认的Servlet容器。静态资源的配置有多种方式，也可以在web.xml文件中配置。-->
     <mvc:default-servlet-handler/>

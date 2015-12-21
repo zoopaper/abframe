@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
        <bean id="configBean" class="org.abframe.config.ConfigBean" lazy-init="false" scope="singleton">
-           <property name="cfgXml" value="mail.conf.xml"/>
+           <property name="cfgXml" value="mail.conf.xml,global.conf.xml"/>
        </bean>
 
 </beans>

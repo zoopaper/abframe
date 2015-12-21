@@ -4,5 +4,6 @@
     <comment>全局配置</comment>
 
     <entry key="image.upload.path"></entry>
+    <entry key="image.avatar.path">/avatar</entry>
 
 </properties>
