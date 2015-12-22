@@ -71,8 +71,6 @@ public class AvatarController extends BaseController {
     public Object upload(MultipartFile file, HttpServletRequest request) {
         JsonWrite jsonWrite = new JsonWrite();
         JSONObject jsonObject = new JSONObject();
-        String serverPath = PathUtil.getServerRealPath();
-
         createAvatarUpload(file);
         String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + IMAGE_SUFFIX;
         try {

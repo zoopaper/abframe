@@ -23,7 +23,6 @@
             position: relative;
             max-width: 100%;
         }
-
         #cut-preview-wrap {
             position: relative;
             display: block;
@@ -33,7 +32,6 @@
             width: 100%;
             overflow: hidden;
         }
-
         #cut-preview {
             position: absolute;
             padding: 0;
@@ -111,8 +109,8 @@
 
 
 <script type="text/javascript">
-    var $field = $("input[type='file']");
-    $field.uploadify({
+    var field=$("#file");
+    field.uploadify({
         'buttonText': '选择图片'
         , 'swf': '/plugins/uploadify3.2.1/uploadify.swf?v=' + ( parseInt(Math.random() * 1000) )
         , 'uploader': '/avatar/upload'
@@ -128,7 +126,7 @@
             $("#upload").show();
         }
         , 'onUploadSuccess': function (file, data, response) {  //上传成功后的触发事件
-            $field.uploadify('disable', true);
+            field.uploadify('disable', true);
             $("#upload").remove();
 
             var rst = JSON.parse(data);
@@ -136,10 +134,10 @@
                 alert('上传失败:' + rst.info);
             } else {
                 var imageData = rst.data;
-                var $image = $("<img src='" + imageData.path + "' id='image-uploaded' data-width='" + imageData.width + "' data-height='" + imageData.height + "' data-name='" + imageData.name + "' />");
-                $("#uploaded-wrap").append($image).show();
+                var image = $("<img src='" + imageData.path + "' id='image-uploaded' data-width='" + imageData.width + "' data-height='" + imageData.height + "' data-name='" + imageData.name + "' />");
+                $("#uploaded-wrap").append(image).show();
                 $("#ratio-wrap").show();
-                $image.bind('click', function (e) {
+                image.bind('click', function (e) {
                     e.preventDefault();
                     alert('请先设置裁剪宽高比！');
                 });
@@ -153,7 +151,7 @@
     //点击上传
     $("#upload").click(function (e) {
         e.preventDefault();
-        $field.uploadify('upload', '*');
+        field.uploadify('upload', '*');
     });
 
     //点击裁剪初始化时
@@ -168,15 +166,13 @@
         }
 
         //相关元素
-        var $uploaded = $("#image-uploaded"),
-                $previewWrap = $("#cut-preview-wrap"),
-                $preview = $("#cut-preview");
+        var uploaded = $("#image-uploaded"), previewWrap = $("#cut-preview-wrap"), preview = $("#cut-preview");
 
         //图片宽高参数
-        var realWidth = $uploaded.data('width'),
-                realHeight = $uploaded.data('height'),
-                uploadedWidth = $uploaded.outerWidth(),
-                uploadedHeight = $uploaded.outerHeight(),
+        var realWidth = uploaded.data('width'),
+                realHeight = uploaded.data('height'),
+                uploadedWidth = uploaded.outerWidth(),
+                uploadedHeight = uploaded.outerHeight(),
                 uploadedRate = uploadedWidth / realWidth; //缩放比例
 
         //其他操作
@@ -184,22 +180,22 @@
         $("#ratio-input").hide();
         $("#cut-help").html('图片宽:' + realWidth + ' 高:' + realHeight + ' 裁剪比例:' + ratio + '<span style="color:red;"> 在图片上进行拖拽确定裁剪区域！</span>');
         $("#preview-wrap").show();
-        $uploaded.unbind('click');
+        uploaded.unbind('click');
 
         //预览框宽高参数
-        var previewWrapWidth = $previewWrap.outerWidth();
+        var previewWrapWidth = previewWrap.outerWidth();
         previewWrapHeight = Math.round(previewWrapWidth / ratio);
 
         //初始化预览框
-        $previewWrap.css({
+        previewWrap.css({
             width: previewWrapWidth + 'px',
             height: previewWrapHeight + 'px'
         });
         //初始化预览图
-        $preview.prop('src', $uploaded.attr('src'));
+        preview.prop('src', uploaded.attr('src'));
 
         //构造AreaSelect选择器
-        var imgArea = $uploaded.imgAreaSelect({
+        var imgArea = uploaded.imgAreaSelect({
             instance: true,
             handles: true,
             fadeSpeed: 300,
@@ -207,7 +203,7 @@
             //选区改变时的触发事件
             onSelectChange: function (img, selection) {//selection包括x1,y1,x2,y2,width,height，分别为选区的偏移和高宽。
                 var rate = previewWrapWidth / selection.width;//预览区相对于选择区的倍数
-                $preview.css({
+                preview.css({
                     width: Math.round(uploadedWidth * rate) + 'px',
                     height: Math.round(uploadedHeight * rate) + 'px',
                     "left": Math.round(selection.x1 * rate * -1),
@@ -226,7 +222,7 @@
                         ' 左偏移:' + realSize.offsetLeft +
                         ' 上偏移:' + realSize.offsetTop
                 );
-                $preview.data(realSize);
+                preview.data(realSize);
             }
         });
 
@@ -234,7 +230,7 @@
         $("#cut").show().click(function (e) {
             e.preventDefault();
             var $this = $(this);
-            var data = $preview.data();
+            var data = preview.data();
             if (typeof data['width'] === 'undefined' ||
                     data['width'] == '' ||
                     data['width'] == 0 ||
@@ -244,7 +240,7 @@
                 return;
             }
             $this.addClass('active').text('裁剪中...');
-            data['name'] = $uploaded.data('name');
+            data['name'] = uploaded.data('name');
             $.ajax({
                 url: '/avatar/cut',
                 type: 'GET',
