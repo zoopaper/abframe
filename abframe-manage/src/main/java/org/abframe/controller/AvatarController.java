@@ -39,12 +39,12 @@ import java.io.InputStream;
  * Date: 2015/12/18
  */
 @Controller
-@RequestMapping("/avatar")
+@RequestMapping("/avatar/*")
 public class AvatarController extends BaseController {
 
-    private static final String JFS_AVATAR_URL = "";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AvatarController.class);
+
+    private static final String IMAGE_SUFFIX = ".jpg";
 
     @Autowired
     private ConfigService configService;
@@ -72,22 +72,9 @@ public class AvatarController extends BaseController {
         JsonWrite jsonWrite = new JsonWrite();
         JSONObject jsonObject = new JSONObject();
         String serverPath = PathUtil.getServerRealPath();
-        String fileName = file.getOriginalFilename();
-        String fileSuffix = ".jpg";
 
-
-        File tmpFile = new File(serverPath + configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH);
-        if (!tmpFile.exists()) {
-            tmpFile.mkdirs();
-        }
-
-        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + fileSuffix;
-        String imageSavePath = serverPath + filePath;
-        try {
-            IOUtils.copy(file.getInputStream(), new FileOutputStream(imageSavePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        createAvatarUpload(file);
+        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + IMAGE_SUFFIX;
         try {
             int[] imageProp = getImageWidthAndHeight(file.getInputStream());
             jsonObject.put("width", imageProp[0]);
@@ -101,11 +88,12 @@ public class AvatarController extends BaseController {
         return jsonWrite;
     }
 
-    @RequestMapping(value = "/cut", method = RequestMethod.POST)
+    @RequestMapping(value = "/cut", method = RequestMethod.GET)
     @ResponseBody
-    public Object cut(int width, int height, int offsetLeft, int offsetTop) {
+    public Object cut(int width, int height, int offsetLeft, int offsetTop, String name) {
         JsonWrite jsonWrite = new JsonWrite();
         jsonWrite.setMsg("裁剪成功！");
+        JSONObject jsonObject = new JSONObject();
         String serverPath = PathUtil.getServerRealPath();
         String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + ".jpg";
         String imageSavePath = serverPath + filePath;
@@ -113,27 +101,18 @@ public class AvatarController extends BaseController {
         String filePath2 = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + File.separator + MD5Util.digestHex(getUserName()) + ".jpg";
         String imageSavePath2 = serverPath + filePath2;
 
-
+        jsonWrite.setData(jsonObject);
         try {
-            Thumbnails.of(new File(imageSavePath)).sourceRegion(offsetLeft, offsetTop, width, height).toFile(new File(imageSavePath2));
+            Thumbnails.of(new File(imageSavePath)).sourceRegion(offsetLeft, offsetTop, width, height).size(width, height).toFile(new File(imageSavePath2));
+            String env = configService.getString(GlobalConstant.ENV_PROFILE, configService.getCfgMap(), "");
+            if (env.equals(GlobalConstant.ENV_DEVELOPMENT)) {
+                String serverRealPath = getServerRealPath();
+                Thumbnails.of(new File(imageSavePath)).sourceRegion(offsetLeft, offsetTop, width, height).size(width, height).toFile(new File(serverRealPath + filePath2));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("avatar/avatarEdit");
         return jsonWrite;
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    @ResponseBody
-    public JsonWrite test() {
-        JsonWrite jsonWrite = new JsonWrite();
-        jsonWrite.setMsg("");
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", "xxxxxxxx");
-        jsonWrite.setData(jsonObject);
-        return jsonWrite;
-
     }
 
     /**
@@ -159,11 +138,47 @@ public class AvatarController extends BaseController {
         return image;
     }
 
-
     public String getUserName() {
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
         UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
         return user.getUserName();
+    }
+
+    public void createAvatarUpload(MultipartFile file) {
+        String serverPath = PathUtil.getServerRealPath();
+        File tmpFile = new File(serverPath + configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH);
+        if (!tmpFile.exists()) {
+            tmpFile.mkdirs();
+        }
+        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + IMAGE_SUFFIX;
+        String imageSavePath = serverPath + filePath;
+        try {
+            IOUtils.copy(file.getInputStream(), new FileOutputStream(imageSavePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String env = configService.getString(GlobalConstant.ENV_PROFILE, configService.getCfgMap(), "");
+        if (env.equals(GlobalConstant.ENV_DEVELOPMENT)) {
+            serverPath = getServerRealPath();
+            File tmpFile2 = new File(serverPath + configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH);
+            if (!tmpFile2.exists()) {
+                tmpFile2.mkdirs();
+            }
+            imageSavePath = serverPath + filePath;
+            try {
+                IOUtils.copy(file.getInputStream(), new FileOutputStream(imageSavePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getServerRealPath() {
+        String serverPath = PathUtil.getServerRealPath();
+        int index = serverPath.indexOf("target");
+        serverPath = serverPath.substring(0, index)+"/src/main/webapp/";
+        return serverPath;
     }
 }

@@ -11,7 +11,7 @@
     <link href="/plugins/imgareaselect/css/imgareaselect-default.css" rel="stylesheet" type="text/css">
     <link href="/plugins/uploadify3.2.1/uploadify.css" rel="stylesheet" type="text/css">
 
-    <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
     <script type="text/javascript" src="/plugins/uploadify3.2.1/jquery.uploadify.min.js"></script>
     <script type="text/javascript" src="/plugins/imgareaselect/scripts/jquery.imgareaselect.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.tips.js"></script>
@@ -182,7 +182,7 @@
         //其他操作
         $(this).hide();
         $("#ratio-input").hide();
-        $("#cut-help").html('图片宽:' + realWidth + ' 高:' + realHeight + ' 裁剪比例:' + ratio + '<strong style="color:red;"> 在图片上进行拖拽确定裁剪区域！</strong>');
+        $("#cut-help").html('图片宽:' + realWidth + ' 高:' + realHeight + ' 裁剪比例:' + ratio + '<span style="color:red;"> 在图片上进行拖拽确定裁剪区域！</span>');
         $("#preview-wrap").show();
         $uploaded.unbind('click');
 
@@ -243,27 +243,26 @@
                 alert('请先选择裁剪区域！');
                 return;
             }
-
             $this.addClass('active').text('裁剪中...');
             data['name'] = $uploaded.data('name');
             $.ajax({
                 url: '/avatar/cut',
-                type: 'POST',
+                type: 'GET',
                 data: data,
+                dataType: 'json',
                 success: function (data) {
-                    var rst = JSON.parse(data);
-                    if (rst.success) {
+                    if (data.success) {
                         $this.hide();
-                        $("#download").show().prop('href', rst.url).prop('target', '_blank');
-                        $("#cuted-wrap").show();
-                        $("#image-cuted").prop('src', rst.path);
+//                        $("#download").show().prop('href', rst.url).prop('target', '_blank');
+//                        $("#cuted-wrap").show();
+//                        $("#image-cuted").prop('src', rst.path);
                         imgArea.setOptions({'disable': true, 'hide': true});//去掉选区功能
-
                         alert('图片已裁剪！点击\'下载成品\'可下载！');
                     } else {
-                        alert('失败!' + rst.info);
+                        alert(data.msg);
                     }
                 }
+
             });
         });
     });

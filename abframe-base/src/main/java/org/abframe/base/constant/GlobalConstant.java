@@ -10,7 +10,7 @@ public class GlobalConstant {
 
     public static final String USER_CUT_AVATAR_PATH = "/cut";
 
-    public static final String ENV_PROFILE = "env";
+    public static final String ENV_PROFILE = "env.profile";
 
     public static final String ENV_DEVELOPMENT = "development";
 
