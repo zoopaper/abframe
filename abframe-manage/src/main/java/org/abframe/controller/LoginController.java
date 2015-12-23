@@ -42,15 +42,13 @@ public class LoginController extends BaseController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private MenuService menuService;
-
     @Autowired
     private RoleService roleService;
 
     @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
-    public ModelAndView toLogin() throws Exception {
+    public ModelAndView toLogin() {
         ModelAndView mv = new ModelAndView();
         PageData pd;
         pd = this.getPageData();
@@ -91,6 +89,7 @@ public class LoginController extends BaseController {
                         user.setLastLogin(pd.getString("lastLogin"));
                         user.setIp(pd.getString("ip"));
                         user.setStatus(pd.getString("status"));
+                        user.setAvatarUrl(pd.getString("avatar_url"));
                         session.setAttribute(Constant.SESSION_USER, user);
                         session.removeAttribute(Constant.SESSION_SECURITY_CODE);
 

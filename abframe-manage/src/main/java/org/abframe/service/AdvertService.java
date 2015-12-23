@@ -14,7 +14,6 @@ public class AdvertService {
     @Autowired
     private BaseDaoSupport dao;
 
-
     public List<PageData> list(Page page) throws Exception {
         return (List<PageData>) dao.findForList("AdvertMapper.listPage", page);
     }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserXMapper">
-
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="allAttribute">
         <![CDATA[
@@ -19,7 +17,8 @@
 			number,
 			phone,
 			skin,
-			bz
+			bz,
+			avatar_url
         ]]>
     </sql>
     <!-- 换皮肤-->
@@ -29,7 +28,6 @@
 		where userName = #{userName}
 	</update>
 
-    <!-- 更新登录时间 -->
     <update id="updateLastLogin" parameterType="pd" flushCache="false">
 		update t_user set
 		lastLogin = #{lastLogin}
@@ -37,8 +35,7 @@
 	</update>
 
     <!-- 判断用户名和密码 -->
-    <select id="getUserInfo" parameterType="pd" resultType="pd"
-            useCache="false"><!-- insert update delete (flushCache="true/false") -->
+    <select id="getUserInfo" parameterType="pd" resultType="pd" useCache="false">
         select * from t_user
         where 1=1
         <if test="userName != null and password != null">
@@ -53,11 +50,13 @@
         </if>
     </select>
 
-
-
     <update id="saveIP" parameterType="pd" flushCache="false">
 		update t_user set 	ip = #{ip} where userName = #{userName}
 	</update>
+    <update id="updateUserAvatarById" parameterType="pd">
+        update t_user set avatar_url=#{avatar_url} where userId=#{id}
+    </update>
+
 
     <!-- 修改 -->
     <update id="editU" parameterType="pd" flushCache="false">

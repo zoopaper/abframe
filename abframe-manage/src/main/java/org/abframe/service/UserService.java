@@ -7,7 +7,9 @@ import org.abframe.util.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -15,8 +17,6 @@ public class UserService {
 
     @Autowired
     private BaseDaoSupport dao;
-
-    //======================================================================================
 
     /*
     * 通过id获取数据
@@ -44,6 +44,10 @@ public class UserService {
     */
     public PageData findByUN(PageData pd) throws Exception {
         return (PageData) dao.findForObject("UserXMapper.findByUN", pd);
+    }
+
+    public void updateUserAvatarById(PageData pd) throws Exception {
+        Object ret = dao.update("UserXMapper.updateUserAvatarById", pd);
     }
 
     /*

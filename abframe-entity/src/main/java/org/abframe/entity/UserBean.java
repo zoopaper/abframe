@@ -13,6 +13,7 @@ public class UserBean {
     private RoleBean role;            //角色对象
     private Page page;            //分页对象
     private String skin;        //皮肤
+    private String avatarUrl;
 
     public String getSkin() {
         return skin;
@@ -112,4 +113,11 @@ public class UserBean {
         this.page = page;
     }
 
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 }

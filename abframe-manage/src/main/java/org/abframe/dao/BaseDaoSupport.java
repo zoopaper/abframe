@@ -39,8 +39,6 @@ public class BaseDaoSupport implements BaseDao {
     }
 
     /**
-     * 修改对象
-     *
      * @param str
      * @param obj
      * @return
