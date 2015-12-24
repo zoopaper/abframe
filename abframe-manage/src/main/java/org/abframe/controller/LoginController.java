@@ -89,7 +89,10 @@ public class LoginController extends BaseController {
                         user.setLastLogin(pd.getString("lastLogin"));
                         user.setIp(pd.getString("ip"));
                         user.setStatus(pd.getString("status"));
-                        user.setAvatarUrl(pd.getString("avatar_url"));
+                        if (Strings.isNullOrEmpty(pd.getString("avatar_url")))
+                            user.setAvatarUrl("/static/img/default-head.png");
+                        else
+                            user.setAvatarUrl(pd.getString("avatar_url"));
                         session.setAttribute(Constant.SESSION_USER, user);
                         session.removeAttribute(Constant.SESSION_SECURITY_CODE);
 

@@ -162,7 +162,7 @@ public class AvatarController extends BaseController {
         if (!tmpFile.exists()) {
             tmpFile.mkdirs();
         }
-        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + File.separator + MD5Util.digestHex(getUserName()) + IMAGE_SUFFIX;
+        String filePath = configService.getString(GlobalConstant.USER_AVATAR_PATH, configService.getCfgMap(), "") + GlobalConstant.USER_CUT_AVATAR_PATH + MD5Util.digestHex(getUserName()) + IMAGE_SUFFIX;
         String imageSavePath = serverPath + filePath;
         try {
             IOUtils.copy(file.getInputStream(), new FileOutputStream(imageSavePath));

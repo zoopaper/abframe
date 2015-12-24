@@ -5,13 +5,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-						http://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/aop 
-						http://www.springframework.org/schema/aop/spring-aop.xsd
-						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context.xsd
-						http://www.springframework.org/schema/tx 
-						http://www.springframework.org/schema/tx/spring-tx.xsd
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
     <!--激活注解,AutowiredAnnotationBeanPostProcessor,CommonAnnotationBeanPostProcessor
         PersistenceAnnotationBeanPostProcessor,RequiredAnnotationBeanPostProcessor注册到容器
@@ -29,11 +29,13 @@
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
-
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="classpath:/jdbc.properties"/>
+        <property name="locations">
+            <list>
+                <value>classpath*:/jdbc.properties</value>
+            </list>
+        </property>
     </bean>
-
     <!--数据源-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <!--基础属性-->
