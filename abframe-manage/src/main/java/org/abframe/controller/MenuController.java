@@ -62,9 +62,9 @@ public class MenuController extends BaseController {
         try {
             int parentId = menu.getParentId();
             if (!"0".equals(parentId)) {
-                pd.put("id", parentId);
-                pd = menuService.getMenuById(pd);
-                menu.setMenuType(pd.getString("menuType"));
+                pd.put("menuId", parentId);
+                Menu menu1 = menuService.getMenuById(pd);
+                menu.setMenuType(menu1.getMenuType());
             }
             menuService.saveMenu(menu);
             mv.addObject("msg", "success");
@@ -82,11 +82,10 @@ public class MenuController extends BaseController {
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
-            pd.put("menuId", menuId);
-            pd = menuService.getMenuById(pd);
+            Menu menu = menuService.getMenuById(pd);
             List<Menu> menuList = menuService.getParentMenu();
             mv.addObject("menuList", menuList);
-            mv.addObject("pd", pd);
+            mv.addObject("menu", menu);
             mv.setViewName("menu/menuEdit");
         } catch (Exception e) {
             LOGGER.error("Controller menu exception.", e);

@@ -19,8 +19,8 @@ public class MenuService {
 
     }
 
-    public PageData getMenuById(PageData pd) throws Exception {
-        return (PageData) dao.findForObject("MenuMapper.getMenuById", pd);
+    public Menu getMenuById(PageData pd) throws Exception {
+        return (Menu) dao.findForObject("MenuMapper.getMenuById", pd);
     }
 
     //取最大id
@@ -61,7 +61,7 @@ public class MenuService {
     }
 
     public PageData edit(PageData pd) throws Exception {
-        return (PageData) dao.findForObject("MenuMapper.updateMenu", pd);
+        return (PageData) dao.findForObject("MenuMapper.update", pd);
     }
 
     /**

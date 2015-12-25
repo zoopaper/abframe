@@ -119,9 +119,10 @@
 
 <body>
 <form action="menu/edit" name="menuForm" id="menuForm" method="post">
-    <input type="hidden" name="id" id="menuId" value="${pd.id}"/>
-    <input type="hidden" name="pId" id="pId" value="${pd.parentId}"/>
-    <input type="hidden" name="menuType" id="menuType" value="${pd.menuType}"/>
+    <input type="hidden" name="id" id="menuId" value="${menu.id}"/>
+    <%--<input type="hidden" name="pId" id="pId" value="${menu.parentId}"/>--%>
+    <input type="hidden" name="menuType" id="menuType" value="${menu.menuType}"/>
+
     <div id="zhongxin">
         <table>
             <tr>
@@ -134,40 +135,33 @@
                     </select>
                 </td>
             </tr>
-
             <tr>
                 <td>
-                    <input type="text" name="MENU_NAME" id="menuName" placeholder="这里输入菜单名称" value="${pd.menuName}" title="名称"/>
+                    <input type="text" name="menuName" id="menuName" placeholder="这里输入菜单名称" value="${menu.menuName}" title="名称"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="MENU_URL" id="menuUrl" placeholder="这里输入链接地址" value="${pd.menuUrl}"
-                           title="地址"/>
+                    <input type="text" name="menuUrl" id="menuUrl" placeholder="这里输入链接地址" value="${menu.menuUrl}" title="地址"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="number" name="sort" id="menuOrder" placeholder="这里输入序号" value="${pd.sort}"
-                           title="序号"/>
+                    <input type="number" name="sort" id="menuOrder" placeholder="这里输入序号" value="${menu.sort}" title="序号"/>
                 </td>
             </tr>
             <tr>
                 <td style="text-align: center;">
                     <label style="float:left;padding-left: 32px;">
-                        <input name="form-field-radio" id="form-field-radio1"
-                               onclick="setType('1');"
-                               <c:if test="${pd.menuType == '1' }">checked="checked"</c:if>
+                        <input name="form-field-radio" id="form-field-radio1" onclick="setType('1');"
+                               <c:if test="${menu.menuType == '1' }">checked="checked"</c:if>
                                type="radio" value="icon-edit">
                         <span class="lbl">系统菜单</span>
                     </label>
                     <label style="float:left;padding-left: 5px;">
-                        <input name="form-field-radio" id="form-field-radio2"
-                                                                        onclick="setType('2');"
-                                                                        <c:if test="${pd.menuType != '1' }">checked="checked"</c:if>
-                                                                        type="radio" value="icon-edit">
-                        <span
-                            class="lbl">业务菜单</span></label>
+                        <input name="form-field-radio" id="form-field-radio2" onclick="setType('2');"
+                               <c:if test="${menu.menuType != '1' }">checked="checked"</c:if> type="radio" value="icon-edit">
+                        <span class="lbl">业务菜单</span></label>
                 </td>
             </tr>
             <tr>

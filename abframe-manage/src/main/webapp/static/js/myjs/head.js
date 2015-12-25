@@ -234,7 +234,7 @@ function menu() {
     diag.Title = "菜单编辑";
     diag.URL = '/menu';
     diag.Width = 720;
-    diag.Height = 390;
+    diag.Height = 690;
     diag.CancelEvent = function () {
         diag.close();
     };

@@ -28,7 +28,7 @@
         $(top.hangge());
         //保存
         function save() {
-            if ($("#MENU_ICON").val() == "") {
+            if ($("#menuIcon").val() == "") {
                 alert('请选择图标');
                 return false;
             }
@@ -37,7 +37,7 @@
             $("#zhongxin2").show();
         }
         function seticon(icon) {
-            $("#MENU_ICON").val(icon);
+            $("#menuIcon").val(icon);
         }
 
     </script>
@@ -46,8 +46,8 @@
 
 <body>
 <form action="menu/editIcon" name="menuForm" id="menuForm" method="post">
-    <input type="hidden" name="MENU_ID" id="menuId" value="${pd.MENU_ID}"/>
-    <input type="hidden" name="MENU_ICON" id="MENU_ICON" value=""/>
+    <input type="hidden" name="menuId" id="menuId" value="${pd.menuId}"/>
+    <input type="hidden" name="menuIcon" id="menuIcon" value=""/>
 
     <div id="zhongxin">
         <table id="table_report" class="table table-striped table-bordered table-hover">

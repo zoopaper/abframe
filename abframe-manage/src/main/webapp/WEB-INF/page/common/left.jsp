@@ -2,16 +2,16 @@
 <div id="sidebar" class="menu-min">
     <div id="sidebar-shortcuts">
         <div id="sidebar-shortcuts-large">
-            <button class="btn btn-small btn-success" onclick="changeMenu();" title="切换菜单">
+            <button class="btn btn-small btn-success" title="">
                 <i class="icon-pencil"></i>
             </button>
-            <button class="btn btn-small btn-info" title="爬虫" onclick="window.open('');">
+            <button class="btn btn-small btn-info" title="">
                 <i class="icon-eye-open"></i>
             </button>
-            <button class="btn btn-small btn-warning" title="数据字典" id="adminzidian" onclick="zidian();">
+            <button class="btn btn-small btn-warning" title="" id="adminzidian">
                 <i class="icon-book"></i>
             </button>
-            <button class="btn btn-small btn-danger" title="菜单管理" id="adminmenu" onclick="menu();">
+            <button class="btn btn-small btn-danger" title="" id="adminmenu">
                 <i class="icon-folder-open"></i>
             </button>
         </div>

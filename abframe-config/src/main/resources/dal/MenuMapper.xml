@@ -51,10 +51,10 @@
         from t_menu where parent_id = #{parentId} order by sort
     </select>
 
-    <select id="getMenuById" parameterType="pd" resultType="pd">
+    <select id="getMenuById" parameterType="pd" resultMap="menuMap">
         select
         <include refid="allAttribute"/>
-        from t_menu where id=#{id}
+        from t_menu where id=#{menuId}
     </select>
 
     <insert id="save" parameterType="Menu" useGeneratedKeys="true" keyProperty="id">
@@ -66,21 +66,21 @@
 			menu_name =#{menuName},
 			menu_url =#{menuUrl} ,
 			parent_id =#{parentId},
-			menu_type =#{menuType}
-			sort=#{sort},
+			menu_type =#{menuType},
+			sort=#{sort}
 		where
 			id=#{id}
 	</update>
 
     <update id="editIcon" parameterType="Menu">
-		update t_menu set	menu_icon=#{menuIcon} where id=#{id}
+		update t_menu set	menu_icon=#{menuIcon} where id=#{menuId}
 	</update>
 
     <update id="editType" parameterType="Menu">
-		update t_menu set	menu_type=#{menuType} where id=#{id}
+		update t_menu set	menu_type=#{menuType} where id=#{menuId}
 	</update>
 
     <delete id="deleteMenuById" parameterType="String">
-		delete from t_menu where id=#{id} or parentId=#{id}
+		delete from t_menu where id=#{id} or parent_id=#{id}
 	</delete>
 </mapper>

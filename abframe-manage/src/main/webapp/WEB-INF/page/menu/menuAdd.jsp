@@ -26,14 +26,14 @@
 <script type="text/javascript">
     $(top.hangge());
     $(document).ready(function () {
-        if ($("#menuId").val() != "") {
-            var parentId = "${menu.parentId}";
-            if (parentId == "") {
-                $("#parentId").attr("disabled", true);
-            } else {
-                $("#parentId").val(parentId);
-            }
-        }
+        <%--if ($("#menuId").val() != "") {--%>
+            <%--var parentId = "${menu.parentId}";--%>
+            <%--if (parentId == "") {--%>
+                <%--$("#parentId").attr("disabled", true);--%>
+            <%--} else {--%>
+                <%--$("#parentId").val(parentId);--%>
+            <%--}--%>
+        <%--}--%>
         setMUR();
     });
 

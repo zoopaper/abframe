@@ -171,46 +171,12 @@ public class LoginController extends BaseController {
                 } else {
                     menus = (List<Menu>) session.getAttribute(Constant.SESSION_ALL_MENU_LIST);
                 }
-
-                //切换菜单=====
-                List<Menu> menuList = new ArrayList<Menu>();
-                if (null == session.getAttribute(Constant.SESSION_MENU_LIST) || ("yes".equals(changeMenu))) {
-                    List<Menu> menuList1 = new ArrayList<Menu>();
-                    List<Menu> menuList2 = new ArrayList<Menu>();
-
-                    //拆分菜单
-                    for (int i = 0; i < menus.size(); i++) {
-                        Menu menu = menus.get(i);
-                        if ("1".equals(menu.getMenuType())) {
-                            menuList1.add(menu);
-                        } else {
-                            menuList2.add(menu);
-                        }
-                    }
-
-                    session.removeAttribute(Constant.SESSION_MENU_LIST);
-                    if ("2".equals(session.getAttribute("changeMenu"))) {
-                        session.setAttribute(Constant.SESSION_MENU_LIST, menuList1);
-                        session.removeAttribute("changeMenu");
-                        session.setAttribute("changeMenu", "1");
-                        menuList = menuList1;
-                    } else {
-                        session.setAttribute(Constant.SESSION_MENU_LIST, menuList2);
-                        session.removeAttribute("changeMenu");
-                        session.setAttribute("changeMenu", "2");
-                        menuList = menuList2;
-                    }
-                } else {
-                    menuList = (List<Menu>) session.getAttribute(Constant.SESSION_MENU_LIST);
-                }
-                //切换菜单=====
-
                 if (null == session.getAttribute(Constant.SESSION_QX)) {
                     session.setAttribute(Constant.SESSION_QX, this.getUQX(session));    //按钮权限放到session中
                 }
                 mv.setViewName("common/index");
                 mv.addObject("user", user);
-                mv.addObject("menuList", menuList);
+                mv.addObject("menuList", menus);
             } else {
                 mv.setViewName("common/login");
             }
@@ -323,4 +289,31 @@ public class LoginController extends BaseController {
         return map;
     }
 
+    public void splitMenu(List<Menu> menuList, Session session) {
+        List<Menu> menuList1 = new ArrayList<Menu>();
+        List<Menu> menuList2 = new ArrayList<Menu>();
+
+        for (int i = 0; i < menuList.size(); i++) {
+            Menu menu = menuList.get(i);
+            if ("1".equals(menu.getMenuType())) {
+                menuList1.add(menu);
+            } else {
+                menuList2.add(menu);
+            }
+        }
+
+        session.removeAttribute(Constant.SESSION_MENU_LIST);
+        if ("2".equals(session.getAttribute("changeMenu"))) {
+            session.setAttribute(Constant.SESSION_MENU_LIST, menuList1);
+            session.removeAttribute("changeMenu");
+            session.setAttribute("changeMenu", "1");
+            menuList = menuList1;
+        } else {
+            session.setAttribute(Constant.SESSION_MENU_LIST, menuList2);
+            session.removeAttribute("changeMenu");
+            session.setAttribute("changeMenu", "2");
+            menuList = menuList2;
+        }
+    }
 }
+
