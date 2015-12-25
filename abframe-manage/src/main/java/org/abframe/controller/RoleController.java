@@ -258,16 +258,16 @@ public class RoleController extends BaseController {
             String roleRights = role.getPerms();
             if (!Strings.isNullOrEmpty(roleRights)) {
                 for (Menu menu : menuList) {
-                    menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
+                    menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getId()));
                     if (menu.isHasMenu()) {
                         List<Menu> subMenuList = menu.getSubMenu();
                         for (Menu sub : subMenuList) {
-                            sub.setHasMenu(RightsHelper.testRights(roleRights, sub.getMENU_ID()));
+                            sub.setHasMenu(RightsHelper.testRights(roleRights, sub.getId()));
                         }
                     }
                 }
             }
-            JSONArray arr = new  JSONArray();
+            JSONArray arr = new JSONArray();
             arr.addAll(menuList);
             String json = arr.toString();
             json = json.replaceAll("MENU_ID", "id").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
@@ -303,11 +303,11 @@ public class RoleController extends BaseController {
 
             if (!Strings.isNullOrEmpty(roleRights)) {
                 for (Menu menu : menuList) {
-                    menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getMENU_ID()));
+                    menu.setHasMenu(RightsHelper.testRights(roleRights, menu.getId()));
                     if (menu.isHasMenu()) {
                         List<Menu> subMenuList = menu.getSubMenu();
                         for (Menu sub : subMenuList) {
-                            sub.setHasMenu(RightsHelper.testRights(roleRights, sub.getMENU_ID()));
+                            sub.setHasMenu(RightsHelper.testRights(roleRights, sub.getId()));
                         }
                     }
                 }

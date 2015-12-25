@@ -1,100 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MenuMapper">
+    <sql id="allAttribute">
+		 <![CDATA[
+            id,
+            menu_name,
+            menu_url,
+            menu_type,
+            menu_icon
+            sort,
+            parent_id,
+        ]]>
+	</sql>
+    <!-- ztree -->
+    <!--<resultMap type="Menu" id="menuZtreeResultMap">-->
+        <!--<id column="MENU_ID" property="MENU_ID"/>-->
+        <!--<result column="MENU_NAME" property="MENU_NAME"/>-->
+        <!--<result column="MENU_URL" property="MENU_URL"/>-->
+        <!--<result column="PARENT_ID" property="PARENT_ID"/>-->
+        <!--<result column="MENU_ORDER" property="MENU_ORDER"/>-->
+        <!--<result column="MENU_ICON" property="MENU_ICON"/>-->
+        <!--<result column="MENU_TYPE" property="MENU_TYPE"/>-->
+        <!--<result column="target" property="target"></result>-->
+    <!--</resultMap>-->
 
-	<resultMap type="Menu" id="menuResultMap">
-		<id column="MENU_ID" property="MENU_ID"/>
-		<result column="MENU_NAME" property="MENU_NAME"/>
-		<result column="MENU_URL" property="MENU_URL"/>
-		<result column="PARENT_ID" property="PARENT_ID"/>
-		<result column="MENU_ORDER" property="MENU_ORDER"/>
-		<result column="MENU_ICON" property="MENU_ICON"/>
-		<result column="MENU_TYPE" property="MENU_TYPE"/>
-	</resultMap>
-	
-	<!-- ztree -->
-	<resultMap type="Menu" id="menuZtreeResultMap">
-	<id column="MENU_ID" property="MENU_ID"/>
-	<result column="MENU_NAME" property="MENU_NAME"/>
-	<result column="MENU_URL" property="MENU_URL"/>
-	<result column="PARENT_ID" property="PARENT_ID"/>
-	<result column="MENU_ORDER" property="MENU_ORDER"/>
-	<result column="MENU_ICON" property="MENU_ICON"/>
-	<result column="MENU_TYPE" property="MENU_TYPE"/>
-	<result column="target" property="target"></result>
-</resultMap>
+    <select id="findMaxId" parameterType="pd" resultType="pd">
+		select MAX(id) MID FROM t_menu
+	</select>
 
-	<select id="findMaxId" parameterType="pd" resultType="pd">
-		select MAX(MENU_ID) MID FROM t_menu
+    <select id="getParentMenu" resultMap="menuResultMap">
+		select * from t_menu where parent_id = '0' order by sort
 	</select>
-	
-	<select id="listAllParentMenu" resultMap="menuResultMap">
-		select * from t_menu
-		where PARENT_ID = '0' order by MENU_ORDER 
-	</select>
-	
-	<select id="listSubMenuByParentId" parameterType="String" resultMap="menuResultMap">
-		select  * from t_menu
-		where PARENT_ID = #{parentId} order by MENU_ORDER 
-	</select>
-		
-	<select id="getMenuById" parameterType="pd" resultType="pd">
-		select  MENU_ID,
-		 		MENU_NAME,
-		 		MENU_URL,
-		 		PARENT_ID,
-		 		MENU_ORDER,
-		 		MENU_TYPE
-		 from t_menu
-		 where MENU_ID=#{MENU_ID}
-	</select>
-	
-	
-	<insert id="insertMenu" parameterType="Menu">
-		insert into t_menu (
-			MENU_ID,
-			MENU_NAME,
-			MENU_URL,
-			PARENT_ID,
-			MENU_ORDER,
-			MENU_TYPE
-		) values (
-			#{MENU_ID},
-			#{MENU_NAME},
-			#{MENU_URL},
-			#{PARENT_ID},
-			#{MENU_ORDER},
-			#{MENU_TYPE}
-		)
+
+    <select id="getSubMenuByParentId" parameterType="String">
+        select  <include refid="allAttribute"/> from t_menu where parent_id = #{parentId} order by sort
+    </select>
+
+    <select id="getMenuById" parameterType="pd" resultType="pd">
+        select
+        <include refid="allAttribute"/>
+        from t_menu where id=#{id}
+    </select>
+
+    <insert id="save" parameterType="Menu" useGeneratedKeys="true" keyProperty="id">
+		insert into t_menu (menu_name,menu_url,parent_id,sort,menu_type) values (#{menuName},#{menuUrl},#{parentId},#{sort},#{menuType})
 	</insert>
-	
-	<update id="updateMenu" parameterType="Menu">
+
+    <update id="update" parameterType="Menu">
 		update t_menu set
-			MENU_NAME =#{MENU_NAME},
-			MENU_URL  =#{MENU_URL} ,
-			PARENT_ID =#{PARENT_ID},
-			MENU_ORDER=#{MENU_ORDER},
-			MENU_TYPE =#{MENU_TYPE}
-		where 
-			MENU_ID=#{MENU_ID}
+			menu_name =#{menuName},
+			menu_url =#{menuUrl} ,
+			parent_id =#{parentId},
+			menu_type =#{menuType}
+			sort=#{sort},
+		where
+			id=#{id}
 	</update>
-	
-	<update id="editIcon" parameterType="Menu">
-		update t_menu set
-			MENU_ICON=#{MENU_ICON}
-		where MENU_ID=#{MENU_ID}
+
+    <update id="editIcon" parameterType="Menu">
+		update t_menu set	menu_icon=#{menuIcon} where id=#{id}
 	</update>
-	
-	<update id="editType" parameterType="Menu">
-		update t_menu set
-			MENU_TYPE=#{MENU_TYPE}
-		where PARENT_ID=#{MENU_ID}
+
+    <update id="editType" parameterType="Menu">
+		update t_menu set	menu_type=#{menuType} where id=#{id}
 	</update>
-	
-	<delete id="deleteMenuById" parameterType="String">
-		delete from t_menu
-		where MENU_ID=#{MENU_ID} 
-		or PARENT_ID=#{MENU_ID}
+
+    <delete id="deleteMenuById" parameterType="String">
+		delete from t_menu where id=#{id} or parentId=#{id}
 	</delete>
 </mapper>

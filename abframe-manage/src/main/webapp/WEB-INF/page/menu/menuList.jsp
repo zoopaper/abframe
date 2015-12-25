@@ -47,7 +47,7 @@
             var diag = new top.Dialog();
             diag.Drag = true;
             diag.Title = "编辑菜单";
-            diag.URL = '<%=basePath%>menu/toEdit?MENU_ID=' + menuId;
+            diag.URL = '<%=basePath%>menu/toEdit?menuId=' + menuId;
             diag.Width = 223;
             diag.Height = 256;
             diag.CancelEvent = function () {
@@ -66,7 +66,7 @@
             var diag = new top.Dialog();
             diag.Drag = true;
             diag.Title = "编辑图标";
-            diag.URL = '<%=basePath%>menu/toEditIcon?MENU_ID=' + menuId;
+            diag.URL = '<%=basePath%>menu/toEditIcon?menuId=' + menuId;
             diag.Width = 530;
             diag.Height = 150;
             diag.CancelEvent = function () {
@@ -92,7 +92,7 @@
             }
             if (flag) {
                 top.jzts();
-                var url = "<%=basePath%>menu/del?MENU_ID=" + menuId + "&guid=" + new Date().getTime();
+                var url = "<%=basePath%>menu/del?menuId=" + menuId + "&guid=" + new Date().getTime();
                 $.get(url, function (data) {
                     top.jzts();
                     document.location.reload();
@@ -108,7 +108,7 @@
                 if (trIndex % 2 == 0) {
                     $("#tempTr" + menuId).addClass("main_table_even");
                 }
-                var url = "<%=basePath%>menu/sub?MENU_ID=" + menuId + "&guid=" + new Date().getTime();
+                var url = "<%=basePath%>menu/sub?menuId=" + menuId + "&guid=" + new Date().getTime();
                 $.get(url, function (data) {
                     if (data.length > 0) {
                         var html = "";
@@ -120,11 +120,12 @@
                                 html += "<img src='static/images/joinbottom.gif' style='vertical-align: middle;'/>";
                             else
                                 html += "<img src='static/images/join.gif' style='vertical-align: middle;'/>";
-                            html += "<span style='width:100px;text-align:left;display:inline-block;'>" + this.MENU_NAME + "</span>";
+                            html += "<span style='width:100px;text-align:left;display:inline-block;'>" + this.menuName + "</span>";
                             html += "</td>";
-                            html += "<td>" + this.MENU_URL + "</td>";
-                            html += "<td class='center'>" + this.MENU_ORDER + "</td>";
-                            html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\"" + this.MENU_ID + "\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\"" + this.MENU_ID + "\",false)'><i class='icon-trash'></i></a></td>";
+                            html += "<td>" + this.menuUrl + "</td>";
+                            html += "<td class='center'>" + this.sort + "</td>";
+                            html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\"" + this.id + "\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\"" +
+                                    this.id + "\",false)'><i class='icon-trash'></i></a></td>";
                             html += "</tr>";
                             $("#tempTr" + menuId).before(html);
                         });
@@ -159,27 +160,24 @@
     <c:choose>
         <c:when test="${not empty menuList}">
             <c:forEach items="${menuList}" var="menu" varStatus="vs">
-                <tr id="tr${menu.MENU_ID }">
+                <tr id="tr${menu.id}">
                     <td class="center">${vs.index+1}</td>
-                    <td class='center'><i class="${menu.MENU_ICON }">&nbsp;</i>${menu.MENU_NAME }&nbsp;
-                        <c:if test="${menu.MENU_TYPE == '1' }">
+                    <td class='center'>
+                        <i class="${menu.menuIcon}">&nbsp;</i>${menu.menuName}&nbsp;
+                        <c:if test="${menu.menuType == '1'}">
                             <span class="label label-success arrowed">系统</span>
                         </c:if>
-                        <c:if test="${menu.MENU_TYPE != '1' }">
+                        <c:if test="${menu.menuType != '1'}">
                             <span class="label label-important arrowed-in">业务</span>
                         </c:if>
                     </td>
-                    <td>${menu.MENU_URL == '#'? '': menu.MENU_URL}</td>
-                    <td class='center'>${menu.MENU_ORDER }</td>
+                    <td>${menu.menuUrl == '#'? '': menu.menuUrl}</td>
+                    <td class='center'>${menu.sort}</td>
                     <td style="width: 25%;">
-                        <a class='btn btn-mini btn-warning'
-                           onclick="openClose('${menu.MENU_ID }',this,${vs.index })">展开</a>
-                        <a class='btn btn-mini btn-purple' title="图标" onclick="editTb('${menu.MENU_ID }')"><i
-                                class='icon-picture'></i></a>
-                        <a class='btn btn-mini btn-info' title="编辑" onclick="editmenu('${menu.MENU_ID }')"><i
-                                class='icon-edit'></i></a>
-                        <a class='btn btn-mini btn-danger' title="删除" onclick="delmenu('${menu.MENU_ID }',true)"><i
-                                class='icon-trash'></i></a>
+                        <a class='btn btn-mini btn-warning' onclick="openClose('${menu.id}',this,${vs.index})">展开</a>
+                        <a class='btn btn-mini btn-purple' title="图标" onclick="editTb('${menu.id}')"><i class='icon-picture'></i></a>
+                        <a class='btn btn-mini btn-info' title="编辑" onclick="editmenu('${menu.id}')"><i class='icon-edit'></i></a>
+                        <a class='btn btn-mini btn-danger' title="删除" onclick="delmenu('${menu.id}',true)"><i class='icon-trash'></i></a>
                 </tr>
             </c:forEach>
         </c:when>
@@ -193,7 +191,7 @@
 
 <div class="page_and_btn">
     <div>
-        &nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">新增</a>
+        &nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">新 增</a>
     </div>
 </div>
 

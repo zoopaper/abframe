@@ -9,7 +9,6 @@
 <html lang="en">
 <head>
     <base href="<%=basePath%>">
-
     <meta charset="utf-8"/>
     <title>菜单</title>
     <meta name="description" content="overview & stats"/>
@@ -112,7 +111,7 @@
         }
 
         function setType(value) {
-            $("#MENU_TYPE").val(value);
+            $("#menuType").val(value);
         }
     </script>
 
@@ -120,46 +119,55 @@
 
 <body>
 <form action="menu/edit" name="menuForm" id="menuForm" method="post">
-    <input type="hidden" name="MENU_ID" id="menuId" value="${pd.MENU_ID}"/>
-    <input type="hidden" name="pId" id="pId" value="${pd.PARENT_ID}"/>
-    <input type="hidden" name="MENU_TYPE" id="MENU_TYPE" value="${pd.MENU_TYPE }"/>
+    <input type="hidden" name="id" id="menuId" value="${pd.id}"/>
+    <input type="hidden" name="pId" id="pId" value="${pd.parentId}"/>
+    <input type="hidden" name="menuType" id="menuType" value="${pd.menuType}"/>
 
     <div id="zhongxin">
         <table>
             <tr>
                 <td>
-                    <select name="PARENT_ID" id="parentId" onchange="setMUR()" title="菜单">
+                    <select name="parentId" id="parentId" onchange="setMUR()" title="菜单">
                         <option value="0">顶级菜单</option>
                         <c:forEach items="${menuList}" var="menu">
-                            <option value="${menu.MENU_ID }">${menu.MENU_NAME }</option>
+                            <option value="${menu.id}">${menu.menuName}</option>
                         </c:forEach>
                     </select>
                 </td>
             </tr>
 
             <tr>
-                <td><input type="text" name="MENU_NAME" id="menuName" placeholder="这里输入菜单名称" value="${pd.MENU_NAME }"
-                           title="名称"/></td>
+                <td>
+                    <input type="text" name="MENU_NAME" id="menuName" placeholder="这里输入菜单名称" value="${pd.menuName}" title="名称"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="text" name="MENU_URL" id="menuUrl" placeholder="这里输入链接地址" value="${pd.MENU_URL }"
-                           title="地址"/></td>
+                <td>
+                    <input type="text" name="MENU_URL" id="menuUrl" placeholder="这里输入链接地址" value="${pd.menuUrl}"
+                           title="地址"/>
+                </td>
             </tr>
             <tr>
-                <td><input type="number" name="MENU_ORDER" id="menuOrder" placeholder="这里输入序号" value="${pd.MENU_ORDER}"
-                           title="序号"/></td>
+                <td>
+                    <input type="number" name="sort" id="menuOrder" placeholder="这里输入序号" value="${pd.sort}"
+                           title="序号"/>
+                </td>
             </tr>
             <tr>
                 <td style="text-align: center;">
-                    <label style="float:left;padding-left: 32px;"><input name="form-field-radio" id="form-field-radio1"
-                                                                         onclick="setType('1');"
-                                                                         <c:if test="${pd.MENU_TYPE == '1' }">checked="checked"</c:if>
-                                                                         type="radio" value="icon-edit"><span
-                            class="lbl">系统菜单</span></label>
-                    <label style="float:left;padding-left: 5px;"><input name="form-field-radio" id="form-field-radio2"
+                    <label style="float:left;padding-left: 32px;">
+                        <input name="form-field-radio" id="form-field-radio1"
+                               onclick="setType('1');"
+                               <c:if test="${pd.menuType == '1' }">checked="checked"</c:if>
+                               type="radio" value="icon-edit">
+                        <span class="lbl">系统菜单</span>
+                    </label>
+                    <label style="float:left;padding-left: 5px;">
+                        <input name="form-field-radio" id="form-field-radio2"
                                                                         onclick="setType('2');"
-                                                                        <c:if test="${pd.MENU_TYPE != '1' }">checked="checked"</c:if>
-                                                                        type="radio" value="icon-edit"><span
+                                                                        <c:if test="${pd.menuType != '1' }">checked="checked"</c:if>
+                                                                        type="radio" value="icon-edit">
+                        <span
                             class="lbl">业务菜单</span></label>
                 </td>
             </tr>

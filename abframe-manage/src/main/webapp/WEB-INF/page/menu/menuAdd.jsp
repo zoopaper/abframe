@@ -9,7 +9,6 @@
 <html lang="en">
 <head>
     <base href="<%=basePath%>">
-
     <meta charset="utf-8"/>
     <title>菜单</title>
     <meta name="description" content="overview & stats"/>
@@ -21,7 +20,6 @@
     <link rel="stylesheet" href="static/css/ace-responsive.min.css"/>
     <link rel="stylesheet" href="static/css/ace-skins.min.css"/>
     <script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
-    <!--提示框-->
     <script type="text/javascript" src="static/js/jquery.tips.js"></script>
 </head>
 
@@ -53,18 +51,15 @@
             $("#form-field-radio2").attr("checked", false);
         }
     }
-
     //保存
     function save() {
         if ($("#menuName").val() == "") {
-
             $("#menuName").tips({
                 side: 3,
                 msg: '请输入菜单名称',
                 bg: '#AE81FF',
                 time: 2
             });
-
             $("#menuName").focus();
             return false;
         }
@@ -72,78 +67,69 @@
             $("#menuUrl").val('#');
         }
         if ($("#menuOrder").val() == "") {
-
             $("#menuOrder").tips({
                 side: 1,
                 msg: '请输入菜单序号',
                 bg: '#AE81FF',
                 time: 2
             });
-
             $("#menuOrder").focus();
             return false;
         }
-
         if (isNaN(Number($("#menuOrder").val()))) {
-
             $("#menuOrder").tips({
                 side: 1,
                 msg: '请输入菜单序号',
                 bg: '#AE81FF',
                 time: 2
             });
-
             $("#menuOrder").focus();
             $("#menuOrder").val(1);
             return false;
         }
-
         $("#menuForm").submit();
         $("#zhongxin").hide();
         $("#zhongxin2").show();
     }
-
     function setType(value) {
-        $("#MENU_TYPE").val(value);
+        $("#menuType").val(value);
     }
-
 </script>
-
-
 <body>
-<form action="menu/add" name="menuForm" id="menuForm" method="post">
-    <input type="hidden" name="MENU_ID" id="menuId" value=""/>
-    <input type="hidden" name="MENU_TYPE" id="MENU_TYPE" value=""/>
+<form action="menu/save" name="menuForm" id="menuForm" method="post">
+    <input type="hidden" name="menuType" id="menuType" value=""/>
     <div id="zhongxin">
         <table>
             <tr>
                 <td>
-                    <select name="PARENT_ID" id="parentId" class="input_txt" onchange="setMUR()" title="菜单">
+                    <select name="parentId" id="parentId" class="input_txt" onchange="setMUR()" title="菜单">
                         <option value="0">顶级菜单</option>
                         <c:forEach items="${menuList}" var="menu">
-                            <option value="${menu.MENU_ID }" onclick="">${menu.MENU_NAME }</option>
+                            <option value="${menu.id}" onclick="">${menu.menuName}</option>
                         </c:forEach>
                     </select>
                 </td>
             </tr>
             <tr>
-                <td><input type="text" name="MENU_NAME" id="menuName" placeholder="这里输入菜单名称" value="" title="名称"/></td>
+                <td><input type="text" name="menuName" id="menuName" placeholder="这里输入菜单名称" value="" title="名称"/></td>
             </tr>
             <tr>
-                <td><input type="text" name="MENU_URL" id="menuUrl" placeholder="这里输入链接地址" value="" title="地址"/></td>
+                <td><input type="text" name="menuUrl" id="menuUrl" placeholder="这里输入链接地址" value="" title="地址"/></td>
             </tr>
             <tr>
-                <td><input type="number" name="MENU_ORDER" id="menuOrder" placeholder="这里输入序号" value="" title="序号"/>
+                <td><input type="number" name="sort" id="menuOrder" placeholder="这里输入序号" value="" title="序号"/>
                 </td>
             </tr>
             <tr>
                 <td style="text-align: center;">
-                    <label style="float:left;padding-left: 32px;"><input name="form-field-radio" id="form-field-radio1"
-                                                                         onclick="setType('1');" type="radio"
-                                                                         value="icon-edit"><span class="lbl">系统菜单</span></label>
-                    <label style="float:left;padding-left: 5px;"><input name="form-field-radio" id="form-field-radio2"
-                                                                        onclick="setType('2');" type="radio"
-                                                                        value="icon-edit"><span class="lbl">业务菜单</span></label>
+                    <label style="float:left;padding-left: 32px;">
+                        <input name="form-field-radio" id="form-field-radio1" onclick="setType('1');" type="radio" value="icon-edit">
+                        <span class="lbl">系统菜单</span>
+                    </label>
+                    <label style="float:left;padding-left: 5px;">
+                        <input name="form-field-radio" id="form-field-radio2" onclick="setType('2');" type="radio" value="icon-edit">
+                        <span class="lbl">业务菜单</span>
+                    </label>
                 </td>
             </tr>
             <tr>
@@ -154,8 +140,12 @@
             </tr>
         </table>
     </div>
-    <div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><img src="static/images/jiazai.gif"/><br/><h4
-            class="lighter block green"></h4></div>
+    <div id="zhongxin2" class="center" style="display:none">
+        <br/><br/><br/>
+        <img src="static/images/jiazai.gif"/>
+        <br/>
+        <h4 class="lighter block green"></h4>
+    </div>
 </form>
 </body>
 </html>

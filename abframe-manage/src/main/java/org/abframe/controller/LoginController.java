@@ -160,12 +160,12 @@ public class LoginController extends BaseController {
                     allmenuList = menuService.listAllMenu();
                     if (!Strings.isNullOrEmpty(rolePerms)) {
                         for (Menu menu : allmenuList) {
-                            boolean isHasMenu = RightsHelper.testRights(rolePerms, menu.getMENU_ID());
+                            boolean isHasMenu = RightsHelper.testRights(rolePerms, menu.getId());
                             menu.setHasMenu(isHasMenu);
                             if (isHasMenu) {
                                 List<Menu> subMenuList = menu.getSubMenu();
                                 for (Menu sub : subMenuList) {
-                                    sub.setHasMenu(RightsHelper.testRights(rolePerms, sub.getMENU_ID()));
+                                    sub.setHasMenu(RightsHelper.testRights(rolePerms, sub.getId()));
                                 }
                             }
                         }
@@ -185,7 +185,7 @@ public class LoginController extends BaseController {
                     //拆分菜单
                     for (int i = 0; i < allmenuList.size(); i++) {
                         Menu menu = allmenuList.get(i);
-                        if ("1".equals(menu.getMENU_TYPE())) {
+                        if ("1".equals(menu.getMenuType())) {
                             menuList1.add(menu);
                         } else {
                             menuList2.add(menu);

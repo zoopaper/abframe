@@ -14,46 +14,38 @@ public class MenuService {
     @Autowired
     private BaseDaoSupport dao;
 
-
-    public void deleteMenuById(String MENU_ID) throws Exception {
-        dao.save("MenuMapper.deleteMenuById", MENU_ID);
+    public void deleteMenuById(int id) throws Exception {
+        dao.save("MenuMapper.deleteMenuById", id);
 
     }
 
     public PageData getMenuById(PageData pd) throws Exception {
         return (PageData) dao.findForObject("MenuMapper.getMenuById", pd);
-
     }
 
     //取最大id
     public PageData findMaxId(PageData pd) throws Exception {
         return (PageData) dao.findForObject("MenuMapper.findMaxId", pd);
-
     }
 
-    public List<Menu> listAllParentMenu() throws Exception {
-        return (List<Menu>) dao.findForList("MenuMapper.listAllParentMenu", null);
+    public List<Menu> getParentMenu() throws Exception {
+        return (List<Menu>) dao.findForList("MenuMapper.getParentMenu", null);
 
     }
 
     public void saveMenu(Menu menu) throws Exception {
-        if (menu.getMENU_ID() != null && menu.getMENU_ID() != "") {
-            //dao.update("MenuMapper.updateMenu", menu);
-            dao.save("MenuMapper.insertMenu", menu);
-        } else {
-            dao.save("MenuMapper.insertMenu", menu);
-        }
+        dao.save("MenuMapper.save", menu);
     }
 
-    public List<Menu> listSubMenuByParentId(String parentId) throws Exception {
-        return (List<Menu>) dao.findForList("MenuMapper.listSubMenuByParentId", parentId);
+    public List<Menu> getSubMenuByParentId(int parentId) throws Exception {
+        return (List<Menu>) dao.findForList("MenuMapper.getSubMenuByParentId", parentId);
 
     }
 
     public List<Menu> listAllMenu() throws Exception {
-        List<Menu> rl = this.listAllParentMenu();
+        List<Menu> rl = this.getParentMenu();
         for (Menu menu : rl) {
-            List<Menu> subList = this.listSubMenuByParentId(menu.getMENU_ID());
+            List<Menu> subList = this.getSubMenuByParentId(menu.getId());
             menu.setSubMenu(subList);
         }
         return rl;
@@ -64,9 +56,6 @@ public class MenuService {
 
     }
 
-    /**
-     * 编辑
-     */
     public PageData edit(PageData pd) throws Exception {
         return (PageData) dao.findForObject("MenuMapper.updateMenu", pd);
     }

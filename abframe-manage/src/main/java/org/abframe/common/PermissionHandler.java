@@ -32,7 +32,7 @@ public class PermissionHandler {
             List<Menu> subMenu = menuList.get(i).getSubMenu();
 
             for (int j = 0; j < subMenu.size(); j++) {
-                if (subMenu.get(j).getMENU_URL().equals(menuUrl)) {
+                if (subMenu.get(j).getMenuUrl().equals(menuUrl)) {
                     if (!subMenu.get(j).isHasMenu()) {
                         return false;
                     } else {                                                                //按钮判断
@@ -41,7 +41,7 @@ public class PermissionHandler {
                         map.remove("del");
                         map.remove("edit");
                         map.remove("cha");
-                        String menuId = menuList.get(i).getSubMenu().get(j).getMENU_ID();
+                        int menuId = menuList.get(i).getSubMenu().get(j).getId();
                         String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();    //获取当前登录者loginname
                         Boolean isAdmin = "admin".equals(userName);
                         map.put("add", (RightsHelper.testRights(map.get("adds"), menuId)) || isAdmin ? "1" : "0");
@@ -78,12 +78,12 @@ public class PermissionHandler {
 
         for (int i = 0; i < menuList.size(); i++) {
             for (int j = 0; j < menuList.get(i).getSubMenu().size(); j++) {
-                if (menuList.get(i).getSubMenu().get(j).getMENU_URL().equals(menuUrl)) {
+                if (menuList.get(i).getSubMenu().get(j).getMenuUrl().equals(menuUrl)) {
                     if (!menuList.get(i).getSubMenu().get(j).isHasMenu()) {                //判断有无此菜单权限
                         return false;
                     } else {                                                                //按钮判断
                         Map<String, String> map = (Map<String, String>) session.getAttribute(Constant.SESSION_QX);//按钮权限
-                        String menuId = menuList.get(i).getSubMenu().get(j).getMENU_ID();
+                        int menuId = menuList.get(i).getSubMenu().get(j).getId();
                         String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
                         Boolean isAdmin = "admin".equals(userName);
                         if ("add".equals(type)) {

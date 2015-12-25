@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 用户头像
+ * user avatar
  * User: shijingui
  * Date: 2015/12/18
  */

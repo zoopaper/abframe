@@ -425,4 +425,37 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <master.jdbc.url></master.jdbc.url>
+                <master.jdbc.username></master.jdbc.username>
+                <master.jdbc.password></master.jdbc.password>
+
+                <slave.jdbc.url></slave.jdbc.url>
+                <slave.jdbc.username></slave.jdbc.username>
+                <slave.jdbc.password></slave.jdbc.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>product</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <master.jdbc.url></master.jdbc.url>
+                <master.jdbc.username></master.jdbc.username>
+                <master.jdbc.password></master.jdbc.password>
+
+                <slave.jdbc.url></slave.jdbc.url>
+                <slave.jdbc.username></slave.jdbc.username>
+                <slave.jdbc.password></slave.jdbc.password>
+            </properties>
+        </profile>
+    </profiles>
 </project>
