@@ -1,5 +1,7 @@
 package org.abframe.util;
 
+import com.google.common.base.Strings;
+
 import java.math.BigInteger;
 
 /**
@@ -54,7 +56,7 @@ public class RightsHelper {
      * @return
      */
     public static boolean testRights(String sum, int targetRights) {
-        if (Tools.isEmpty(sum))
+        if (Strings.isNullOrEmpty(sum))
             return false;
         return testRights(new BigInteger(sum), targetRights);
     }
@@ -81,5 +83,12 @@ public class RightsHelper {
      */
     public static boolean testRights(BigInteger sum, String targetRights) {
         return testRights(sum, Integer.parseInt(targetRights));
+    }
+
+    public static void main(String[] args) {
+        BigInteger number = new BigInteger("10");
+
+        System.out.println(Integer.toBinaryString(10));
+        System.out.println(number.testBit(3));
     }
 }

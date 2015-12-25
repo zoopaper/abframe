@@ -253,7 +253,7 @@ public class RoleController extends BaseController {
     public String auth(@RequestParam String id, Model model) {
 
         try {
-            List<Menu> menuList = menuService.listAllMenu();
+            List<Menu> menuList = menuService.getAllMenu();
             RoleBean role = roleService.getRoleById(id);
             String roleRights = role.getPerms();
             if (!Strings.isNullOrEmpty(roleRights)) {
@@ -287,7 +287,7 @@ public class RoleController extends BaseController {
     public ModelAndView button(@RequestParam String id, @RequestParam String msg, Model model) throws Exception {
         ModelAndView mv = new ModelAndView();
         try {
-            List<Menu> menuList = menuService.listAllMenu();
+            List<Menu> menuList = menuService.getAllMenu();
             RoleBean role = roleService.getRoleById(id);
 
             String roleRights = "";

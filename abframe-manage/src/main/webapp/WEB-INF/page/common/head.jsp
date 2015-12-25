@@ -115,7 +115,7 @@
                 </li>
                 <li class="light-blue user-profile">
                     <a class="user-menu dropdown-toggle" href="javascript:;" data-toggle="dropdown">
-                        <img  src="${sessionScope.sessionUser.avatarUrl}" class="img-circle"  style="height: 47px;"/>
+                        <img  src="${sessionScope.sessionUser.avatarUrl}" class="img-circle"  style="height: 40px;"/>
                         <span id="user_info" style="padding-top: 10px;"></span>
                         <i class="icon-caret-down"></i>
                     </a>

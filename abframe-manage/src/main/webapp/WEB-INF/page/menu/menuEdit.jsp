@@ -122,7 +122,6 @@
     <input type="hidden" name="id" id="menuId" value="${pd.id}"/>
     <input type="hidden" name="pId" id="pId" value="${pd.parentId}"/>
     <input type="hidden" name="menuType" id="menuType" value="${pd.menuType}"/>
-
     <div id="zhongxin">
         <table>
             <tr>

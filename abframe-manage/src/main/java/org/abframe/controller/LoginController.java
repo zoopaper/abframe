@@ -57,7 +57,6 @@ public class LoginController extends BaseController {
         return mv;
     }
 
-
     @RequestMapping(value = "/login", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
     public Object login() {
@@ -107,7 +106,6 @@ public class LoginController extends BaseController {
                         } catch (AuthenticationException e) {
                             result = "身份验证失败!";
                         }
-
                     } else {
                         //用户名或密码有误
                         result = "usererror";
@@ -135,10 +133,8 @@ public class LoginController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
-
             Subject currentUser = SecurityUtils.getSubject();
             Session session = currentUser.getSession();
-
             UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
             if (user != null) {
                 UserBean userRole = (UserBean) session.getAttribute(Constant.SESSION_USERROL);
@@ -150,16 +146,17 @@ public class LoginController extends BaseController {
                 }
                 RoleBean role = user.getRole();
                 String rolePerms = role != null ? role.getPerms() : "";
-                //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
-                session.setAttribute(Constant.SESSION_ROLE_RIGHTS, rolePerms);        //将角色权限存入session
-                session.setAttribute(Constant.SESSION_USERNAME, user.getUserName());    //放入用户名
 
-                List<Menu> allmenuList = new ArrayList<Menu>();
+                //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
+                session.setAttribute(Constant.SESSION_ROLE_RIGHTS, rolePerms);
+                session.setAttribute(Constant.SESSION_USERNAME, user.getUserName());
+
+                List<Menu> menus = new ArrayList<Menu>();
 
                 if (null == session.getAttribute(Constant.SESSION_ALL_MENU_LIST)) {
-                    allmenuList = menuService.listAllMenu();
+                    menus = menuService.getAllMenu();
                     if (!Strings.isNullOrEmpty(rolePerms)) {
-                        for (Menu menu : allmenuList) {
+                        for (Menu menu : menus) {
                             boolean isHasMenu = RightsHelper.testRights(rolePerms, menu.getId());
                             menu.setHasMenu(isHasMenu);
                             if (isHasMenu) {
@@ -170,21 +167,20 @@ public class LoginController extends BaseController {
                             }
                         }
                     }
-                    session.setAttribute(Constant.SESSION_ALL_MENU_LIST, allmenuList);            //菜单权限放入session中
+                    session.setAttribute(Constant.SESSION_ALL_MENU_LIST, menus);
                 } else {
-                    allmenuList = (List<Menu>) session.getAttribute(Constant.SESSION_ALL_MENU_LIST);
+                    menus = (List<Menu>) session.getAttribute(Constant.SESSION_ALL_MENU_LIST);
                 }
 
                 //切换菜单=====
                 List<Menu> menuList = new ArrayList<Menu>();
-                //if(null == session.getAttribute(Const.SESSION_MENU_LIST) || ("yes".equals(pd.getString("changeMenu")))){
                 if (null == session.getAttribute(Constant.SESSION_MENU_LIST) || ("yes".equals(changeMenu))) {
                     List<Menu> menuList1 = new ArrayList<Menu>();
                     List<Menu> menuList2 = new ArrayList<Menu>();
 
                     //拆分菜单
-                    for (int i = 0; i < allmenuList.size(); i++) {
-                        Menu menu = allmenuList.get(i);
+                    for (int i = 0; i < menus.size(); i++) {
+                        Menu menu = menus.get(i);
                         if ("1".equals(menu.getMenuType())) {
                             menuList1.add(menu);
                         } else {
@@ -212,24 +208,12 @@ public class LoginController extends BaseController {
                 if (null == session.getAttribute(Constant.SESSION_QX)) {
                     session.setAttribute(Constant.SESSION_QX, this.getUQX(session));    //按钮权限放到session中
                 }
-
-                //FusionCharts 报表
-                String strXML = "<graph caption='前12个月订单销量柱状图' xAxisName='月份' yAxisName='值' decimalPrecision='0' formatNumberScale='0'><set name='2013-05' value='4' color='AFD8F8'/><set name='2013-04' value='0' " +
-                        "color='AFD8F8'/><set name='2013-03' value='0' color='AFD8F8'/><set name='2013-02' value='0' color='AFD8F8'/><set name='2013-01' value='0' color='AFD8F8'/><set name='2012-01' value='0' " +
-                        "color='AFD8F8'/><set name='2012-11' value='0' color='AFD8F8'/><set name='2012-10' value='0' color='AFD8F8'/><set name='2012-09' value='0' color='AFD8F8'/><set name='2012-08' value='0' " +
-                        "color='AFD8F8'/><set name='2012-07' value='0' color='AFD8F8'/><set name='2012-06' value='0' color='AFD8F8'/></graph>";
-                mv.addObject("strXML", strXML);
-                //FusionCharts 报表
-
                 mv.setViewName("common/index");
                 mv.addObject("user", user);
                 mv.addObject("menuList", menuList);
             } else {
-                //session失效后跳转登录页面
                 mv.setViewName("common/login");
             }
-
-
         } catch (Exception e) {
             mv.setViewName("common/login");
             LOGGER.error("Controller login exception.", e);
@@ -302,7 +286,6 @@ public class LoginController extends BaseController {
             String roleId = pageData.get("roleId").toString();
 
             pd.put("roleId", roleId);
-
             PageData pd2 = new PageData();
             pd2.put(userName, userName);
             pd2.put("roleId", roleId);

@@ -42,13 +42,17 @@ public class MenuService {
 
     }
 
-    public List<Menu> listAllMenu() throws Exception {
-        List<Menu> rl = this.getParentMenu();
-        for (Menu menu : rl) {
+    /**
+     * @return
+     * @throws Exception
+     */
+    public List<Menu> getAllMenu() throws Exception {
+        List<Menu> parentMenu = this.getParentMenu();
+        for (Menu menu : parentMenu) {
             List<Menu> subList = this.getSubMenuByParentId(menu.getId());
             menu.setSubMenu(subList);
         }
-        return rl;
+        return parentMenu;
     }
 
     public List<Menu> listAllSubMenu() throws Exception {

@@ -7,9 +7,7 @@ import org.abframe.util.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -128,12 +126,7 @@ public class UserService {
         dao.update("UserXMapper.updateLastLogin", pd);
     }
 
-    /*
-    *通过id获取数据
-    */
-    public UserBean getUserAndRoleById(String USER_ID) throws Exception {
-        return (UserBean) dao.findForObject("UserMapper.getUserAndRoleById", USER_ID);
+    public UserBean getUserAndRoleById(String userId) throws Exception {
+        return (UserBean) dao.findForObject("UserMapper.getUserAndRoleById", userId);
     }
-
-
 }

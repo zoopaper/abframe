@@ -30,15 +30,15 @@ public class MenuController extends BaseController {
 
     @RequestMapping
     public ModelAndView list() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("menu/menuList");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("menu/menuList");
         try {
             List<Menu> menuList = menuService.getParentMenu();
-            mv.addObject("menuList", menuList);
+            modelAndView.addObject("menuList", menuList);
         } catch (Exception e) {
             LOGGER.error("Controller menu exception.", e);
         }
-        return mv;
+        return modelAndView;
     }
 
     @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
@@ -166,7 +166,6 @@ public class MenuController extends BaseController {
             JSONArray arr = new JSONArray();
             arr.addAll(subMenu);
             PrintWriter out;
-
             response.setCharacterEncoding("utf-8");
             out = response.getWriter();
             String json = arr.toString();

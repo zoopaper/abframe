@@ -8,33 +8,47 @@
             menu_name,
             menu_url,
             menu_type,
-            menu_icon
+            menu_icon,
             sort,
-            parent_id,
+            parent_id
         ]]>
 	</sql>
+
+    <resultMap type="Menu" id="menuMap">
+        <id column="id" property="id"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_url" property="menuUrl"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="sort" property="sort"/>
+        <result column="menu_icon" property="menuIcon"/>
+        <result column="menu_type" property="menuType"/>
+    </resultMap>
     <!-- ztree -->
     <!--<resultMap type="Menu" id="menuZtreeResultMap">-->
-        <!--<id column="MENU_ID" property="MENU_ID"/>-->
-        <!--<result column="MENU_NAME" property="MENU_NAME"/>-->
-        <!--<result column="MENU_URL" property="MENU_URL"/>-->
-        <!--<result column="PARENT_ID" property="PARENT_ID"/>-->
-        <!--<result column="MENU_ORDER" property="MENU_ORDER"/>-->
-        <!--<result column="MENU_ICON" property="MENU_ICON"/>-->
-        <!--<result column="MENU_TYPE" property="MENU_TYPE"/>-->
-        <!--<result column="target" property="target"></result>-->
+    <!--<id column="MENU_ID" property="MENU_ID"/>-->
+    <!--<result column="MENU_NAME" property="MENU_NAME"/>-->
+    <!--<result column="MENU_URL" property="MENU_URL"/>-->
+    <!--<result column="PARENT_ID" property="PARENT_ID"/>-->
+    <!--<result column="MENU_ORDER" property="MENU_ORDER"/>-->
+    <!--<result column="MENU_ICON" property="MENU_ICON"/>-->
+    <!--<result column="MENU_TYPE" property="MENU_TYPE"/>-->
+    <!--<result column="target" property="target"></result>-->
     <!--</resultMap>-->
 
     <select id="findMaxId" parameterType="pd" resultType="pd">
 		select MAX(id) MID FROM t_menu
 	</select>
 
-    <select id="getParentMenu" resultMap="menuResultMap">
-		select * from t_menu where parent_id = '0' order by sort
-	</select>
+    <select id="getParentMenu" resultMap="menuMap">
+        select
+        <include refid="allAttribute"/>
+        from t_menu where parent_id = '0' order by sort
+    </select>
 
-    <select id="getSubMenuByParentId" parameterType="String">
-        select  <include refid="allAttribute"/> from t_menu where parent_id = #{parentId} order by sort
+    <select id="getSubMenuByParentId" parameterType="String" resultMap="menuMap">
+        select
+        <include refid="allAttribute"/>
+        from t_menu where parent_id = #{parentId} order by sort
     </select>
 
     <select id="getMenuById" parameterType="pd" resultType="pd">

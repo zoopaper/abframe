@@ -22,12 +22,10 @@ public class BaseController {
         return new PageData(this.getRequest());
     }
 
-
     public HttpServletRequest getRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return request;
     }
-
 
     /**
      * 得到分页列表的信息
@@ -46,5 +44,4 @@ public class BaseController {
         Session session = currentUser.getSession();
         return (Map<String, String>) session.getAttribute(Constant.SESSION_QX);
     }
-
 }

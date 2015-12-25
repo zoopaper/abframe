@@ -45,7 +45,7 @@
             </div>
             <div style="float:right;padding-right:10%;">
                 <div style="float: left;margin-top:3px;margin-right:2px;">
-                    <font color="white">记住密码</font>
+                    <span color="white">记住密码</span>
                 </div>
                 <div style="float: left;">
                     <input name="form-field-checkbox" id="saveid" type="checkbox" onclick="savePaw();"
@@ -58,8 +58,7 @@
                         <i><img src="/static/login/yan.png"/></i>
                     </div>
                     <div style="float: left;" class="codediv">
-                        <input type="text" name="code" id="code" class="login_code"
-                               style="height:16px; padding-top:0px;"/>
+                        <input type="text" name="code" id="code" class="login_code" style="height:16px; padding-top:0px;"/>
                     </div>
                     <div style="float: left;">
                         <i>
@@ -163,31 +162,25 @@
 
     //客户端校验
     function check() {
-
         if ($("#userName").val() == "") {
-
             $("#userName").tips({
                 side: 2,
                 msg: '用户名不为空',
                 bg: '#AE81FF',
                 time: 3
             });
-
             $("#userName").focus();
             return false;
         } else {
             $("#userName").val(jQuery.trim($('#userName').val()));
         }
-
         if ($("#password").val() == "") {
-
             $("#password").tips({
                 side: 2,
                 msg: '密码不为空',
                 bg: '#AE81FF',
                 time: 3
             });
-
             $("#password").focus();
             return false;
         }

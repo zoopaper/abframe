@@ -2,7 +2,6 @@ package org.abframe.entity;
 
 import org.abframe.util.PageData;
 
-
 public class Page {
 
     /**
@@ -29,8 +28,6 @@ public class Page {
     private String pageStr;
 
     private PageData pd = new PageData();
-
-
     public Page() {
         try {
             this.showCount = 10;
