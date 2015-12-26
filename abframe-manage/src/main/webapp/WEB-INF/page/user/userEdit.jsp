@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>修改个人账户</title>
+    <title>修改个人信息</title>
     <meta name="description" content="overview & stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
@@ -22,83 +22,62 @@
     <script type="text/javascript">
         $(top.hangge());
         $(document).ready(function () {
-            if ($("#user_id").val() != "") {
-                $("#loginname").attr("readonly", "readonly");
-                $("#loginname").css("color", "gray");
+            if ($("#userId").val() != "") {
+                $("#account").attr("readonly", "readonly");
+                $("#account").css("color", "gray");
             }
         });
 
         //保存
         function save() {
-            if ($("#role_id").val() == "") {
-
-                $("#role_id").tips({
+            if ($("#roleId").val() == "") {
+                $("#roleId").tips({
                     side: 3,
                     msg: '选择角色',
                     bg: '#AE81FF',
                     time: 2
                 });
-
                 $("#role_id").focus();
                 return false;
             }
-            if ($("#loginname").val() == "" || $("#loginname").val() == "此用户名已存在!") {
+            if ($("#account").val() == "" || $("#account").val() == "此用户名已存在!") {
 
-                $("#loginname").tips({
+                $("#account").tips({
                     side: 3,
                     msg: '输入用户名',
                     bg: '#AE81FF',
                     time: 2
                 });
 
-                $("#loginname").focus();
-                $("#loginname").val('');
-                $("#loginname").css("background-color", "white");
+                $("#account").focus();
+                $("#account").val('');
+                $("#account").css("background-color", "white");
                 return false;
             } else {
-                $("#loginname").val(jQuery.trim($('#loginname').val()));
+                $("#account").val(jQuery.trim($('#account').val()));
             }
 
-            if ($("#NUMBER").val() == "") {
-
-                $("#NUMBER").tips({
-                    side: 3,
-                    msg: '输入编号',
-                    bg: '#AE81FF',
-                    time: 3
-                });
-                $("#NUMBER").focus();
-                return false;
-            } else {
-                $("#NUMBER").val($.trim($("#NUMBER").val()));
-            }
-
-            if ($("#user_id").val() == "" && $("#password").val() == "") {
-
+            if ($("#userId").val() == "" && $("#password").val() == "") {
                 $("#password").tips({
                     side: 3,
                     msg: '输入密码',
                     bg: '#AE81FF',
                     time: 2
                 });
-
                 $("#password").focus();
                 return false;
             }
             if ($("#password").val() != $("#chkpwd").val()) {
-
                 $("#chkpwd").tips({
                     side: 3,
                     msg: '两次密码不相同',
                     bg: '#AE81FF',
                     time: 3
                 });
-
                 $("#chkpwd").focus();
                 return false;
             }
             if ($("#name").val() == "") {
-
                 $("#name").tips({
                     side: 3,
                     msg: '输入姓名',
@@ -110,50 +89,50 @@
             }
 
             var myreg = /^(((13[0-9]{1})|159)+\d{8})$/;
-            if ($("#PHONE").val() == "") {
+            if ($("#phone").val() == "") {
 
-                $("#PHONE").tips({
+                $("#phone").tips({
                     side: 3,
                     msg: '输入手机号',
                     bg: '#AE81FF',
                     time: 3
                 });
-                $("#PHONE").focus();
+                $("#phone").focus();
                 return false;
-            } else if ($("#PHONE").val().length != 11 && !myreg.test($("#PHONE").val())) {
-                $("#PHONE").tips({
+            } else if ($("#phone").val().length != 11 && !myreg.test($("#phone").val())) {
+                $("#phone").tips({
                     side: 3,
                     msg: '手机号格式不正确',
                     bg: '#AE81FF',
                     time: 3
                 });
-                $("#PHONE").focus();
+                $("#phone").focus();
                 return false;
             }
 
-            if ($("#EMAIL").val() == "") {
+            if ($("#email").val() == "") {
 
-                $("#EMAIL").tips({
+                $("#email").tips({
                     side: 3,
                     msg: '输入邮箱',
                     bg: '#AE81FF',
                     time: 3
                 });
-                $("#EMAIL").focus();
+                $("#email").focus();
                 return false;
-            } else if (!ismail($("#EMAIL").val())) {
-                $("#EMAIL").tips({
+            } else if (!ismail($("#email").val())) {
+                $("#email").tips({
                     side: 3,
                     msg: '邮箱格式不正确',
                     bg: '#AE81FF',
                     time: 3
                 });
-                $("#EMAIL").focus();
+                $("#email").focus();
                 return false;
             }
 
-            if ($("#user_id").val() == "") {
-                hasU();
+            if ($("#userId").val() == "") {
+                hasUser();
             } else {
                 $("#userForm").submit();
                 $("#zhongxin").hide();
@@ -166,12 +145,12 @@
         }
 
         //判断用户名是否存在
-        function hasU() {
-            var USERNAME = $.trim($("#loginname").val());
+        function hasUser() {
+            var account = $.trim($("#account").val());
             $.ajax({
                 type: "POST",
-                url: '/user/hasU',
-                data: {userName: USERNAME, tm: new Date().getTime()},
+                url: '/user/hasUser',
+                data: {account: account},
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
@@ -180,20 +159,20 @@
                         $("#zhongxin").hide();
                         $("#zhongxin2").show();
                     } else {
-                        $("#loginname").css("background-color", "#D16E6C");
-                        setTimeout("$('#loginname').val('此用户名已存在!')", 500);
+                        $("#account").css("background-color", "#D16E6C");
+                        setTimeout("$('#account').val('此用户名已存在!')", 500);
                     }
                 }
             });
         }
 
         //判断邮箱是否存在
-        function hasE(USERNAME) {
-            var EMAIL = $.trim($("#EMAIL").val());
+        function hasEmail(account) {
+            var email = $.trim($("#email").val());
             $.ajax({
                 type: "POST",
-                url: '/user/hasE',
-                data: {email: EMAIL, userName: USERNAME, tm: new Date().getTime()},
+                url: '/user/hasEmail',
+                data: {email: email, userName: account},
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
@@ -204,114 +183,82 @@
                             bg: '#AE81FF',
                             time: 3
                         });
-                        setTimeout("$('#EMAIL').val('')", 2000);
+                        setTimeout("$('#email').val('')", 2000);
                     }
                 }
             });
         }
-
-        //判断编码是否存在
-        function hasN(USERNAME) {
-            var NUMBER = $.trim($("#NUMBER").val());
-            $.ajax({
-                type: "POST",
-                url: '/user/hasN',
-                data: {NUMBER: NUMBER, USERNAME: USERNAME, tm: new Date().getTime()},
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    if ("success" != data.result) {
-                        $("#NUMBER").tips({
-                            side: 3,
-                            msg: '编号已存在',
-                            bg: '#AE81FF',
-                            time: 3
-                        });
-                        setTimeout("$('#NUMBER').val('')", 2000);
-                    }
-                }
-            });
-        }
-
     </script>
+    <style>
+        .s-input{
+            width: 80px;
+            margin-left: 20px;
+            margin-right: 33px;;
+            font-size: 11pt;
+            color:#9C9C9C;
+        }
+        table
+        {   border-collapse:   separate;   border-spacing:   10px;   }
+    </style>
 </head>
 <body>
-<form action="/user/${msg}" name="userForm" id="userForm" method="post">
-    <input type="hidden" name="userId" id="user_id" value="${pd.userId}"/>
-    <div id="zhongxin">
+
+<form action="/user/${msg}" name="userForm" id="userForm" method="post" class="form-horizontal">
+    <input type="hidden" name="userId" id="userId" value="${user.id}"/>
+
+    <div id="zhongxin" style="margin-top: 20px;">
         <table>
-            <c:if test="${fx != 'head'}">
-                <c:if test="${pd.roleId != '1'}">
-                    <tr class="info">
-                        <td>
-                            <select class="chzn-select" name="roleId" id="roleId" data-placeholder="请选择职位"
-                                    style="vertical-align:top;width: 384px;">
-                                <option value=""></option>
-                                <c:forEach items="${roleList}" var="role">
-                                    <option value="${role.roleId}"
-                                            <c:if test="${role.roleId == pd.roleId}">selected</c:if>>${role.name}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                    </tr>
-                </c:if>
-                <c:if test="${pd.roleId == '1'}">
-                    <input name="roleId" id="role_id" value="1" type="hidden"/>
-                </c:if>
-            </c:if>
-
-            <c:if test="${fx == 'head'}">
-                <input name="roleId" id="role_id" value="${pd.roleId }" type="hidden"/>
-            </c:if>
-
-            <tr>
+            <tr class="info">
                 <td>
-                    <input type="text" name="userName" id="loginname" value="${pd.userName}" maxlength="32"  placeholder="这里输入用户名" title="用户名" style="width: 384px;"/>
+                    <span class="s-input">角色</span><select class="chzn-select" name="roleId" id="roleId" data-placeholder="请选择" style="vertical-align:top;width: 384px;">
+                        <option value=""></option>
+                        <c:forEach items="${roleList}" var="role">
+                            <option value="${role.roleId}"
+                                    <c:if test="${role.roleId == pd.roleId}">selected</c:if>>${role.name}
+                            </option>
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="number" id="NUMBER" value="${pd.number}" maxlength="32"
-                           placeholder="这里输入编号" title="编号" onblur="hasN('${pd.userName}')" style="width: 384px;"/>
+                  <span class="s-input">账号</span><input type="text" name="account" id="account" value="${user.account}" maxlength="32" placeholder="输入账号" title="登录账号" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="password" name="password" id="password" maxlength="32" placeholder="输入密码" title="密码" style="width: 384px;"/>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="password" name="chkpwd" id="chkpwd" maxlength="32" placeholder="确认密码" title="确认密码" style="width: 384px;"/>
+                  <span class="s-input">密码</span><input type="password" name="password" id="password" maxlength="32" placeholder="输入密码" title="密码" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="name" id="name" value="${pd.name}" maxlength="32" placeholder="输入姓名"
-                           title="姓名" style="width: 384px;"/>
+                   <span style="margin-left: 20px;font-size: 11pt;color:#9C9C9C;">确认密码</span> <input type="password" name="chkpwd" id="chkpwd" maxlength="32" placeholder="确认密码" title="确认密码" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="number" name="phone" id="PHONE" value="${pd.phone}" maxlength="32"
-                           placeholder="输入手机号" title="手机号" style="width: 384px;"/>
+                    <span class="s-input">姓名</span><input type="text" name="name" id="name" value="${user.name}" maxlength="32" placeholder="输入真实姓名" title="真实姓名" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="email" name="email" id="EMAIL" value="${pd.email}" maxlength="32" placeholder="输入邮箱"
-                           title="邮箱" onblur="hasE('${pd.userName}')" style="width: 384px;"/>
+                    <span class="s-input">手机</span><input type="number" name="phone" id="phone" value="${user.phone}" maxlength="32" placeholder="输入手机号" title="手机号" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="bz" id="BZ" value="${pd.bz}" placeholder="输入备注" maxlength="64"
-                           title="备注" style="width: 384px;"/>
+                    <span class="s-input">邮箱</span><input type="email" name="email" id="email" value="${user.email}" maxlength="32" placeholder="输入邮箱" title="邮箱" onblur="hasEmail('${user.account}')" style="width: 384px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="s-input">爱好</span><input type="text" name="interest" id="interest" value="${user.interest}" placeholder="兴趣爱好" title="兴趣爱好" style="width: 384px;"/>
                 </td>
             </tr>
             <tr>
                 <td style="text-align: center;">
-                    <a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-                    <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+                    <a class="btn  btn-primary btn-lg" onclick="save();">保存</a>
+                    <a class="btn  btn-danger btn-lg" onclick="top.Dialog.close();">取消</a>
                 </td>
             </tr>
         </table>
@@ -332,19 +279,14 @@
 <!-- 下拉框 -->
 
 <script type="text/javascript">
-
     $(function () {
-
         //单选框
         $(".chzn-select").chosen();
         $(".chzn-select-deselect").chosen({allow_single_deselect: true});
 
         //日期框
         $('.date-picker').datepicker();
-
     });
-
 </script>
-
 </body>
 </html>

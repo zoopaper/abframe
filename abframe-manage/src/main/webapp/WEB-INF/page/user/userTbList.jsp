@@ -219,7 +219,7 @@
     function delUser(userId, msg) {
         bootbox.confirm("确定要删除[" + msg + "]吗?", function (result) {
             if (result) {
-                var url = "<%=basePath%>user/deleteU?USER_ID=" + userId + "&tm=" + new Date().getTime();
+                var url = "<%=basePath%>user/deleteUser?USER_ID=" + userId + "&tm=" + new Date().getTime();
                 $.get(url, function (data) {
                     if (data == "success") {
                         document.location.reload();

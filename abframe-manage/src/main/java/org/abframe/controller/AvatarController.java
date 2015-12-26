@@ -146,14 +146,14 @@ public class AvatarController extends BaseController {
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
         UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
-        return user.getUserName();
+        return user.getAccount();
     }
 
-    public String getUserId() {
+    public long getUserId() {
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
         UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
-        return user.getUserId();
+        return user.getId();
     }
 
     public void createAvatarUpload(MultipartFile file) {

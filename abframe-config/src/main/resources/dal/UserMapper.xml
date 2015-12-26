@@ -9,84 +9,171 @@
             readOnly="true"/>
     <sql id="allAttribute">
 		<![CDATA[
-			userId,
-			userName,
+
+			id,
+			account,
 			name,
 			password,
 			perms,
 			status,
-			roleId,
-			lastLogin,
+			role_id,
+			last_login,
 			ip,
 			email,
 			number,
 			phone,
-			bz
+			interest,
+			avatar_url,
+			create_time
+
         ]]>
 	</sql>
 
     <resultMap type="User" id="userAndRoleResultMap">
-        <id column="userId" property="userId"/>
-        <result column="userName" property="userName"/>
-        <result column="password" property="password"/>
+        <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="account" property="account"/>
         <result column="perms" property="perms"/>
-        <result column="lastLogin" property="lastLogin"/>
+        <result column="last_login" property="lastLogin"/>
         <result column="ip" property="ip"/>
         <result column="status" property="status"/>
         <result column="skin" property="skin"/>
-        <association property="role" column="roleId" javaType="RoleBean">
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="phone" property="phone"/>
+        <association property="role" column="role_id" javaType="RoleBean">
             <id column="roleId" property="roleId"/>
             <result column="name" property="name"/>
             <result column="perms" property="perms"/>
         </association>
     </resultMap>
     <resultMap type="User" id="userResultMap">
-        <id column="userId" property="userId"/>
-        <result column="userName" property="userName"/>
-        <result column="password" property="password"/>
+        <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
         <result column="perms" property="perms"/>
-        <result column="lastLogin" property="lastLogin"/>
+        <result column="last_login" property="lastLogin"/>
         <result column="ip" property="ip"/>
         <result column="status" property="status"/>
-        <result column="roleId" property="roleId"/>
+        <result column="role_id" property="roleId"/>
         <result column="skin" property="skin"/>
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="phone" property="phone"/>
+        <result column="interest" property="interest"/>
+        <result column="create_time" property="createTime"/>
     </resultMap>
 
-    <!-- 判断用户名和密码 -->
-    <select id="getUserInfo" parameterType="User" resultMap="userResultMap">
+
+    <insert id="saveUser" parameterType="pd" flushCache="false" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user (account,password,name,perms, role_id,ip,interest,skin,email,phone,create_time) values (
+        #{account},
+        #{password},
+        #{name},
+        #{perms},
+        #{roleId},
+        #{ip},
+        #{interest},
+        #{skin},
+        #{email},
+        #{phone},
+        #{createTime}
+        )
+    </insert>
+
+    <update id="deleteUser" parameterType="pd" flushCache="false">
+        update  t_user set status =1 where id = #{userId}
+    </update>
+
+    <update id="updateUserAvatarById" parameterType="pd">
+        update t_user set avatar_url=#{avatar_url} where id=#{id}
+    </update>
+
+
+    <select id="getUserInfo" parameterType="pd" resultType="User">
         select * from t_user
-        where 1=1
-        <if test="userName!=null and password!=null">
-            and userName = #{userName} and password=#{password}
+        where 1=1 and status=0
+        <if test="account!=null and password!=null">
+            and account = #{account} and password=#{password}
         </if>
         <if test="userId!=null and userId>0">
-            and userId = #{userId}
+            and id = #{userId}
         </if>
     </select>
 
     <select id="getUserAndRoleById" parameterType="String" resultMap="userAndRoleResultMap">
-		select  u.userId,
-				u.userName,
+		select u.id,
+				u.account,
 				u.name,
 				u.perms,
 				u.password,
 				u.skin,
+				u.avatar_url,
 				r.roleId,
-				r.name,
+				r.name as roleName,
 				r.perms
-		from t_user u
-		left join t_role r
-		on u.roleId=r.roleId
-		where u.status=0
-		and u.userId=#{userId}
+		from t_user u left join t_role r on u.role_id = r.roleId and  u.status=0
+		where u.status= 0 and u.id=#{userId}
 	</select>
 
-    <update id="updateLastLogin" parameterType="User">
-		update t_user set
-		lastLogin=#{lastLogin}
-		where userId=#{userId}
-	</update>
+    <!--<update id="updateLastLogin" parameterType="User">-->
+    <!--update t_user set-->
+    <!--lastLogin=#{lastLogin}-->
+    <!--where userId=#{userId}-->
+    <!--</update>-->
 
+    <select id="getUserById" parameterType="pd" resultType="User" useCache="false">
+        select
+        <include refid="allAttribute"/>
+        from t_user where id = #{userId} and status=0
+    </select>
+
+    <select id="getUserByEmail" parameterType="pd" resultType="User" useCache="false">
+        select
+        <include refid="allAttribute"/>
+        where email = #{email} and status=0
+    </select>
+
+    <select id="getUserByAccount" parameterType="pd" resultType="pd" useCache="false">
+        select
+        <include refid="allAttribute"/>
+        from t_user where account = #{account} and status=0
+    </select>
+
+    <select id="getUserlistPage" parameterType="page" resultType="pd" useCache="false">
+        select u.id,
+        u.account,
+        u.password,
+        u.last_login as lastLogin,
+        u.name,
+        u.ip,
+        u.email,
+        u.phone
+        from t_user u
+        where status=0
+        <if test="pd.account != null and pd.account != ''">
+            and( u.account LIKE CONCAT(CONCAT('%', #{pd.account}),'%') or u.name LIKE CONCAT(CONCAT('%', #{pd.account}),'%'))
+        </if>
+        order by u.last_login desc
+    </select>
+
+    <update id="editUser" parameterType="pd" flushCache="false">
+        update t_user
+        set account = #{account},
+        name = #{name},
+        role_id = #{roleId},
+        interest = #{interest},
+        email = #{email},
+        phone = #{phone}
+        <if test="password != null and password != ''">
+            ,password = #{password}
+        </if>
+        where id = #{userId}
+    </update>
+
+    <update id="updateLastLogin" parameterType="pd" flushCache="false">
+        update t_user set
+        last_login = #{lastLogin}
+        where id = #{userId}
+    </update>
 </mapper>

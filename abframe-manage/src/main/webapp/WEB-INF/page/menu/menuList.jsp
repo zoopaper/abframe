@@ -163,13 +163,7 @@
                 <tr id="tr${menu.id}">
                     <td class="center">${vs.index+1}</td>
                     <td class='center'>
-                        <i class="${menu.menuIcon}">&nbsp;</i>${menu.menuName}&nbsp;
-                        <c:if test="${menu.menuType == '1'}">
-                            <span class="label label-success arrowed">系统</span>
-                        </c:if>
-                        <c:if test="${menu.menuType != '1'}">
-                            <span class="label label-important arrowed-in">业务</span>
-                        </c:if>
+                        <i class="${menu.menuIcon}">&nbsp;</i>${menu.menuName}
                     </td>
                     <td>${menu.menuUrl == '#'? '': menu.menuUrl}</td>
                     <td class='center'>${menu.sort}</td>

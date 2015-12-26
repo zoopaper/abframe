@@ -16,7 +16,7 @@ import java.util.Map;
 public class BaseController {
 
     /**
-     * 获取客户端提交封装的数据
+     * 封装请求数据
      */
     public PageData getPageData() {
         return new PageData(this.getRequest());

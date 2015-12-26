@@ -4,7 +4,6 @@ import net.common.utils.mail.MailInfo;
 import net.common.utils.mail.MailUtil;
 import org.abframe.base.config.ConfigService;
 import org.abframe.controller.base.BaseController;
-import org.abframe.service.MemberUserService;
 import org.abframe.service.UserService;
 import org.abframe.util.AppUtil;
 import org.abframe.util.PageData;
@@ -38,10 +37,6 @@ public class MailController extends BaseController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private MemberUserService appuserService;
-
     @Autowired
     ConfigService configService;
 
@@ -111,7 +106,7 @@ public class MailController extends BaseController {
         if ("yes".endsWith(isAll)) {
             try {
                 List<PageData> userList = new ArrayList<PageData>();
-                userList = "appuser".equals(fmsg) ? appuserService.listAllUser(pd) : userService.listAllUser(pd);
+                userList = userService.listAllUser(pd);
 
                 zcount = userList.size();
                 try {

@@ -63,40 +63,28 @@ public class LoginController extends BaseController {
         Map<String, String> map = new HashMap<String, String>();
         PageData pd = this.getPageData();
         String result = "";
-        String userName = pd.getString("userName");
+        String account = pd.getString("userName");
         String password = pd.getString("password");
         String code = pd.getString("code");
         try {
-            if (!Strings.isNullOrEmpty(userName) && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(code)) {
+            if (!Strings.isNullOrEmpty(account) && !Strings.isNullOrEmpty(password) && !Strings.isNullOrEmpty(code)) {
                 Subject currentUser = SecurityUtils.getSubject();
                 Session session = currentUser.getSession();
                 String sessionCode = (String) session.getAttribute(Constant.SESSION_SECURITY_CODE);
 
-                pd.put("userName", userName);
+                pd.put("account", account);
                 if (!Strings.isNullOrEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)) {
-                    String passwd = new SimpleHash("SHA-1", userName, password).toString();
+                    String passwd = new SimpleHash("SHA-1", account, password).toString();
                     pd.put("password", passwd);
-                    pd = userService.getUserByNameAndPwd(pd);
+                    UserBean user = userService.getUserByNameAndPwd(pd);
                     if (pd != null) {
-                        UserBean user = new UserBean();
-                        user.setUserId(pd.getString("userId"));
-                        user.setUserName(pd.getString("userName"));
-                        user.setPassword(pd.getString("password"));
-                        user.setName(pd.getString("name"));
-                        user.setPerms(pd.getString("perms"));
-                        user.setRoleId(pd.getString("roleId"));
-                        user.setLastLogin(pd.getString("lastLogin"));
-                        user.setIp(pd.getString("ip"));
-                        user.setStatus(pd.getString("status"));
-                        if (Strings.isNullOrEmpty(pd.getString("avatar_url")))
+                        if (Strings.isNullOrEmpty(user.getAvatarUrl()))
                             user.setAvatarUrl("/static/img/default-head.png");
-                        else
-                            user.setAvatarUrl(pd.getString("avatar_url"));
                         session.setAttribute(Constant.SESSION_USER, user);
                         session.removeAttribute(Constant.SESSION_SECURITY_CODE);
 
                         Subject subject = SecurityUtils.getSubject();
-                        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+                        UsernamePasswordToken token = new UsernamePasswordToken(account, password);
 
                         pd.put("lastLogin", DateUtil.getDateTimeStr().toString());
                         userService.updateLastLogin(pd);
@@ -139,7 +127,7 @@ public class LoginController extends BaseController {
             if (user != null) {
                 UserBean userRole = (UserBean) session.getAttribute(Constant.SESSION_USERROL);
                 if (null == userRole) {
-                    user = userService.getUserAndRoleById(user.getUserId());
+                    user = userService.getUserAndRoleById(user.getId());
                     session.setAttribute(Constant.SESSION_USERROL, user);
                 } else {
                     user = userRole;
@@ -149,7 +137,7 @@ public class LoginController extends BaseController {
 
                 //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
                 session.setAttribute(Constant.SESSION_ROLE_RIGHTS, rolePerms);
-                session.setAttribute(Constant.SESSION_USERNAME, user.getUserName());
+                session.setAttribute(Constant.SESSION_USERNAME, user.getAccount());
 
                 List<Menu> menus = new ArrayList<Menu>();
 
@@ -247,7 +235,7 @@ public class LoginController extends BaseController {
         try {
             String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
             pd.put("userName", userName);
-            PageData pageData = userService.findByUId(pd);
+            PageData pageData = userService.getUserByAccount(pd);
 
             String roleId = pageData.get("roleId").toString();
 
