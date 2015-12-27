@@ -61,7 +61,7 @@ public class MenuController extends BaseController {
         pd = this.getPageData();
         try {
             int parentId = menu.getParentId();
-            if (!"0".equals(parentId)) {
+            if (!(parentId == 0)) {
                 pd.put("menuId", parentId);
                 Menu menu1 = menuService.getMenuById(pd);
                 menu.setMenuType(menu1.getMenuType());

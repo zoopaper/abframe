@@ -89,7 +89,7 @@ public class LinkController extends BaseController {
         try {
             pd = linkService.findById(pd);
             mv.setViewName("link/linkEdit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller Link exception.", e);

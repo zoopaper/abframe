@@ -12,7 +12,7 @@
 
     <typeAliases>
         <typeAlias type="org.abframe.entity.UserBean" alias="User"/>
-        <typeAlias type="org.abframe.entity.RoleBean" alias="RoleBean"/>
+        <typeAlias type="org.abframe.entity.RoleBean" alias="Role"/>
         <typeAlias type="org.abframe.entity.Menu" alias="Menu"/>
         <typeAlias type="org.abframe.util.PageData" alias="pd"/>
         <!-- 分页 -->

@@ -52,7 +52,7 @@ public class AvatarController extends BaseController {
     private UserService userService;
 
     /**
-     * to edit user avatar
+     * to updateRoleById user avatar
      *
      * @return
      */

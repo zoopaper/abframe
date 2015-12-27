@@ -16,7 +16,7 @@
 
     <script type="text/javascript">
         top.hangge();
-        //保存
+
         function save() {
             if ($("#roleName").val() == "") {
                 $("#roleName").focus();
@@ -30,17 +30,15 @@
 </head>
 <body>
 <form action="/role/add" name="form1" id="form1" method="post">
-    <input name="parentId" id="parentId" value="${pd.parentId}" type="hidden">
-
     <div id="zhongxin">
         <table>
             <tr>
-                <td><input type="text" name="name" id="name" placeholder="输入名称" title="名称"/></td>
+                <td>角色名称：<input type="text" name="roleName" id="roleName" placeholder="输入名称" title="名称"/></td>
             </tr>
             <tr>
                 <td style="text-align: center;">
-                    <a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-                    <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+                    <a class="btn btn-mini btn-primary" onclick="save();">保 存</a>
+                    <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取 消</a>
                 </td>
             </tr>
         </table>

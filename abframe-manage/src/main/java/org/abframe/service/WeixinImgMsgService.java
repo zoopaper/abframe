@@ -27,7 +27,7 @@ public class WeixinImgMsgService {
 
 
     public void edit(PageData pd) throws Exception {
-        dao.update("WeixinImgMsgMapper.edit", pd);
+        dao.update("WeixinImgMsgMapper.updateRoleById", pd);
     }
 
 

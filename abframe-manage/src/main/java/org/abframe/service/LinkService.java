@@ -39,7 +39,7 @@ public class LinkService {
     * 修改
     */
     public void edit(PageData pd) throws Exception {
-        dao.update("LinkMapper.edit", pd);
+        dao.update("LinkMapper.updateRoleById", pd);
     }
 
     /*

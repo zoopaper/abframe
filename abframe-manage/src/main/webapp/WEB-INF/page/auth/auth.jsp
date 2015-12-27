@@ -61,7 +61,6 @@
 <script type="text/javascript">
 
     function save() {
-
         var nodes = zTree.getCheckedNodes();
         var tmpNode;
         var ids = "";
@@ -74,11 +73,11 @@
             }
         }
 
-        var roleId = "${roleId}";
+        var roleId = "${id}";
         var url = "<%=basePath%>role/auth/save";
         var postData;
 
-        postData = {"ROLE_ID": roleId, "menuIds": ids};
+        postData = {"id": roleId, "menuIds": ids};
 
         $("#zhongxin").hide();
         $("#zhongxin2").show();

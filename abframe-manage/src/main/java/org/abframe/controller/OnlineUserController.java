@@ -45,7 +45,7 @@ public class OnlineUserController extends BaseController {
     @RequestMapping(value = "/edit")
     public ModelAndView edit() throws Exception {
 
-        if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+        if (!PermissionHandler.buttonJurisdiction(menuUrl, "updateRoleById")) {
             return null;
         }
         ModelAndView mv = new ModelAndView();

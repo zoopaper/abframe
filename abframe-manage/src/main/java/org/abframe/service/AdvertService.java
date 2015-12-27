@@ -30,7 +30,7 @@ public class AdvertService {
 
 
     public void edit(PageData pd) throws Exception {
-        dao.update("AdvertMapper.edit", pd);
+        dao.update("AdvertMapper.updateRoleById", pd);
     }
 
 

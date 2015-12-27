@@ -16,8 +16,8 @@
         top.hangge();
         //保存
         function save() {
-            if ($("#name").val() == "") {
-                $("#name").focus();
+            if ($("#roleName").val() == "") {
+                $("#roleName").focus();
                 return false;
             }
             $("#form1").submit();
@@ -29,14 +29,13 @@
 </head>
 <body>
 <form action="/role/edit" name="form1" id="form1" method="post">
-    <input type="hidden" name="id" id="id" value="${pd.id}"/>
+    <input type="hidden" name="roleId" id="id" value="${role.id}"/>
 
     <div id="zhongxin">
         <table>
             <tr>
                 <td>
-                    <input type="text" name="name" id="name" value="${pd.name}" placeholder="输入名称"
-                           title="名称"/>
+                    <input type="text" name="roleName" id="roleName" value="${role.roleName}" placeholder="角色名称" title="名称"/>
                 </td>
             </tr>
             <tr>

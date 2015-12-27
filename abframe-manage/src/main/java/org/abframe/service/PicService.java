@@ -25,7 +25,7 @@ public class PicService {
     }
 
     public void edit(PageData pd) throws Exception {
-        dao.update("PicMapper.edit", pd);
+        dao.update("PicMapper.updateRoleById", pd);
     }
 
     public List<PageData> list(Page page) throws Exception {

@@ -77,7 +77,7 @@ public class WeixinImgMsgController extends BaseController {
     public ModelAndView edit() {
         ModelAndView mv = new ModelAndView();
         try {
-            if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+            if (!PermissionHandler.buttonJurisdiction(menuUrl, "updateRoleById")) {
                 return null;
             } //校验权限
             PageData pd = new PageData();
@@ -138,7 +138,7 @@ public class WeixinImgMsgController extends BaseController {
         try {
             pd = weixinImgMsgService.findById(pd);    //根据ID读取
             mv.setViewName("weixin/imgmsg/imgmsg_edit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller weixin imgmsg exxception.", e);

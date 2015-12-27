@@ -27,7 +27,7 @@ public class NewsService {
     }
 
     public void edit(PageData pd) throws Exception {
-        dao.update("NewsMapper.edit", pd);
+        dao.update("NewsMapper.updateRoleById", pd);
     }
 
     public void delete(PageData pd) throws Exception {

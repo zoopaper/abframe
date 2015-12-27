@@ -26,7 +26,7 @@ public class WeixinTextMsgService {
 
 
     public void edit(PageData pd) throws Exception {
-        dao.update("WeixinTextMsgMapper.edit", pd);
+        dao.update("WeixinTextMsgMapper.updateRoleById", pd);
     }
 
 

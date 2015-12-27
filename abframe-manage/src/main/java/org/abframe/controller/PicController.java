@@ -100,7 +100,7 @@ public class PicController extends BaseController {
         PageData pd = new PageData();
         pd = this.getPageData();
         try {
-            if (PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+            if (PermissionHandler.buttonJurisdiction(menuUrl, "updateRoleById")) {
                 pd.put("PICTURES_ID", PICTURES_ID);        //图片ID
                 pd.put("TITLE", TITLE);                    //标题
                 pd.put("MASTER_ID", MASTER_ID);            //属于ID
@@ -178,7 +178,7 @@ public class PicController extends BaseController {
         try {
             pd = picService.findById(pd);    //根据ID读取
             mv.setViewName("pic/picEdit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller pic exception.", e);

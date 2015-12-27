@@ -20,7 +20,7 @@ public class DictService {
     }
 
     public void edit(PageData pd) throws Exception {
-        dao.update("DictMapper.edit", pd);
+        dao.update("DictMapper.updateRoleById", pd);
     }
 
     //通过id获取数据

@@ -29,8 +29,8 @@
             diag.Drag = true;
             diag.Title = "新增菜单";
             diag.URL = '<%=basePath%>menu/toAdd';
-            diag.Width = 223;
-            diag.Height = 256;
+            diag.Width = 330;
+            diag.Height = 270;
             diag.CancelEvent = function () {
                 if (diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none') {
                     top.jzts();
@@ -48,8 +48,8 @@
             diag.Drag = true;
             diag.Title = "编辑菜单";
             diag.URL = '<%=basePath%>menu/toEdit?menuId=' + menuId;
-            diag.Width = 223;
-            diag.Height = 256;
+            diag.Width = 330;
+            diag.Height = 270;
             diag.CancelEvent = function () {
                 if (diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none') {
                     top.jzts();
@@ -124,7 +124,7 @@
                             html += "</td>";
                             html += "<td>" + this.menuUrl + "</td>";
                             html += "<td class='center'>" + this.sort + "</td>";
-                            html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\"" + this.id + "\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\"" +
+                            html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\"" + this.id + "\")'><i class='icon-updateRoleById'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\"" +
                                     this.id + "\",false)'><i class='icon-trash'></i></a></td>";
                             html += "</tr>";
                             $("#tempTr" + menuId).before(html);
@@ -152,7 +152,7 @@
     <tr>
         <th class="center" style="width: 50px;">序号</th>
         <th class='center'>名称</th>
-        <th class='center'>资源路径</th>
+        <th class='center'>URL</th>
         <th class='center'>排序</th>
         <th class='center'>操作</th>
     </tr>
@@ -185,7 +185,7 @@
 
 <div class="page_and_btn">
     <div>
-        &nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">新 增</a>
+        <a class="btn btn-success btn-sm" onclick="addmenu();">新 增</a>
     </div>
 </div>
 

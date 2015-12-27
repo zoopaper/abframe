@@ -5,308 +5,54 @@
 
     <sql id="allAttribute">
 		<![CDATA[
-			roleId,
-			name,
+			id,
+			role_name,
 			perms,
-			permId,
-			parentId,
-			permAdd,
-			permEdit,
-			permDel,
-			permQuery
+			perm_id,
+			menu_id,
+			create_time
         ]]>
 	</sql>
 
-    <resultMap type="RoleBean" id="roleResultMap">
-        <id column="roleId" property="roleId"/>
-        <result column="name" property="name"/>
+    <resultMap type="Role" id="roleResultMap">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
         <result column="perms" property="perms"/>
+        <result column="menu_id" property="menuId"/>
     </resultMap>
 
+    <select id="getUserByRoleId" parameterType="pd" resultType="User">
+		select id from t_user where role_id = #{roleId}
+	</select>
 
-    <!-- 权限 -->
-    <update id="c1" parameterType="pd">
-		update t_user_perm
-		set C1=#{value} 
-		where U_ID=#{backup}
-	</update>
-
-    <!-- 列出二级角色信息 -->
-    <select id="listAllERRoles" resultMap="roleResultMap">
+    <select id="listAllRoles"  resultMap="roleResultMap">
         select
         <include refid="allAttribute"/>
-        from t_role
-        where
-        parentId != '0'
-        and parentId != '7'
+        from t_role order by id
     </select>
 
-    <!-- 列出会员二级角色信息 -->
-    <select id="listAllappERRoles" resultMap="roleResultMap">
-        select
-        <include refid="allAttribute"/>
-        from t_role
-        where
-        parentId = '7'
-    </select>
-
-    <!-- 列出此角色下的所有用户 -->
-    <select id="listAllUByRid" parameterType="pd" resultType="pd">
-		select userId from t_user where roleId = #{roleId}
-	</select>
-
-    <!-- 列出此角色下的所有会员 -->
-    <select id="listAllAppUByRid" parameterType="pd" resultType="pd">
-		select userId
-		from t_member
-		where 
-		ROLE_ID = #{roleId}
-	</select>
-
-    <!-- 通过当前登录用的角色id获取管理权限数据 -->
-    <select id="findGLbyrid" parameterType="pd" resultType="pd">
-		SELECT 
-			b.GL_ID,
-			b.ROLE_ID,
-			b.FX_QX,
-			b.FW_QX,
-			b.QX1,
-			b.QX2,
-			b.QX3,
-			b.QX4
-		from t_role a, t_role_perm b, t_user c
-		where 
-			a.permId = b.GL_ID
-		and 
-			a.roleId = c.roleId
-		and
-			c.roleId =  '${roleId}'
-		limit 0,1
-	</select>
-
-    <!-- 通过当前登录用的角色id获取用户权限数据 -->
-    <select id="findYHbyrid" parameterType="pd" resultType="pd">
-		SELECT 
-			b.U_ID,
-			b.C1,
-			b.C2,
-			b.C3,
-			b.C4,
-			b.Q1,
-			b.Q2,
-			b.Q3,
-			b.Q4
-		from t_role a, t_user_perm b, t_user c
-		where 
-			a.permId = b.U_ID
-		and 
-			a.roleId = c.roleId
-		and
-			c.roleId =  '${id}'
-		limit 0,1
-	</select>
-
-    <!-- 列出K权限表里的数据 -->
-    <select id="listAllkefu" parameterType="pd" resultType="pd">
-		select 
-			GL_ID,
-			ROLE_ID,
-			FX_QX,
-			FW_QX,
-			QX1,
-			QX2,
-			QX3,
-			QX4
-		from t_role_perm
-	</select>
-
-    <!-- 列出G权限表里的数据 -->
-    <select id="listAllGysQX" parameterType="pd" resultType="pd">
-		select U_ID,C1,C2,C3,C4,Q1,Q2,Q3,Q4 from t_user_perm
-	</select>
-
-    <!-- 给全部子职位加菜单权限 -->
-    <update id="setAllRights" parameterType="pd">
+    <update id="updateRoleRights" parameterType="Role">
 		update t_role
-		set perms=#{perms}
-		where parentId=#{roleId}
+		set menu_id=#{menuId}
+		where id=#{id}
 	</update>
 
-    <update id="add_qx" parameterType="pd">
-		update t_role
-		set permAdd=#{value}
-		where roleId=#{roleId}
-	</update>
-
-    <update id="del_qx" parameterType="pd">
-		update t_role
-		set permDel=#{value}
-		where roleId=#{roleId}
-	</update>
-
-    <update id="edit_qx" parameterType="pd">
-		update t_role
-		set permEdit=#{value}
-		where roleId=#{roleId}
-	</update>
-
-    <update id="cha_qx" parameterType="pd">
-		update t_role
-		set permQuery=#{value}
-		where roleId=#{roleId}
-	</update>
-
-    <update id="kfqx1" parameterType="pd">
-		update t_role_perm
-		set QX1=#{value} 
-		where GL_ID=#{backup}
-	</update>
-
-    <update id="kfqx2" parameterType="pd">
-		update t_role_perm
-		set QX2=#{value} 
-		where GL_ID=#{backup}
-	</update>
-
-    <update id="fxqx" parameterType="pd">
-		update t_role_perm
-		set FX_QX=#{value} 
-		where GL_ID=#{backup}
-	</update>
-
-    <update id="fwqx" parameterType="pd">
-		update t_role_perm
-		set FW_QX=#{value} 
-		where GL_ID=#{backup}
-	</update>
-
-    <select id="listAllRoles" resultMap="roleResultMap">
-        select
-        <include refid="allAttribute"/>
-        from t_role where parentId = '0' order by roleId
-    </select>
-
-    <select id="listAllRolesByPId" resultMap="roleResultMap">
-        select
-        <include refid="allAttribute"/>
-        from t_role where parentId = #{roleId} order by roleId
-    </select>
-
-
-    <select id="getRoleById" parameterType="String" resultMap="roleResultMap">
-        select
-        <include refid="allAttribute"/>
-        from t_role
-        where roleId=#{roleId}
-    </select>
-
-
-    <update id="updateRoleRights" parameterType="RoleBean">
-		update t_role
-		set perms=#{perms}
-		where roleId=#{roleId}
-	</update>
-    <delete id="deleteRoleById" parameterType="String">
-		delete from t_role where roleId=#{roleId}
+    <delete id="deleteRoleById" parameterType="Long">
+		delete from t_role where id=#{roleId}
 	</delete>
 
-    <!-- 删除K权限表里对应的数据 -->
-    <delete id="deleteKeFuById" parameterType="String">
-		delete from t_role_perm
-		where GL_ID = #{id}
-	</delete>
-
-    <!-- 删除G权限表里对应的数据 -->
-    <delete id="deleteGById" parameterType="String">
-		delete from t_user_perm
-		where U_ID = #{id}
-	</delete>
-
-    <!-- 保存K权限 -->
-    <insert id="saveKeFu" parameterType="pd">
-		insert into t_role_perm (
-			GL_ID,
-			ROLE_ID,
-			FX_QX,
-			FW_QX,
-			QX1,
-			QX2,
-			QX3,
-			QX4
-		) values (
-			#{GL_ID},
-			#{ROLE_ID},
-			#{FX_QX},
-			#{FW_QX},
-			#{QX1},
-			#{QX2},
-			#{QX3},
-			#{QX4}
-		)
+    <insert id="insert" parameterType="pd" useGeneratedKeys="true" keyProperty="id">
+		insert into t_role (role_name,create_time) values (#{roleName},#{createTime})
 	</insert>
 
-    <!-- 保存G权限 -->
-    <insert id="saveGYSQX" parameterType="pd">
-		insert into t_user_perm (
-			U_ID,
-			C1,
-			C2,
-			C3,
-			C4,
-			Q1,
-			Q2,
-			Q3,
-			Q4
-		) values (
-			#{U_ID},
-			#{C1},
-			#{C2},
-			#{C3},
-			#{C4},
-			#{Q1},
-			#{Q2},
-			#{Q3},
-			#{Q4}
-		)
-	</insert>
-
-    <!-- 添加 -->
-    <insert id="insert" parameterType="pd">
-		insert into t_role (
-			roleId,
-			name,
-			perms,
-			parentId,
-			permAdd,
-			permDel,
-			permEdit,
-			permQuery,
-			permId
-		) values (
-			#{roleId},
-			#{name},
-			#{perms},
-			#{parentId},
-			#{permAdd},
-			#{permDel},
-			#{permEdit},
-			#{permQuery},
-			#{permId}
-		)
-	</insert>
-
-    <!-- 通过id查找 -->
-    <select id="findObjectById" parameterType="pd" resultType="pd">
+    <select id="getRoleById" parameterType="Long" resultMap="roleResultMap">
         select
         <include refid="allAttribute"/>
         from t_role
-        where roleId = #{roleId}
+        where id = #{roleId}
     </select>
 
-    <!-- 编辑角色 -->
-    <update id="edit" parameterType="pd">
-		update t_role
-		set name = #{name}
-		where roleId = #{roleId}
+    <update id="updateRoleById" parameterType="pd">
+		update t_role set role_name = #{roleName}	where id = #{roleId}
 	</update>
 </mapper>

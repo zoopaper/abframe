@@ -8,7 +8,7 @@ import java.math.BigInteger;
  * @author Administrator
  *         权限计算帮助类
  */
-public class RightsHelper {
+public class MenuHelper {
     /**
      * 利用BigInteger对权限进行2的权的和计算
      *
@@ -60,6 +60,7 @@ public class RightsHelper {
             return false;
         return testRights(new BigInteger(sum), targetRights);
     }
+
 
     /**
      * 测试是否具有指定编码的权限

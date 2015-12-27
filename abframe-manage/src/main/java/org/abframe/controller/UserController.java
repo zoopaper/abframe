@@ -141,7 +141,7 @@ public class UserController extends BaseController {
         List<RoleBean> roleList = null;
         UserBean userBean = null;
         try {
-            roleList = roleService.listAllERRoles();
+            roleList = roleService.listAllRoles();
             userBean = userService.getUserById(pd);
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +163,7 @@ public class UserController extends BaseController {
         pd = this.getPageData();
         List<RoleBean> roleList;
 
-        roleList = roleService.listAllERRoles();
+        roleList = roleService.listAllRoles();
 
         mv.setViewName("user/userEdit");
         mv.addObject("msg", "saveUser");
@@ -191,13 +191,13 @@ public class UserController extends BaseController {
 
         page.setPd(pd);
         List<PageData> userList = userService.getUserListPage(page);
-        List<RoleBean> roleList = roleService.listAllERRoles();
+        List<RoleBean> roleList = roleService.listAllRoles();
 
         mv.setViewName("user/userList");
         mv.addObject("userList", userList);
         mv.addObject("roleList", roleList);
         mv.addObject("pd", pd);
-        mv.addObject(Constant.SESSION_QX, this.getHC());
+        mv.addObject(Constant.SESSION_QX, this.getHC());    //按钮权限
         return mv;
     }
 

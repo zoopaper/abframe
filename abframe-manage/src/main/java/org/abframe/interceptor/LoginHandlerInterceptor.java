@@ -1,6 +1,5 @@
 package org.abframe.interceptor;
 
-import org.abframe.common.PermissionHandler;
 import org.abframe.entity.UserBean;
 import org.abframe.util.Constant;
 import org.apache.shiro.SecurityUtils;
@@ -26,11 +25,11 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
             UserBean user = (UserBean) session.getAttribute(Constant.SESSION_USER);
             if (user != null) {
                 path = path.substring(1, path.length());
-                boolean b = PermissionHandler.hasPerm(path);
-                if (!b) {
-                    response.sendRedirect(request.getContextPath() + Constant.LOGIN);
-                }
-                return b;
+//                boolean b = PermissionHandler.hasPerm(path);
+//                if (!b) {
+//                    response.sendRedirect(request.getContextPath() + Constant.LOGIN);
+//                }
+                return true;
             } else {
                 //登陆过滤
                 response.sendRedirect(request.getContextPath() + Constant.LOGIN);

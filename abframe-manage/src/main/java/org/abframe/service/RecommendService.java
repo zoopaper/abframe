@@ -32,7 +32,7 @@ public class RecommendService {
 
 
     public void edit(PageData pd) throws Exception {
-        dao.update("RecommendMapper.edit", pd);
+        dao.update("RecommendMapper.updateRoleById", pd);
     }
 
 

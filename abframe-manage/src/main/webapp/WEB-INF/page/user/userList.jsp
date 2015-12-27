@@ -180,7 +180,7 @@
         diag.Drag = true;
         diag.Title = "新增用户";
         diag.URL = '/user/toAddUser';
-        diag.Width = 520;
+        diag.Width = 550;
         diag.Height = 450;
         diag.CancelEvent = function () {
             if (diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none') {

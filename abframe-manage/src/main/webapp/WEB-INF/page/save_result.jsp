@@ -14,8 +14,10 @@
     var msg = "${msg}";
     if (msg == "success" || msg == "") {
         document.getElementById('zhongxin').style.display = 'none';
+        alert(msg);
         top.Dialog.close();
     } else {
+        alert(msg);
         top.Dialog.close();
     }
 </script>

@@ -78,7 +78,7 @@ public class WeixinCommandController extends BaseController {
     @RequestMapping(value = "/edit")
     public ModelAndView edit() {
         ModelAndView mv = new ModelAndView();
-        if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+        if (!PermissionHandler.buttonJurisdiction(menuUrl, "updateRoleById")) {
             return null;
         }
         try {
@@ -144,7 +144,7 @@ public class WeixinCommandController extends BaseController {
         try {
             pd = weixinCommandService.findById(pd);    //根据ID读取
             mv.setViewName("weixin/command/command_edit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller weixin command exception", e);

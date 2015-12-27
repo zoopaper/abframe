@@ -58,7 +58,7 @@
                 <td><label onclick="seticon('icon-list');"><input name="form-field-radio" type="radio"
                                                                   value="icon-edit"><span class="lbl">&nbsp;<i
                         class="icon-list"></i></span></label></td>
-                <td><label onclick="seticon('icon-edit');"><input name="form-field-radio" type="radio"
+                <td><label onclick="seticon('icon-updateRoleById');"><input name="form-field-radio" type="radio"
                                                                   value="icon-edit"><span class="lbl">&nbsp;<i
                         class="icon-edit"></i></span></label></td>
                 <td><label onclick="seticon('icon-list-alt');"><input name="form-field-radio" type="radio"

@@ -114,7 +114,12 @@
             $("#menuType").val(value);
         }
     </script>
-
+    <style type="text/css">
+        .s-input {
+            font-size: 11pt;
+            color: #9C9C9C;
+        }
+    </style>
 </head>
 
 <body>
@@ -123,51 +128,51 @@
     <%--<input type="hidden" name="pId" id="pId" value="${menu.parentId}"/>--%>
     <input type="hidden" name="menuType" id="menuType" value="${menu.menuType}"/>
 
-    <div id="zhongxin">
+    <div id="zhongxin" style="margin-top: 10px;margin-left: 15px;">
         <table>
             <tr>
                 <td>
-                    <select name="parentId" id="parentId" onchange="setMUR()" title="菜单">
-                        <option value="0">顶级菜单</option>
-                        <c:forEach items="${menuList}" var="menu">
-                            <option value="${menu.id}">${menu.menuName}</option>
-                        </c:forEach>
-                    </select>
+                    <span class="s-input">上级菜单：</span><select name="parentId" id="parentId" onchange="setMUR()" title="菜单">
+                    <option value="0">顶级菜单</option>
+                    <c:forEach items="${menuList}" var="menu">
+                        <option value="${menu.id}">${menu.menuName}</option>
+                    </c:forEach>
+                </select>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="menuName" id="menuName" placeholder="这里输入菜单名称" value="${menu.menuName}" title="名称"/>
+                    <span class="s-input">菜单名称：</span><input type="text" name="menuName" id="menuName" placeholder="输入菜单名称" value="${menu.menuName}" title="名称"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="menuUrl" id="menuUrl" placeholder="这里输入链接地址" value="${menu.menuUrl}" title="地址"/>
+                    <span class="s-input">URL地址：</span><input type="text" name="menuUrl" id="menuUrl" placeholder="输入URL" value="${menu.menuUrl}" title="URL"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="number" name="sort" id="menuOrder" placeholder="这里输入序号" value="${menu.sort}" title="序号"/>
+                    <span class="s-input">菜单排序：</span><input type="number" name="sort" id="menuOrder" placeholder="输入序号" value="${menu.sort}" title="序号"/>
                 </td>
             </tr>
-            <tr>
-                <td style="text-align: center;">
-                    <label style="float:left;padding-left: 32px;">
-                        <input name="form-field-radio" id="form-field-radio1" onclick="setType('1');"
-                               <c:if test="${menu.menuType == '1' }">checked="checked"</c:if>
-                               type="radio" value="icon-edit">
-                        <span class="lbl">系统菜单</span>
-                    </label>
-                    <label style="float:left;padding-left: 5px;">
-                        <input name="form-field-radio" id="form-field-radio2" onclick="setType('2');"
-                               <c:if test="${menu.menuType != '1' }">checked="checked"</c:if> type="radio" value="icon-edit">
-                        <span class="lbl">业务菜单</span></label>
-                </td>
-            </tr>
+            <%--<tr>--%>
+            <%--<td style="text-align: center;">--%>
+            <%--<label style="float:left;padding-left: 32px;">--%>
+            <%--<input name="form-field-radio" id="form-field-radio1" onclick="setType('1');"--%>
+            <%--<c:if test="${menu.menuType == '1' }">checked="checked"</c:if>--%>
+            <%--type="radio" value="icon-updateRoleById">--%>
+            <%--<span class="lbl">系统菜单</span>--%>
+            <%--</label>--%>
+            <%--<label style="float:left;padding-left: 5px;">--%>
+            <%--<input name="form-field-radio" id="form-field-radio2" onclick="setType('2');"--%>
+            <%--<c:if test="${menu.menuType != '1' }">checked="checked"</c:if> type="radio" value="icon-updateRoleById">--%>
+            <%--<span class="lbl">业务菜单</span></label>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
             <tr>
                 <td style="text-align: center; padding-top: 10px;">
-                    <a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-                    <a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+                    <a class="btn  btn-primary" onclick="save();">保存</a>
+                    <a class="btn  btn-danger" onclick="top.Dialog.close();">取消</a>
                 </td>
             </tr>
         </table>

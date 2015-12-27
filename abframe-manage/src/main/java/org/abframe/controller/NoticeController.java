@@ -82,7 +82,7 @@ public class NoticeController extends BaseController {
             pd = noticeService.findById(pd);
 
             mv.setViewName("notice/noticeEdit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller notice exception.", e);

@@ -35,10 +35,6 @@
     <!--<result column="target" property="target"></result>-->
     <!--</resultMap>-->
 
-    <select id="findMaxId" parameterType="pd" resultType="pd">
-		select MAX(id) MID FROM t_menu
-	</select>
-
     <select id="getParentMenu" resultMap="menuMap">
         select
         <include refid="allAttribute"/>

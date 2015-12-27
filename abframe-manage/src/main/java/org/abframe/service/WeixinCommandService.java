@@ -25,7 +25,7 @@ public class WeixinCommandService {
     }
 
     public void edit(PageData pd) throws Exception {
-        dao.update("WeixinCommandMapper.edit", pd);
+        dao.update("WeixinCommandMapper.updateRoleById", pd);
     }
 
 

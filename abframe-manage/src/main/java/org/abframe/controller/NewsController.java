@@ -85,7 +85,7 @@ public class NewsController extends BaseController {
         try {
             pd = newsService.findById(pd);
             mv.setViewName("news/newsEdit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller news exception.", e);

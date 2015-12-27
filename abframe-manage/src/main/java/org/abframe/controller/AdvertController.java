@@ -95,7 +95,7 @@ public class AdvertController extends BaseController {
             pd = advertService.findById(pd);
 
             mv.setViewName("advert/advertEdit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller adv/toEdit exception ", e);

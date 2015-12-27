@@ -86,7 +86,7 @@ public class WeixinTextMsgController extends BaseController {
     public ModelAndView edit() {
         ModelAndView mv = new ModelAndView();
         try {
-            if (!PermissionHandler.buttonJurisdiction(menuUrl, "edit")) {
+            if (!PermissionHandler.buttonJurisdiction(menuUrl, "updateRoleById")) {
                 return null;
             }
             PageData pd = new PageData();
@@ -187,7 +187,7 @@ public class WeixinTextMsgController extends BaseController {
         try {
             pd = weixinTextMsgService.findById(pd);    //根据ID读取
             mv.setViewName("weixin/textmsg/textmsg_edit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller weixin textMsg exception.", e);

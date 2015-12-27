@@ -12,7 +12,6 @@ import org.abframe.service.UserService;
 import org.abframe.util.AppUtil;
 import org.abframe.util.Constant;
 import org.abframe.util.PageData;
-import org.abframe.util.RightsHelper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -29,10 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -133,7 +129,7 @@ public class LoginController extends BaseController {
                     user = userRole;
                 }
                 RoleBean role = user.getRole();
-                String rolePerms = role != null ? role.getPerms() : "";
+                String rolePerms = role != null ? role.getMenuId() : "";
 
                 //避免每次拦截用户操作时查询数据库，以下将用户所属角色权限、用户权限限都存入session
                 session.setAttribute(Constant.SESSION_ROLE_RIGHTS, rolePerms);
@@ -144,13 +140,14 @@ public class LoginController extends BaseController {
                 if (null == session.getAttribute(Constant.SESSION_ALL_MENU_LIST)) {
                     menus = menuService.getAllMenu();
                     if (!Strings.isNullOrEmpty(rolePerms)) {
+                        List menuIds = Arrays.asList(rolePerms.split(","));
                         for (Menu menu : menus) {
-                            boolean isHasMenu = RightsHelper.testRights(rolePerms, menu.getId());
+                            boolean isHasMenu = menuIds.contains(String.valueOf(menu.getId()));
                             menu.setHasMenu(isHasMenu);
                             if (isHasMenu) {
                                 List<Menu> subMenuList = menu.getSubMenu();
                                 for (Menu sub : subMenuList) {
-                                    sub.setHasMenu(RightsHelper.testRights(rolePerms, sub.getId()));
+                                    sub.setHasMenu(menuIds.contains(String.valueOf(sub.getId())));
                                 }
                             }
                         }
@@ -158,9 +155,6 @@ public class LoginController extends BaseController {
                     session.setAttribute(Constant.SESSION_ALL_MENU_LIST, menus);
                 } else {
                     menus = (List<Menu>) session.getAttribute(Constant.SESSION_ALL_MENU_LIST);
-                }
-                if (null == session.getAttribute(Constant.SESSION_QX)) {
-                    session.setAttribute(Constant.SESSION_QX, this.getUQX(session));    //按钮权限放到session中
                 }
                 mv.setViewName("common/index");
                 mv.addObject("user", user);
@@ -224,57 +218,6 @@ public class LoginController extends BaseController {
         mv.setViewName("common/login");
         mv.addObject("pd", pd);
         return mv;
-    }
-
-    /**
-     * 获取用户权限
-     */
-    public Map<String, String> getUQX(Session session) {
-        PageData pd = new PageData();
-        Map<String, String> map = new HashMap<String, String>();
-        try {
-            String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
-            pd.put("userName", userName);
-            PageData pageData = userService.getUserByAccount(pd);
-
-            String roleId = pageData.get("roleId").toString();
-
-            pd.put("roleId", roleId);
-            PageData pd2 = new PageData();
-            pd2.put(userName, userName);
-            pd2.put("roleId", roleId);
-
-            pd = roleService.findObjectById(pd);
-
-            pd2 = roleService.findGLbyrid(pd2);
-            if (null != pd2) {
-                map.put("FX_QX", pd2.get("FX_QX").toString());
-                map.put("FW_QX", pd2.get("FW_QX").toString());
-                map.put("QX1", pd2.get("QX1").toString());
-                map.put("QX2", pd2.get("QX2").toString());
-                map.put("QX3", pd2.get("QX3").toString());
-                map.put("QX4", pd2.get("QX4").toString());
-
-                pd2.put("ROLE_ID", roleId);
-                pd2 = roleService.findYHbyrid(pd2);
-                map.put("C1", pd2.get("C1").toString());
-                map.put("C2", pd2.get("C2").toString());
-                map.put("C3", pd2.get("C3").toString());
-                map.put("C4", pd2.get("C4").toString());
-                map.put("Q1", pd2.get("Q1").toString());
-                map.put("Q2", pd2.get("Q2").toString());
-                map.put("Q3", pd2.get("Q3").toString());
-                map.put("Q4", pd2.get("Q4").toString());
-            }
-
-            map.put("adds", pd.getString("ADD_QX"));
-            map.put("dels", pd.getString("DEL_QX"));
-            map.put("edits", pd.getString("EDIT_QX"));
-            map.put("chas", pd.getString("CHA_QX"));
-        } catch (Exception e) {
-            LOGGER.error("Controller login exception.", e);
-        }
-        return map;
     }
 
     public void splitMenu(List<Menu> menuList, Session session) {

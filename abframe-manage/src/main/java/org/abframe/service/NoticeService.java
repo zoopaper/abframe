@@ -33,7 +33,7 @@ public class NoticeService {
 
 
     public void edit(PageData pd) throws Exception {
-        dao.update("NoticeMapper.edit", pd);
+        dao.update("NoticeMapper.updateRoleById", pd);
     }
 
     public void delete(PageData pd) throws Exception {

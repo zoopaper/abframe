@@ -81,7 +81,7 @@ public class RecommendController extends BaseController {
         try {
             pd = recommendService.findById(pd);
             mv.setViewName("recommend/recEdit");
-            mv.addObject("msg", "edit");
+            mv.addObject("msg", "updateRoleById");
             mv.addObject("pd", pd);
         } catch (Exception e) {
             LOGGER.error("Controller recommend exception.", e);

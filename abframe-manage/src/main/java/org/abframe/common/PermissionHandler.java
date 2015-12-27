@@ -2,7 +2,7 @@ package org.abframe.common;
 
 import org.abframe.entity.Menu;
 import org.abframe.util.Constant;
-import org.abframe.util.RightsHelper;
+import org.abframe.util.MenuHelper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -39,15 +39,15 @@ public class PermissionHandler {
                         Map<String, String> map = (Map<String, String>) session.getAttribute(Constant.SESSION_QX);//按钮权限
                         map.remove("add");
                         map.remove("del");
-                        map.remove("edit");
+                        map.remove("updateRoleById");
                         map.remove("cha");
                         int menuId = menuList.get(i).getSubMenu().get(j).getId();
                         String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();    //获取当前登录者loginname
                         Boolean isAdmin = "admin".equals(userName);
-                        map.put("add", (RightsHelper.testRights(map.get("adds"), menuId)) || isAdmin ? "1" : "0");
-                        map.put("del", RightsHelper.testRights(map.get("dels"), menuId) || isAdmin ? "1" : "0");
-                        map.put("edit", RightsHelper.testRights(map.get("edits"), menuId) || isAdmin ? "1" : "0");
-                        map.put("cha", RightsHelper.testRights(map.get("chas"), menuId) || isAdmin ? "1" : "0");
+                        map.put("add", (MenuHelper.testRights(map.get("adds"), menuId)) || isAdmin ? "1" : "0");
+                        map.put("del", MenuHelper.testRights(map.get("dels"), menuId) || isAdmin ? "1" : "0");
+                        map.put("updateRoleById", MenuHelper.testRights(map.get("edits"), menuId) || isAdmin ? "1" : "0");
+                        map.put("cha", MenuHelper.testRights(map.get("chas"), menuId) || isAdmin ? "1" : "0");
                         session.removeAttribute(Constant.SESSION_QX);
                         session.setAttribute(Constant.SESSION_QX, map);    //重新分配按钮权限
                     }
@@ -61,7 +61,7 @@ public class PermissionHandler {
      * 按钮权限(方法中校验)
      *
      * @param menuUrl 菜单路径
-     * @param type    类型(add、del、edit、cha)
+     * @param type    类型(add、del、updateRoleById、cha)
      * @return
      */
     public static boolean buttonJurisdiction(String menuUrl, String type) {
@@ -87,13 +87,13 @@ public class PermissionHandler {
                         String userName = session.getAttribute(Constant.SESSION_USERNAME).toString();
                         Boolean isAdmin = "admin".equals(userName);
                         if ("add".equals(type)) {
-                            return ((RightsHelper.testRights(map.get("adds"), menuId)) || isAdmin);
+                            return ((MenuHelper.testRights(map.get("adds"), menuId)) || isAdmin);
                         } else if ("del".equals(type)) {
-                            return ((RightsHelper.testRights(map.get("dels"), menuId)) || isAdmin);
-                        } else if ("edit".equals(type)) {
-                            return ((RightsHelper.testRights(map.get("edits"), menuId)) || isAdmin);
+                            return ((MenuHelper.testRights(map.get("dels"), menuId)) || isAdmin);
+                        } else if ("updateRoleById".equals(type)) {
+                            return ((MenuHelper.testRights(map.get("edits"), menuId)) || isAdmin);
                         } else if ("cha".equals(type)) {
-                            return ((RightsHelper.testRights(map.get("chas"), menuId)) || isAdmin);
+                            return ((MenuHelper.testRights(map.get("chas"), menuId)) || isAdmin);
                         }
                     }
                 }
