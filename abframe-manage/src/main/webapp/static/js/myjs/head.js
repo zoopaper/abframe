@@ -46,7 +46,7 @@ $(function () {
         success: function (data) {
             $.each(data.list, function (i, list) {
                 //登陆者资料
-                $("#user_info").html(list.name + '');
+                $("#user_info").html(list.account + '');
                 user = list.userName;
                 userId = list.userId;
                 hf(list.skin);//皮肤
